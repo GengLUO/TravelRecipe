@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe;
+package be.kuleuven.travelrecipe.models;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

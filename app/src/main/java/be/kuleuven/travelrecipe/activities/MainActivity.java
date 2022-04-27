@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe;
+package be.kuleuven.travelrecipe.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
+
+import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.models.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

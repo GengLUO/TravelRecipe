@@ -1,8 +1,10 @@
-package be.kuleuven.travelrecipe;
+package be.kuleuven.travelrecipe.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import be.kuleuven.travelrecipe.R;
 
 public class Settings extends AppCompatActivity {
 
