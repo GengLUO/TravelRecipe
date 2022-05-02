@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="be.kuleuven.travelrecipe">
+    package="be.kuleuven.travelrecipe" >
 
     <application
         android:allowBackup="true"
@@ -8,16 +8,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TravelRecipe">
+        android:theme="@style/Theme.TravelRecipe" >
         <activity
-            android:name=".activities.ViewActicity"
+            android:name=".activities.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.Settings"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import be.kuleuven.travelrecipe.R;
 
-public class ViewActicity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_acticity);
+        setContentView(R.layout.activity_detail);
     }
 }
