@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 import be.kuleuven.travelrecipe.Adapter.DashboardAdapter;
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.DashboardModel;
+import be.kuleuven.travelrecipe.models.Dashboard;
 
 public class ViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
     //private List<Recipe> recipeList;
-    private ArrayList<DashboardModel> dashboardModels;
+    private ArrayList<Dashboard> dashboardModels;
 
     public ViewFragment() {
         // Required empty public constructor
@@ -52,15 +52,15 @@ public class ViewFragment extends Fragment {
 
     private void initData() {
         dashboardModels = new ArrayList<>();
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
-        dashboardModels.add(new DashboardModel(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
+        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
 
     }
 

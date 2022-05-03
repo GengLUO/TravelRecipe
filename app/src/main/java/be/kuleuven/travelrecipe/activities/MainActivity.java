@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        ImageView imgMore = findViewById(R.id.img_More);
-        ImageView imgSetting = findViewById(R.id.img_Setting);
+        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+        imgMore = findViewById(R.id.img_More);
+        imgSetting = findViewById(R.id.img_Setting);
 
         recipeFragment = new RecipeFragment();
         workFragment = new WorkFragment();
