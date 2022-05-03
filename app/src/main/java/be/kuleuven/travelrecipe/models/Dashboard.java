@@ -1,10 +1,10 @@
 package be.kuleuven.travelrecipe.models;
 
-public class DashboardModel {
+public class Dashboard {
     private int dish, flag;
     private String name, description;
 
-    public DashboardModel(int dish, int flag, String name, String description) {
+    public Dashboard(int dish, int flag, String name, String description) {
         this.dish = dish;
         this.flag = flag;
         this.name = name;

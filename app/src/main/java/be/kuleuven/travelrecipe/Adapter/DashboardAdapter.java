@@ -15,14 +15,14 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.activities.DetailActivity;
-import be.kuleuven.travelrecipe.models.DashboardModel;
+import be.kuleuven.travelrecipe.models.Dashboard;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{
 
-    List<DashboardModel> list;
+    List<Dashboard> list;
     Context context;
 
-    public DashboardAdapter(List<DashboardModel> list, Context context) {
+    public DashboardAdapter(List<Dashboard> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -36,7 +36,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
 
     @Override
     public void onBindViewHolder(@NonNull dashboardViewHolder holder, int position) {
-        DashboardModel model = list.get(position);
+        Dashboard model = list.get(position);
         holder.imgFlag.setImageResource(model.getFlag());
         holder.imgDish.setImageResource(model.getDish());
         holder.txtName.setText(model.getName());
