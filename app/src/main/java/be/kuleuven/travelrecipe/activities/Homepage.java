@@ -1,6 +1,7 @@
 package be.kuleuven.travelrecipe.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +40,7 @@ public class Homepage extends AppCompatActivity {
     private ProgressBar progressBar2;
     private ProgressBar progressBar3;
     private ProgressBar progressBar4;
-    private Button settingButton;
+    private ImageView settingButton;
 
     private static final String URL = "https://studev.groept.be/api/a21pt210";
 
@@ -107,7 +108,7 @@ public class Homepage extends AppCompatActivity {
 
     }
 
-    public  void onBtnSubmit_Clicked(View caller){
-
+    public void onImgSetting_Clicked(View caller){
+        startActivity(new Intent(this, Settings.class));
     }
 }
