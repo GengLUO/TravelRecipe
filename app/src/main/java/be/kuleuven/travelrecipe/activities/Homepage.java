@@ -103,7 +103,9 @@ public class Homepage extends AppCompatActivity {
             }
         });
         recipeAmountTextview.setText(recipeAmount);
+        recipeAmountText.setText("recipeAmount");
         usernameTextview.setText(username);
+        levelText.setText("level");
         levelTextview.setText(level);
 
     }
