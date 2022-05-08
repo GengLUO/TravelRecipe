@@ -10,13 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelRecipe">
         <activity
+            android:name=".activities.MeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SettingMain"
             android:exported="false" />
         <activity
             android:name=".activities.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.Settings"
+            android:name=".activities.DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"

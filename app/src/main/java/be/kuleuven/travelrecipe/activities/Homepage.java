@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -111,6 +110,6 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void onImgSetting_Clicked(View caller){
-        startActivity(new Intent(this, Settings.class));
+        startActivity(new Intent(this, DashboardActivity.class));
     }
 }
