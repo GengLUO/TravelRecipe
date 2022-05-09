@@ -11,11 +11,13 @@
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/drawable/ic_round_outlet_24.xml" value="0.213" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/drawable/ic_search.xml" value="0.2145" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/drawable/selector.xml" value="0.2145" />
+        <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_bnactivity.xml" value="0.12409420289855072" />
+        <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_bottom.xml" value="0.22864583333333333" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_detail.xml" value="0.1" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_homepage.xml" value="0.25" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_me.xml" value="0.12409420289855072" />
+        <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_me.xml" value="0.165" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_recipe_detail.xml" value="0.23641304347826086" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_setting_main.xml" value="0.24048913043478262" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/activity_settings.xml" value="0.11727456940222898" />
@@ -24,6 +26,7 @@
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/content_setting_main.xml" value="0.12409420289855072" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/expand_list_view.xml" value="0.22864583333333333" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/fragment_first.xml" value="0.22864583333333333" />
+        <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/fragment_home.xml" value="0.12409420289855072" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/fragment_me.xml" value="0.25" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/fragment_recipe.xml" value="0.11727456940222898" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/fragment_scrolling.xml" value="0.11727456940222898" />
@@ -36,6 +39,8 @@
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/recipe_fall.xml" value="0.25" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/layout/recipe_step.xml" value="0.17346014492753623" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/menu/bottom.xml" value="0.1" />
+        <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/menu/menu_bottom.xml" value="0.22864583333333333" />
         <entry key="..\:/Desktop/PT-AndroidAPP/TravelRecipe/app/src/main/res/menu/more.xml" value="0.22777777777777777" />
       </map>
     </option>

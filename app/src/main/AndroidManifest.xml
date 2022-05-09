@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelRecipe">
         <activity
+            android:name=".views.activities.BottomActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.MeActivity"
             android:exported="false" />
         <activity

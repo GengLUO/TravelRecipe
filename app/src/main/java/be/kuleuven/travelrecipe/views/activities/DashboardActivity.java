@@ -32,7 +32,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         //initialize and assign variable
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.btm_nav);
 
         //set home selected
         bottomNavigationView.setSelectedItemId(R.id.search);

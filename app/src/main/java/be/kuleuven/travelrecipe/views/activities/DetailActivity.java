@@ -2,6 +2,7 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -70,7 +71,8 @@ public class DetailActivity extends AppCompatActivity {
 //    }
 
     public void onImgBack_Clicked(View caller){
-        onBackPressed();
+        //onBackPressed();
+        startActivity(new Intent(this, BottomActivity.class));
     }
 
 }
