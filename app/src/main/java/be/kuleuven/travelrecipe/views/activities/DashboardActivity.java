@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.activities;
+package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.kuleuven.travelrecipe.Adapter.DashboardAdapter;
+import be.kuleuven.travelrecipe.controller.DashboardAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Dashboard;
 
@@ -51,7 +51,7 @@ public class DashboardActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.homePage:
-                        startActivity(new Intent(getApplicationContext(),Homepage.class));
+                        startActivity(new Intent(getApplicationContext(), Homepage.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

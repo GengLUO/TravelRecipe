@@ -10,19 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelRecipe">
         <activity
-            android:name=".activities.MeActivity"
+            android:name=".views.activities.MeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.SettingMain"
+            android:name=".views.activities.SettingMain"
             android:exported="false" />
         <activity
-            android:name=".activities.DetailActivity"
+            android:name=".views.activities.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DashboardActivity"
+            android:name=".views.activities.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".views.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,24 +1,15 @@
-package be.kuleuven.travelrecipe.activities;
+package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import be.kuleuven.travelrecipe.Adapter.DetailsAdapter;
-import be.kuleuven.travelrecipe.Adapter.RecipeDetailsAdapter;
+import be.kuleuven.travelrecipe.controller.DetailsAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.ExpandListView;
 import be.kuleuven.travelrecipe.models.RecipeStep;

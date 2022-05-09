@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.Adapter;
+package be.kuleuven.travelrecipe.controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.activities.DetailActivity;
+import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 import be.kuleuven.travelrecipe.models.Dashboard;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{

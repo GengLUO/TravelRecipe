@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.activities;
+package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +13,10 @@ import android.widget.ImageView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import be.kuleuven.travelrecipe.Adapter.ViewPagerAdapter;
+import be.kuleuven.travelrecipe.controller.ViewPagerAdapter;
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.Dashboard;
+import be.kuleuven.travelrecipe.views.fragments.RecipeFragment;
+import be.kuleuven.travelrecipe.views.fragments.WorkFragment;
 
 public class MeActivity extends AppCompatActivity {
 
@@ -65,7 +66,7 @@ public class MeActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.homePage:
-                        startActivity(new Intent(getApplicationContext(),Homepage.class));
+                        startActivity(new Intent(getApplicationContext(), Homepage.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

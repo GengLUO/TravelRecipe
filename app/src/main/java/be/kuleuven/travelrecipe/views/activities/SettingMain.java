@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.activities;
+package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

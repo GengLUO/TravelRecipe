@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.activities;
+package be.kuleuven.travelrecipe.views.fragments;
 
 import android.os.Bundle;
 
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import be.kuleuven.travelrecipe.Adapter.DashboardAdapter;
+import be.kuleuven.travelrecipe.controller.DashboardAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Dashboard;
 
