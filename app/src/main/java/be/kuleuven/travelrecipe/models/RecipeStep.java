@@ -1,5 +1,7 @@
 package be.kuleuven.travelrecipe.models;
 
+//实体类，对数据对象分装
+
 public class RecipeStep {
     private String stepNr, stepDesc;
     private int stepImg;

@@ -1,65 +1,31 @@
 package be.kuleuven.travelrecipe.models;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
 
-    private String title;
-    private String content;
-    private String stepNr, stepDesc;
-    private int stepImg;
-    private List<RecipeStep> recipeSteps = new LinkedList<>();
+    private String name;
+    private String country;
+    private int demo;
+    private List<RecipeStep> steps = new ArrayList<>();
 
-    public Recipe(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
-
-    public Recipe(String stepNr, String stepDesc, int stepImg) {
-        this.stepNr = stepNr;
-        this.stepDesc = stepDesc;
-        this.stepImg = stepImg;
-    }
-
-    public Recipe() {
-    }
-
-    public String getStepNr() {
-        return stepNr;
-    }
-
-    public void setStepNr(String stepNr) {
-        this.stepNr = stepNr;
-    }
-
-    public String getStepDesc() {
-        return stepDesc;
-    }
-
-    public void setStepDesc(String stepDesc) {
-        this.stepDesc = stepDesc;
-    }
-
-    public int getStepImg() {
-        return stepImg;
-    }
-
-    public void setStepImg(int stepImg) {
-        this.stepImg = stepImg;
-    }
-
-    public List<RecipeStep> getRecipeSteps() {
-        return recipeSteps;
-    }
-
-    public void setRecipeSteps(List<RecipeStep> recipeSteps) {
-        this.recipeSteps = recipeSteps;
+    public Recipe(String title, String content, int demo) {
+        this.name = title;
+        this.country = content;
+        this.demo = demo;
     }
 
 
+    public List<RecipeStep> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<RecipeStep> steps) {
+        this.steps = steps;
+    }
 
     public void addRecipeSteps(RecipeStep recipeStep){
-        recipeSteps.add(recipeStep);
+        steps.add(recipeStep);
     }
 }

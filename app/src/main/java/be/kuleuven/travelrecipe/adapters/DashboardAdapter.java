@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.controller;
+package be.kuleuven.travelrecipe.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,18 +19,20 @@ import be.kuleuven.travelrecipe.models.Dashboard;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{
 
-    List<Dashboard> list;
-    Context context;
+    private List<Dashboard> list;
+    private Context context;
+    private LayoutInflater inflater;
 
     public DashboardAdapter(List<Dashboard> list, Context context) {
         this.list = list;
         this.context = context;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public dashboardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recipe_fall,parent,false);
+        View view = inflater.inflate(R.layout.recipe_fall,parent,false);
         return new dashboardViewHolder(view);
     }
 

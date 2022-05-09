@@ -1,5 +1,5 @@
 package be.kuleuven.travelrecipe.models;
-
+//暂时废弃
 public class Dashboard {
     private int dish, flag;
     private String name, description;

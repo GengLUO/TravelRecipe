@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.controller;
+package be.kuleuven.travelrecipe.adapters;
 
 import android.content.Context;
 import android.content.Intent;

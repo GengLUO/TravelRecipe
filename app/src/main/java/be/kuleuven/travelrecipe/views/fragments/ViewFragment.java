@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import be.kuleuven.travelrecipe.controller.DashboardAdapter;
+import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Dashboard;
 

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.kuleuven.travelrecipe.controller.DetailsAdapter;
+import be.kuleuven.travelrecipe.adapters.DetailsAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.ExpandListView;
 import be.kuleuven.travelrecipe.models.RecipeStep;

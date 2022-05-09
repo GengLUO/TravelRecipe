@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import be.kuleuven.travelrecipe.controller.ViewPagerAdapter;
+import be.kuleuven.travelrecipe.adapters.ViewPagerAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.views.fragments.RecipeFragment;
 import be.kuleuven.travelrecipe.views.fragments.WorkFragment;
