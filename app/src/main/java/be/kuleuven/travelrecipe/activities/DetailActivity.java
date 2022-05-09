@@ -4,22 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import be.kuleuven.travelrecipe.Adapter.DetailsAdapter;
 import be.kuleuven.travelrecipe.Adapter.RecipeDetailsAdapter;
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.models.ExpandListView;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 
 public class DetailActivity extends AppCompatActivity {
 
     ImageView imgBack;
-    RecyclerView recipeDetailsRV;
-    RecipeDetailsAdapter recipeDetailsAdapter;
+    //RecyclerView recipeDetailsRV;
+    //RecipeDetailsAdapter recipeDetailsAdapter;
+    DetailsAdapter detailsAdapter;
+    ExpandListView listView;
     List<RecipeStep> recipeList;
 
     @Override
@@ -48,18 +58,28 @@ public class DetailActivity extends AppCompatActivity {
         recipeList.add(step5);
         recipeList.add(step5);
 
-        setRecipeRecyclerView(recipeList);
+        //setRecipeRecyclerView(recipeList);
+
+        setListView(recipeList);
+
     }
 
-    private void setRecipeRecyclerView(List<RecipeStep> recipeList){
-        recipeDetailsRV = findViewById(R.id.details_recycler);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        recipeDetailsRV.setLayoutManager(layoutManager);
-        recipeDetailsAdapter = new RecipeDetailsAdapter(recipeList,this);
-        recipeDetailsRV.setAdapter(recipeDetailsAdapter);
+    private void setListView(List<RecipeStep> recipeList) {
+        listView = findViewById(R.id.simple_adapter);
+        detailsAdapter = new DetailsAdapter(recipeList,getApplicationContext());
+        listView.setAdapter(detailsAdapter);
     }
+
+//    private void setRecipeRecyclerView(List<RecipeStep> recipeList){
+//        //recipeDetailsRV = findViewById(R.id.details_recycler);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//        recipeDetailsRV.setLayoutManager(layoutManager);
+//        recipeDetailsAdapter = new RecipeDetailsAdapter(recipeList,this);
+//        recipeDetailsRV.setAdapter(recipeDetailsAdapter);
+//    }
 
     public void onImgBack_Clicked(View caller){
         onBackPressed();
     }
+
 }
