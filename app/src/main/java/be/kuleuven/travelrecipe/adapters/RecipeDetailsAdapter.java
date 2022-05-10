@@ -19,8 +19,8 @@ import be.kuleuven.travelrecipe.models.RecipeStep;
 
 public class RecipeDetailsAdapter extends  RecyclerView.Adapter<RecipeDetailsAdapter.detailsViewHolder>{
 
-    List<RecipeStep> list;
-    Context context;
+    private List<RecipeStep> list;
+    private Context context;
 
     public RecipeDetailsAdapter(List<RecipeStep> list, Context context) {
         this.list = list;

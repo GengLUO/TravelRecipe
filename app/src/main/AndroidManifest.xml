@@ -10,29 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelRecipe">
         <activity
-            android:name=".views.activities.BottomActivity"
+            android:name=".views.activities.MedalActivity"
             android:exported="false" />
-        <activity
-            android:name=".views.activities.MeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.SettingMain"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.DashboardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.MainActivity"
-            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+
     </application>
 
 </manifest>
