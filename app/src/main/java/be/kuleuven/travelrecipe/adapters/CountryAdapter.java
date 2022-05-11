@@ -30,14 +30,14 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     @NonNull
     @Override
     public CountryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recipe_fall,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.country,parent,false);
         return new CountryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
         Country model = list.get(position);
-        holder.number.setText(model.getNumber());
+        holder.number.setText(String.valueOf(model.getNumber()));
         holder.countryname.setText(model.getCountryname());
         holder.imgCountry.setImageResource(model.getImage());
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
@@ -29,7 +30,7 @@ public class CountrysActivity extends AppCompatActivity {
         TextView tvContinent = findViewById(R.id.textViewContinent);
 
         countries = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 20; i++) {
             countries.add(new Country("china",20,R.drawable.flag_china));
         }
         setCountriesRecyclerView(countries);
@@ -37,7 +38,7 @@ public class CountrysActivity extends AppCompatActivity {
     }
     private void setCountriesRecyclerView(List<Country> countries){
         countriesRecyclerView = findViewById(R.id.countriesRecyclerView);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,1);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,3);
         countriesRecyclerView.setLayoutManager(layoutManager);
         countryAdapter = new CountryAdapter(countries,this);
         countriesRecyclerView.setAdapter(countryAdapter);
