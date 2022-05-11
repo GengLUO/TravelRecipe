@@ -106,10 +106,13 @@ public class Homepage extends AppCompatActivity {
         usernameTextview.setText(username);
         levelText.setText("level");
         levelTextview.setText(level);
-
     }
 
     public void onImgSetting_Clicked(View caller){
         startActivity(new Intent(this, DashboardActivity.class));
+    }
+
+    public void onImgArea_Clicked(View caller){
+        startActivity(new Intent(this, MedalActivity.class));
     }
 }
