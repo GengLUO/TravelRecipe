@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:layout_width="410dp"
     android:layout_height="95dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
@@ -12,13 +12,13 @@
 
     <RelativeLayout
         android:id="@+id/layout1"
-        android:layout_width="300dp"
+        android:layout_width="410dp"
         android:layout_height="95dp"
         android:background="@color/black">
 
         <TextView
             android:id="@+id/medalname"
-            android:layout_width="103dp"
+            android:layout_width="137dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="4dp"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/medalnumber"
-            android:layout_width="103dp"
+            android:layout_width="137dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/medalname"
             android:gravity="center"
@@ -39,7 +39,7 @@
 
         <ImageView
             android:id="@+id/medalimage"
-            android:layout_width="103dp"
+            android:layout_width="137dp"
             android:layout_height="40dp"
             android:layout_below="@+id/medalnumber"
 
@@ -53,7 +53,7 @@
 
         <TextView
             android:id="@+id/medalname2"
-            android:layout_width="103dp"
+            android:layout_width="137dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_toEndOf="@+id/medalname"
@@ -65,7 +65,7 @@
 
         <TextView
             android:id="@+id/medalnumber2"
-            android:layout_width="103dp"
+            android:layout_width="137dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/medalname2"
             android:layout_marginStart="0dp"
@@ -78,7 +78,7 @@
 
         <ImageView
             android:id="@+id/medalimage2"
-            android:layout_width="103dp"
+            android:layout_width="137dp"
             android:layout_height="40dp"
             android:layout_below="@id/medalnumber2"
             android:layout_centerHorizontal="true"
@@ -92,7 +92,7 @@
 
         <TextView
             android:id="@+id/medalname3"
-            android:layout_width="103dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/medalname2"
             android:gravity="center"
@@ -103,7 +103,7 @@
 
         <TextView
             android:id="@+id/medalnumber3"
-            android:layout_width="103dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/medalname3"
             android:layout_marginStart="0dp"
@@ -116,7 +116,7 @@
 
         <ImageView
             android:id="@+id/medalimage3"
-            android:layout_width="103dp"
+            android:layout_width="135dp"
             android:layout_height="40dp"
             android:layout_below="@id/medalnumber3"
             android:layout_centerHorizontal="true"
