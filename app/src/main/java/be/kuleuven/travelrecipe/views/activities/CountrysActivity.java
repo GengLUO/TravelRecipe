@@ -1,0 +1,59 @@
+package be.kuleuven.travelrecipe.views.activities;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import be.kuleuven.travelrecipe.adapters.CountryAdapter;
+import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
+import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.models.Country;
+import be.kuleuven.travelrecipe.models.Dashboard;
+
+public class CountrysActivity extends AppCompatActivity {
+    RecyclerView countriesRecyclerView;
+    CountryAdapter countryAdapter;
+    List<Country> countries;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_countries);
+
+        //continent setting
+        TextView tvContinent = findViewById(R.id.textViewContinent);
+
+        countries = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            countries.add(new Country("china",20,R.drawable.flag_china));
+        }
+
+        setCountriesRecyclerView(countries);
+
+    }
+    private void setCountriesRecyclerView(List<Country> countries){
+        countriesRecyclerView = findViewById(R.id.countriesRecyclerView);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,3);
+        countriesRecyclerView.setLayoutManager(layoutManager);
+        countryAdapter = new CountryAdapter(countries,this);
+        countriesRecyclerView.setAdapter(countryAdapter);
+    }
+
+    public void onImgBack_Clicked(View caller){
+        onBackPressed();
+    }
+}
