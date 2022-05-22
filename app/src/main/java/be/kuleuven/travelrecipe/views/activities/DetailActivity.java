@@ -71,7 +71,8 @@ public class DetailActivity extends AppCompatActivity {
 //    }
 
     public void onImgBack_Clicked(View caller){
-        onBackPressed();
+        //onBackPressed();
+        startActivity(new Intent(this, CountrysActivity.class));
     }
 
 }
