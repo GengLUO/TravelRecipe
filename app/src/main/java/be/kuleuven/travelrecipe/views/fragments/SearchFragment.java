@@ -52,7 +52,7 @@ public class SearchFragment extends Fragment {
         dashboardModelList.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
 
         dashboardRecyclerView = view.findViewById(R.id.recycler_view);
-        DashboardAdapter dashboardAdapter = new DashboardAdapter(dashboardModelList,getContext());
+        dashboardAdapter = new DashboardAdapter(dashboardModelList,getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         dashboardRecyclerView.setLayoutManager(layoutManager);
         dashboardRecyclerView.setNestedScrollingEnabled(false);
