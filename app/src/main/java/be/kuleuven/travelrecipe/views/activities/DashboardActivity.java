@@ -17,14 +17,13 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.Dashboard;
-import be.kuleuven.travelrecipe.views.fragments.HomeFragment;
+import be.kuleuven.travelrecipe.models.Recipe;
 
 public class DashboardActivity extends AppCompatActivity {
 
     RecyclerView dashboardRecyclerView;
     DashboardAdapter dashboardAdapter;
-    List<Dashboard> dashboardModelList;
+    List<Recipe> dashboardModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +50,8 @@ public class DashboardActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), HomeFragment.class));
+                    case R.id.homePage:
+                        startActivity(new Intent(getApplicationContext(), Homepage.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -62,7 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
 
-        dashboardModelList = new ArrayList<>();
+        dashboardModelList = new ArrayList<be.kuleuven.travelrecipe.models.Recipe>();
 //        dashboardModelList.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
 //        dashboardModelList.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
 //        dashboardModelList.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
@@ -76,7 +75,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-    private void setDashboardRecyclerView(List<Dashboard> dashboardModelList){
+    private void setDashboardRecyclerView(List<Recipe> dashboardModelList){
         dashboardRecyclerView = findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         dashboardRecyclerView.setLayoutManager(layoutManager);
@@ -89,7 +88,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void onImgHome_Clicked(View caller){
-        startActivity(new Intent(this, HomeFragment.class));
+        startActivity(new Intent(this, Homepage.class));
     }
 
     public void onImgMe_Clicked(View caller){

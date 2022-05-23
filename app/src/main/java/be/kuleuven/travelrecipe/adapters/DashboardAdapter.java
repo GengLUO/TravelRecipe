@@ -11,18 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.Dashboard;
+import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{
 
-    private List<Dashboard> list;
+    private List<Recipe> list = new LinkedList<>();
     private Context context;
     private LayoutInflater inflater;
 
-    public DashboardAdapter(List<Dashboard> list, Context context) {
+    public DashboardAdapter(List<Recipe> list, Context context) {
         this.list = list;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
@@ -37,16 +39,18 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
 
     @Override
     public void onBindViewHolder(@NonNull dashboardViewHolder holder, int position) {
-        Dashboard model = list.get(position);
-        holder.imgFlag.setImageBitmap(model.getFlag());
-        holder.imgDish.setImageBitmap(model.getDish());
-        holder.txtName.setText(model.getName());
-        holder.txtDescription.setText(model.getDescription());
+        Recipe recipe = list.get(position);
+        //Todo
+        //holder.imgFlag.setImageBitmap(recipe.getCountry());
+        holder.imgDish.setImageBitmap(recipe.getDemo());
+        holder.txtName.setText(recipe.getName());
+        holder.txtDescription.setText(recipe.getDescription());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("id",recipe.getRecipeId());
                 context.startActivity(intent);
             }
         });

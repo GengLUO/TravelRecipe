@@ -1,6 +1,7 @@
 package be.kuleuven.travelrecipe.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IRecipesModel {
     void addRecipe(Recipe recipe);
@@ -9,4 +10,5 @@ public interface IRecipesModel {
     void addRecipes(ArrayList<Recipe> newRecipes);
     void clearRecipes();
     void loadRecipes();
+    List<Recipe> getAllRecipes();
 }

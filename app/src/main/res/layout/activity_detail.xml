@@ -57,7 +57,7 @@
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/dumpling" />
 
-            <be.kuleuven.travelrecipe.models.ExpandListView
+            <be.kuleuven.travelrecipe.adapters.ExpandListView
                 android:id="@+id/simple_adapter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

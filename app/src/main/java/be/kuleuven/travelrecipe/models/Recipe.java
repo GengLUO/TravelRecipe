@@ -7,17 +7,57 @@ import java.util.List;
 
 public class Recipe extends AbstractRecipe{
 
-    private String name;
-    private String country;
+    private String name, description;
+    private int country, recipeId;
     private Bitmap demo;
     private List<RecipeStep> steps = new ArrayList<>();
 
-    public Recipe(String title, String content, Bitmap demo) {
+    public Recipe(String title, String desc , int id, Bitmap demo) {
         this.name = title;
-        this.country = content;
+        this.description = desc;
+        this.recipeId = id;
         this.demo = demo;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getCountry() {
+        return country;
+    }
+
+    public void setCountry(int country) {
+        this.country = country;
+    }
+
+    public Bitmap getDemo() {
+        return demo;
+    }
+
+    public void setDemo(Bitmap demo) {
+        this.demo = demo;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
 
     public List<RecipeStep> getSteps() {
         return steps;
