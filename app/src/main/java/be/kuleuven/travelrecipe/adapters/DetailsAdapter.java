@@ -48,7 +48,7 @@ public class DetailsAdapter extends BaseAdapter {
         final ViewHolder holder = getViewHolder(view);
 
         RecipeStep model = list.get(i);
-        holder.imgStep.setImageResource(model.getStepImg());
+        holder.imgStep.setImageBitmap(model.getStepImg());
         holder.txtStepNr.setText(model.getStepNr());
         holder.txtStepDesc.setText(model.getStepDesc());
         return view;

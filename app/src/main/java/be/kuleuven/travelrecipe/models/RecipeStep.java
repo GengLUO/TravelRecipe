@@ -2,11 +2,13 @@ package be.kuleuven.travelrecipe.models;
 
 //实体类，对数据对象分装
 
+import android.graphics.Bitmap;
+
 public class RecipeStep {
     private String stepNr, stepDesc;
-    private String stepImg;
+    private Bitmap stepImg;
 
-    public RecipeStep(String stepNr, String stepDesc, String stepImg) {
+    public RecipeStep(String stepNr, String stepDesc, Bitmap stepImg) {
         this.stepNr = stepNr;
         this.stepDesc = stepDesc;
         this.stepImg = stepImg;
@@ -28,11 +30,11 @@ public class RecipeStep {
         this.stepDesc = stepDesc;
     }
 
-    public String getStepImg() {
+    public Bitmap getStepImg() {
         return stepImg;
     }
 
-    public void setStepImg(String stepImg) {
+    public void setStepImg(Bitmap stepImg) {
         this.stepImg = stepImg;
     }
 }

@@ -37,7 +37,7 @@ public class RecipeDetailsAdapter extends  RecyclerView.Adapter<RecipeDetailsAda
     @Override
     public void onBindViewHolder(@NonNull detailsViewHolder holder, int position) {
         RecipeStep model = list.get(position);
-        holder.imgStep.setImageResource(model.getStepImg());
+        holder.imgStep.setImageBitmap(model.getStepImg());
         holder.txtStepNr.setText(model.getStepNr());
         holder.txtStepDesc.setText(model.getStepDesc());
 

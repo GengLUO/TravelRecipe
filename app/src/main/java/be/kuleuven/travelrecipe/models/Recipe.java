@@ -1,5 +1,7 @@
 package be.kuleuven.travelrecipe.models;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +9,10 @@ public class Recipe {
 
     private String name;
     private String country;
-    private int demo;
+    private Bitmap demo;
     private List<RecipeStep> steps = new ArrayList<>();
 
-    public Recipe(String title, String content, int demo) {
+    public Recipe(String title, String content, Bitmap demo) {
         this.name = title;
         this.country = content;
         this.demo = demo;

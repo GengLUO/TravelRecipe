@@ -114,7 +114,10 @@ public class DatabaseConnect {
                             if( response.length() > 0 ) {
                                 for(int i=0; i<response.length();i++){
                                     JSONObject o = response.getJSONObject(0);
-                                    RecipeStep step = new RecipeStep(String.valueOf(i),o.getString("description"),o.getString("image"));
+                                    String b64String = o.getString("image");
+                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+                                    RecipeStep step = new RecipeStep(String.valueOf(i),o.getString("description"),bitmap);
                                     steps.add(step);
                                 }
 

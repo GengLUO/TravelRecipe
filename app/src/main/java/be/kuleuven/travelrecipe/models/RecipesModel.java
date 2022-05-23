@@ -3,7 +3,7 @@ package be.kuleuven.travelrecipe.models;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class RecipesModel {
+public class RecipesModel implements IRecipesModel {
 
     private static LinkedList<Recipe> recipes = new LinkedList<>();
 
