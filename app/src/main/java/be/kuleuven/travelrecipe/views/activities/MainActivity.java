@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
-
     private RequestQueue requestQueue;
     private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
     protected static RecipesModel recipesModel123 = new RecipesModel();
@@ -134,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         bottomNavigationView = findViewById(R.id.btm_nav);
         navController = Navigation.findNavController(this, R.id.nav_controller);
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -189,10 +187,10 @@ public class MainActivity extends AppCompatActivity {
 //
 //            requestQueue.add(retrieveImageRequest);
 //        }
+    }
 
-
-
-
+    public void generatecountries(int userID)
+    {
 
     }
 }
