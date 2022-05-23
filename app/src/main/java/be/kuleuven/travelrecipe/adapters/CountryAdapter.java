@@ -18,10 +18,12 @@ import be.kuleuven.travelrecipe.models.Country;
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder>{
     private List<Country> list;
     private Context context;
+    private int continentNumber;
 
-    public CountryAdapter(List<Country> list, Context context) {
+    public CountryAdapter(List<Country> list,int continentNumber, Context context) {
         this.list = list;
         this.context = context;
+        this.continentNumber = continentNumber;
     }
 
     @NonNull

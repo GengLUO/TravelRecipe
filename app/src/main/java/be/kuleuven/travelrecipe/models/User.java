@@ -2,6 +2,7 @@ package be.kuleuven.travelrecipe.models;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -20,6 +21,19 @@ public class User {
         this.userID = userID;
     }
 
+    public List<Country> getCountriesByContinentID(int continentID)
+    {
+        Country country;
+        List<Country> newCountries = new  ArrayList<Country>();
+        for (int i = 0; i < countries.size(); i++) {
+            country = countries.get(i);
+            if (country.getContinent() == continentID)
+            {
+                newCountries.add(country);
+            }
+        }
+        return newCountries;
+    }
     public void setUserID(int userID) {
         this.userID = userID;
     }
@@ -99,4 +113,6 @@ public class User {
     public List<Country> getCountries() {
         return countries;
     }
+
+
 }

@@ -102,7 +102,7 @@ public class SettingMain extends AppCompatActivity {
         levelNumber.setText(level);
         passwordText.setText("password");
     }
-    public void onSettingButton_Clicked(View caller){
+    public void onProfileImage_Clicked(View caller){
         String UsernameURL = URL+"/setUsername/"+usernameinput.getText()+"/"+userID;
         String PasswordURL = URL+"/setPassword/"+passwordinput.getText()+"/"+userID;
         StringRequest settingRequest = new StringRequest(Request.Method.GET, UsernameURL, new Response.Listener<String>() {

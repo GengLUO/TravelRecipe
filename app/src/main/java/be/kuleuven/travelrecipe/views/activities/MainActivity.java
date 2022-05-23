@@ -99,10 +99,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -191,6 +193,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void generatecountries(int userID)
     {
+        String URL = "https://studev.groept.be/api/a21pt210/getAllAvailableCountries";
 
+    }
+    public void onImgSetting_Clicked(View caller){
+        startActivity(new Intent(this, SettingMain.class));
+    }
+    public void onImgContinent1_Clicked(View caller){
+        Intent intent = new Intent(this,CountrysActivity.class);
+        intent.putExtra("continentnumber",1);
+        startActivity(intent);
+        startActivity(new Intent(this, CountrysActivity.class));
+    }
+    public void onImgContinent2_Clicked(View caller){
+        Intent intent = new Intent(this,CountrysActivity.class);
+        intent.putExtra("continentnumber",2);
+        startActivity(intent);
+        startActivity(new Intent(this, CountrysActivity.class));
+    }
+    public void onImgContinent3_Clicked(View caller){
+        Intent intent = new Intent(this,CountrysActivity.class);
+        intent.putExtra("continentnumber",3);
+        startActivity(intent);
+        startActivity(new Intent(this, CountrysActivity.class));
+    }
+    public void onImgContinent4_Clicked(View caller){
+        Intent intent = new Intent(this,CountrysActivity.class);
+        intent.putExtra("continentnumber",4);
+        startActivity(intent);
+        startActivity(new Intent(this, CountrysActivity.class));
     }
 }

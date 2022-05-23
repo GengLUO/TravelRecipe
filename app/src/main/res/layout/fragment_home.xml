@@ -21,27 +21,33 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="90dp"
+        android:clickable="true"
+        android:onClick="onImgContinent2_Clicked"
         app:layout_constraintStart_toStartOf="@+id/imageView1"
         app:layout_constraintTop_toTopOf="@+id/imageView1"
-        tools:srcCompat="@drawable/flag_china" />
+        tools:srcCompat="@drawable/england" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="180dp"
+        android:clickable="true"
+        android:onClick="onImgContinent3_Clicked"
         app:layout_constraintStart_toStartOf="@+id/imageView1"
         app:layout_constraintTop_toTopOf="@+id/imageView1"
-        tools:srcCompat="@drawable/flag_china" />
+        tools:srcCompat="@drawable/belgium" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="270dp"
+        android:clickable="true"
+        android:onClick="onImgContinent4_Clicked"
         app:layout_constraintStart_toStartOf="@+id/imageView1"
         app:layout_constraintTop_toTopOf="@+id/imageView1"
-        tools:srcCompat="@drawable/flag_china" />
+        tools:srcCompat="@drawable/germany" />
 
     <ImageView
         android:id="@+id/profileImage"
@@ -109,9 +115,11 @@
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="350dp"
+        android:clickable="true"
+        android:onClick="onImgContinent1_Clicked"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/flag_china" />
+        tools:srcCompat="@drawable/italy" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
