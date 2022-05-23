@@ -68,7 +68,6 @@ public class DetailActivity extends AppCompatActivity {
                             try
                             {
                                 //Check if the DB actually contains an image
-                                System.out.println("lsz sb");
                                 if( response.length() > 0 ) {
                                     for(int i=0; i<response.length();i++){
                                         JSONObject o = response.getJSONObject(i);
@@ -82,8 +81,11 @@ public class DetailActivity extends AppCompatActivity {
                                         //Link the bitmap to the ImageView, so it's visible on screen
                                         //imageRetrieved.setImageBitmap( bitmap2 );
                                         recipeList.add(new RecipeStep(String.valueOf(i+1),desc,bitmap));
+                                        System.out.println(desc);
+                                        System.out.println(bitmap);
                                         //Just a double-check to tell us the request has completed
                                     }
+                                    setListView(recipeList);
                                     progressDialog.dismiss();
                                     Toast.makeText(DetailActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
                                 }
@@ -105,12 +107,9 @@ public class DetailActivity extends AppCompatActivity {
             requestQueue.add(retrieveImageRequest);
         }
 
-
-
         //setRecipeRecyclerView(recipeList);
-
-        setListView(recipeList);
-
+        //setListView(recipeList);
+        System.out.println("222222");
     }
 
     private void setListView(List<RecipeStep> recipeList) {

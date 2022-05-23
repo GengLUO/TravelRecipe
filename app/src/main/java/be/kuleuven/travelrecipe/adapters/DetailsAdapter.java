@@ -45,7 +45,8 @@ public class DetailsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view==null)
             view = inflater.inflate(R.layout.recipe_step,null);
-        final ViewHolder holder = getViewHolder(view);
+        //final ViewHolder holder = getViewHolder(view);
+        ViewHolder holder = getViewHolder(view);
 
         RecipeStep model = list.get(i);
         holder.imgStep.setImageBitmap(model.getStepImg());
