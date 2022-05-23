@@ -2,10 +2,15 @@ package be.kuleuven.travelrecipe.models;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
 
 public class RecipesModel implements IRecipesModel {
+    protected List<Recipe> recipes = new LinkedList<>();
 
-    private static LinkedList<Recipe> recipes = new LinkedList<>();
+    public RecipesModel() {
+    }
+
 
     public void addRecipe(Recipe recipe){
         recipes.add(recipe);
@@ -29,5 +34,10 @@ public class RecipesModel implements IRecipesModel {
 
     public void loadRecipes(){
 
+    }
+
+    @Override
+    public List<Recipe> getAllRecipes() {
+        return recipes;
     }
 }

@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.adapters;
 //重写ListView以解决显示不全的问题
 import android.annotation.TargetApi;
 import android.content.Context;

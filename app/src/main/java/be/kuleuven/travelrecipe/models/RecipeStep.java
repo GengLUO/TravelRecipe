@@ -14,6 +14,11 @@ public class RecipeStep {
         this.stepImg = stepImg;
     }
 
+    public RecipeStep(String stepNr, String stepDesc) {
+        this.stepNr = stepNr;
+        this.stepDesc = stepDesc;
+    }
+
     public String getStepNr() {
         return stepNr;
     }

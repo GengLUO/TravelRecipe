@@ -13,7 +13,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,22 +32,27 @@ import java.util.List;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.models.Dashboard;
+import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.models.RecipesModel;
+import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 
 public class SearchFragment extends Fragment {
 
     RecyclerView dashboardRecyclerView;
     DashboardAdapter dashboardAdapter;
-    List<Dashboard> dashboardModelList;
+    List<Recipe> dashboardModelList;
 
     private RequestQueue requestQueue;
-    private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getLastImage";
+    private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
     private int PICK_IMAGE_REQUEST = 111;
     private Bitmap bitmap;
     private ProgressDialog progressDialog;
+    protected RecipesModel recipesModel = new RecipesModel();
 
     public SearchFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -60,10 +64,14 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Uploading, please wait...");
+        progressDialog.show();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
         requestQueue = Volley.newRequestQueue(getContext());
-        {
+
             //Standard Volley request. We don't need any parameters for this one
             JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL, null,
                     new Response.Listener<JSONArray>() {
@@ -72,18 +80,31 @@ public class SearchFragment extends Fragment {
                             try
                             {
                                 //Check if the DB actually contains an image
+                                Toast.makeText(getContext(), "begin", Toast.LENGTH_SHORT).show();
+                                System.out.println(response);
                                 if( response.length() > 0 ) {
-                                    JSONObject o = response.getJSONObject(0);
+                                    for(int i=0; i<response.length();i++){
+                                        JSONObject o = response.getJSONObject(i);
 
-                                    //converting base64 string to image
-                                    String b64String = o.getString("image");
-                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-                                    bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+                                        //converting base64 string to image
+                                        String name = o.getString("name");
+                                        String desc = o.getString("recipe_desc");
+                                        String b64String = o.getString("recipe_image");
+                                        byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
 
-                                    //Link the bitmap to the ImageView, so it's visible on screen
-                                    //imageRetrieved.setImageBitmap( bitmap2 );
+                                        //Link the bitmap to the ImageView, so it's visible on screen
+                                        //imageRetrieved.setImageBitmap( bitmap2 );
+                                        recipesModel.addRecipe(new Recipe(name,desc,bitmap));
 
-                                    Toast.makeText(getContext(), "Image retrieved from DB", Toast.LENGTH_SHORT).show();
+                                        //Just a double-check to tell us the request has completed
+
+
+
+                                    }
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getContext(), "IIImage retrieved from DB", Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                             catch( JSONException e )
@@ -101,20 +122,22 @@ public class SearchFragment extends Fragment {
             );
 
             requestQueue.add(retrieveImageRequest);
-        }
-        dashboardModelList = new ArrayList<>();
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+
+
+//        dashboardModelList = new ArrayList<Recipe>();
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
+
 
         dashboardRecyclerView = view.findViewById(R.id.recycler_view);
-        dashboardAdapter = new DashboardAdapter(dashboardModelList,getContext());
+        dashboardAdapter = new DashboardAdapter(recipesModel.getAllRecipes(),getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         dashboardRecyclerView.setLayoutManager(layoutManager);
         dashboardRecyclerView.setNestedScrollingEnabled(false);
