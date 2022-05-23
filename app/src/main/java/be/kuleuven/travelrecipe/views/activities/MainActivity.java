@@ -98,9 +98,23 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import be.kuleuven.travelrecipe.R;
 
@@ -108,6 +122,12 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
+
+    private RequestQueue requestQueue;
+    private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getLastImage";
+    private int PICK_IMAGE_REQUEST = 111;
+    private Bitmap bitmap;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +138,48 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_controller);
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                bottomNavigationView.getMenu()).build();
-//
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
+
+        {
+            //Standard Volley request. We don't need any parameters for this one
+            JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL, null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try
+                            {
+                                //Check if the DB actually contains an image
+                                if( response.length() > 0 ) {
+                                    JSONObject o = response.getJSONObject(0);
+
+                                    //converting base64 string to image
+                                    String b64String = o.getString("image");
+                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+
+                                    //Link the bitmap to the ImageView, so it's visible on screen
+                                    //imageRetrieved.setImageBitmap( bitmap2 );
+
+                                    //Just a double-check to tell us the request has completed
+                                    Toast.makeText(MainActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            catch( JSONException e )
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(MainActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
+                        }
+                    }
+            );
+
+            requestQueue.add(retrieveImageRequest);
+        }
     }
 }

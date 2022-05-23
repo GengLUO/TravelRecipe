@@ -4,9 +4,9 @@ package be.kuleuven.travelrecipe.models;
 
 public class RecipeStep {
     private String stepNr, stepDesc;
-    private int stepImg;
+    private String stepImg;
 
-    public RecipeStep(String stepNr, String stepDesc, int stepImg) {
+    public RecipeStep(String stepNr, String stepDesc, String stepImg) {
         this.stepNr = stepNr;
         this.stepDesc = stepDesc;
         this.stepImg = stepImg;
@@ -28,11 +28,11 @@ public class RecipeStep {
         this.stepDesc = stepDesc;
     }
 
-    public int getStepImg() {
+    public String getStepImg() {
         return stepImg;
     }
 
-    public void setStepImg(int stepImg) {
+    public void setStepImg(String stepImg) {
         this.stepImg = stepImg;
     }
 }

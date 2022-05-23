@@ -1,29 +1,32 @@
 package be.kuleuven.travelrecipe.models;
+
+import android.graphics.Bitmap;
+
 //暂时废弃
 public class Dashboard {
-    private int dish, flag;
+    private Bitmap dish, flag;
     private String name, description;
 
-    public Dashboard(int dish, int flag, String name, String description) {
+    public Dashboard(Bitmap dish, Bitmap flag, String name, String description) {
         this.dish = dish;
         this.flag = flag;
         this.name = name;
         this.description = description;
     }
 
-    public int getDish() {
+    public Bitmap getDish() {
         return dish;
     }
 
-    public void setDish(int dish) {
+    public void setDish(Bitmap dish) {
         this.dish = dish;
     }
 
-    public int getFlag() {
+    public Bitmap getFlag() {
         return flag;
     }
 
-    public void setFlag(int flag) {
+    public void setFlag(Bitmap flag) {
         this.flag = flag;
     }
 

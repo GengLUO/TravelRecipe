@@ -39,8 +39,8 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
     @Override
     public void onBindViewHolder(@NonNull dashboardViewHolder holder, int position) {
         Dashboard model = list.get(position);
-        holder.imgFlag.setImageResource(model.getFlag());
-        holder.imgDish.setImageResource(model.getDish());
+        holder.imgFlag.setImageBitmap(model.getFlag());
+        holder.imgDish.setImageBitmap(model.getDish());
         holder.txtName.setText(model.getName());
         holder.txtDescription.setText(model.getDescription());
 

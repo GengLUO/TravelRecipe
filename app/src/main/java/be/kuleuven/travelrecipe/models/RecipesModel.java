@@ -3,12 +3,16 @@ package be.kuleuven.travelrecipe.models;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class LocalRecipesModel {
+public class RecipesModel {
 
     private static LinkedList<Recipe> recipes = new LinkedList<>();
 
     public void addRecipe(Recipe recipe){
         recipes.add(recipe);
+    }
+
+    public Recipe getRecipe(int index){
+        return recipes.get(index);
     }
 
     public void deleteRecipe(Recipe recipe){
@@ -21,5 +25,9 @@ public class LocalRecipesModel {
 
     public void clearRecipes(){
         recipes.clear();
+    }
+
+    public void loadRecipes(){
+
     }
 }
