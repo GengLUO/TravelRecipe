@@ -52,7 +52,7 @@ public class Homepage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.fragment_home);
 
         viewPager = findViewById(R.id.homePage);
         profileImage = findViewById(R.id.profileImage);
