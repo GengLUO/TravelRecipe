@@ -87,6 +87,7 @@ public class SearchFragment extends Fragment {
                                         JSONObject o = response.getJSONObject(i);
 
                                         //converting base64 string to image
+                                        int id = o.getInt("recipe_id");
                                         String name = o.getString("name");
                                         String desc = o.getString("recipe_desc");
                                         String b64String = o.getString("recipe_image");
@@ -95,7 +96,7 @@ public class SearchFragment extends Fragment {
 
                                         //Link the bitmap to the ImageView, so it's visible on screen
                                         //imageRetrieved.setImageBitmap( bitmap2 );
-                                        recipesModel.addRecipe(new Recipe(name,desc,bitmap));
+                                        recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
 
                                         //Just a double-check to tell us the request has completed
 

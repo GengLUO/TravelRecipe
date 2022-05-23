@@ -8,13 +8,14 @@ import java.util.List;
 public class Recipe {
 
     private String name, description;
-    private int country;
+    private int country, recipeId;
     private Bitmap demo;
     private List<RecipeStep> steps = new ArrayList<>();
 
-    public Recipe(String title, String desc , Bitmap demo) {
+    public Recipe(String title, String desc , int id, Bitmap demo) {
         this.name = title;
         this.description = desc;
+        this.recipeId = id;
         this.demo = demo;
     }
 
@@ -48,6 +49,14 @@ public class Recipe {
 
     public void setDemo(Bitmap demo) {
         this.demo = demo;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     public List<RecipeStep> getSteps() {

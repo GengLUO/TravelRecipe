@@ -50,6 +50,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("id",recipe.getRecipeId());
                 context.startActivity(intent);
             }
         });
