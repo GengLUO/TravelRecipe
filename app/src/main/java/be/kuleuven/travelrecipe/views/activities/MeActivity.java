@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import be.kuleuven.travelrecipe.adapters.ViewPagerAdapter;
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.views.fragments.HomeFragment;
 import be.kuleuven.travelrecipe.views.fragments.RecipeFragment;
 import be.kuleuven.travelrecipe.views.fragments.WorkFragment;
 
@@ -65,8 +66,8 @@ public class MeActivity extends AppCompatActivity {
                     case R.id.me:
                         return true;
 
-                    case R.id.homePage:
-                        startActivity(new Intent(getApplicationContext(), Homepage.class));
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), HomeFragment.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

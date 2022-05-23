@@ -18,6 +18,7 @@ import java.util.List;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Dashboard;
+import be.kuleuven.travelrecipe.views.fragments.HomeFragment;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -50,8 +51,8 @@ public class DashboardActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.homePage:
-                        startActivity(new Intent(getApplicationContext(), Homepage.class));
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), HomeFragment.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -88,7 +89,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void onImgHome_Clicked(View caller){
-        startActivity(new Intent(this, Homepage.class));
+        startActivity(new Intent(this, HomeFragment.class));
     }
 
     public void onImgMe_Clicked(View caller){

@@ -16,11 +16,13 @@ import java.util.List;
 import be.kuleuven.travelrecipe.adapters.CountryAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Country;
+import be.kuleuven.travelrecipe.models.User;
 
 public class CountrysActivity extends AppCompatActivity {
     RecyclerView countriesRecyclerView;
     CountryAdapter countryAdapter;
     List<Country> countries;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +30,7 @@ public class CountrysActivity extends AppCompatActivity {
 
         //continent setting
         TextView tvContinent = findViewById(R.id.textViewContinent);
-
-        countries = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            countries.add(new Country("china",20,R.drawable.flag_china));
-        }
-        setCountriesRecyclerView(countries);
+        setCountriesRecyclerView(user.getCountries());
 
     }
     private void setCountriesRecyclerView(List<Country> countries){

@@ -33,6 +33,7 @@ import java.util.List;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.models.Dashboard;
+import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 
 public class SearchFragment extends Fragment {

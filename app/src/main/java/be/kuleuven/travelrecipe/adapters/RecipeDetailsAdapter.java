@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 
 public class RecipeDetailsAdapter extends  RecyclerView.Adapter<RecipeDetailsAdapter.detailsViewHolder>{

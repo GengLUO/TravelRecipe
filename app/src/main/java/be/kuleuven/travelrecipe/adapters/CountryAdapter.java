@@ -1,7 +1,6 @@
 package be.kuleuven.travelrecipe.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Country;
-import be.kuleuven.travelrecipe.models.Dashboard;
-import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder>{
     private List<Country> list;
@@ -37,9 +34,9 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     @Override
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
         Country model = list.get(position);
-        holder.number.setText(String.valueOf(model.getNumber()));
-        holder.countryname.setText(model.getCountryname());
-        holder.imgCountry.setImageResource(model.getImage());
+        holder.number.setText(String.valueOf(model.getRecipeNumber()));
+        holder.countryname.setText(model.getCountryName());
+        holder.imgCountry.setImageResource(model.getCountryImg());
 
     }
     @Override

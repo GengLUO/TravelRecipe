@@ -1,37 +1,60 @@
 package be.kuleuven.travelrecipe.models;
 
+import be.kuleuven.travelrecipe.R;
+
 public class Country {
-    private String countryname;
-    private int number;
-    private int image;
+    private int countryImg;
+    private String countryName;
+    private int recipeNumber;
+    private int continent;
+    private boolean actived;
 
-    public Country(String countryname, int number, int image) {
-        this.countryname = countryname;
-        this.number = number;
-        this.image = image;
+    public int getContinent() {
+        return continent;
     }
 
-    public String getCountryname() {
-        return countryname;
+    public void setContinent(int continent) {
+        this.continent = continent;
     }
 
-    public void setCountryname(String countryname) {
-        this.countryname = countryname;
+    public int getCountryImg() {
+        return countryImg;
+
     }
 
-    public int getNumber() {
-        return number;
+    public void setCountryImg(int countryImg) {
+        this.countryImg = countryImg;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public String getCountryName() {
+        return countryName;
     }
 
-    public int getImage() {
-        return image;
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public int getRecipeNumber() {
+        return recipeNumber;
+    }
+
+    public void setRecipeNumber(int recipeNumber) {
+        this.recipeNumber = recipeNumber;
+    }
+
+    public boolean isActived() {
+        return actived;
+    }
+
+    public void setActived(boolean actived) {
+        this.actived = actived;
+    }
+
+    public Country(int countryImg, String countryName, int recipeNumber, boolean actived, int continent) {
+        this.countryImg = countryImg;
+        this.countryName = countryName;
+        this.recipeNumber = recipeNumber;
+        this.actived = actived;
+        this.continent = continent;
     }
 }
