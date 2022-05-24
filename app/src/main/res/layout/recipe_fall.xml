@@ -35,8 +35,7 @@
         android:layout_marginStart="13dp"
         app:layout_constraintBottom_toBottomOf="@+id/txt_name"
         app:layout_constraintStart_toEndOf="@+id/txt_name"
-        app:layout_constraintTop_toTopOf="@+id/txt_name"
-        app:srcCompat="@drawable/belgium" />
+        app:layout_constraintTop_toTopOf="@+id/txt_name" />
 
     <TextView
         android:id="@+id/txt_name"

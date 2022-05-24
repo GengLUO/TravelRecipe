@@ -5,33 +5,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.RecipeStep;
 
-public class DetailsAdapter extends BaseAdapter {
+public class IngredientAdapter extends BaseAdapter {
 
-    private List<RecipeStep> list;
+    private LinkedHashMap<String,String> ingredients;
     private Context context;
 
-
-    public DetailsAdapter(List<RecipeStep> list, Context context) {
-        this.list = list;
+    public IngredientAdapter(LinkedHashMap ingredients, Context context) {
+        this.ingredients = ingredients;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return ingredients.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return list.get(i);
+        String key = (String) ingredients.keySet().toArray()[i];
+        return new LinkedHashMap<String, String>().put(key,ingredients.get(key));
     }
 
     @Override
@@ -42,14 +41,13 @@ public class DetailsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view==null)
-            view = LayoutInflater.from(context).inflate(R.layout.recipe_step,null);
+            view = LayoutInflater.from(context).inflate(R.layout.ingredient_list,null);
         //final ViewHolder holder = getViewHolder(view);
         ViewHolder holder = getViewHolder(view);
 
-        RecipeStep model = list.get(i);
-        holder.imgStep.setImageBitmap(model.getStepImg());
-        holder.txtStepNr.setText(model.getStepNr());
-        holder.txtStepDesc.setText(model.getStepDesc());
+        String key = (String) ingredients.keySet().toArray()[i];
+        holder.txtIngNmLbl.setText(key);
+        holder.txtIngAmntLbl.setText(ingredients.get(key));
         return view;
     }
 
@@ -63,13 +61,11 @@ public class DetailsAdapter extends BaseAdapter {
     }
 
     private class ViewHolder{
-        private ImageView imgStep;
-        private TextView txtStepNr,txtStepDesc;
+        private TextView txtIngNmLbl,txtIngAmntLbl;
 
         ViewHolder(View view){
-            imgStep = view.findViewById(R.id.img_step);
-            txtStepNr = view.findViewById(R.id.txt_step_nr);
-            txtStepDesc = view.findViewById(R.id.txt_step_desc);
+            txtIngNmLbl = view.findViewById(R.id.txtIngNmLbl);
+            txtIngAmntLbl = view.findViewById(R.id.txtIngAmntLbl);
         }
     }
 }
