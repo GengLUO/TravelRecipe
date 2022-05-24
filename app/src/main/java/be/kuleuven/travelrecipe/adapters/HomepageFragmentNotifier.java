@@ -5,4 +5,9 @@ public interface HomepageFragmentNotifier {
     void notifyLevelChanged();
     void notifyRecipeNumberChanged();
     void notifyImageChanged();
+    void notifyAsiaChanged();
+    void notifyEuropeChanged();
+    void notifyAmericaChanged();
+    void notifyAfricaChanged();
+
 }

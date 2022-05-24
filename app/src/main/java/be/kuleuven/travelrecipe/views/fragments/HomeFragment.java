@@ -46,6 +46,9 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     private ImageView imageView4;
     private ImageView profileImage;
     private ProgressBar progressBar1;
+    private ProgressBar progressBar2;
+    private ProgressBar progressBar3;
+    private ProgressBar progressBar4;
     RequestQueue requestQueue;
     private static final String URL = "https://studev.groept.be/api/a21pt210";
 
@@ -75,19 +78,15 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         imageView3 = view.findViewById(R.id.imageView3);
         imageView4 = view.findViewById(R.id.imageView4);
         progressBar1 = view.findViewById(R.id.progressBar1);
+        progressBar2 = view.findViewById(R.id.progressBar2);
+        progressBar3 = view.findViewById(R.id.progressBar3);
+        progressBar4 = view.findViewById(R.id.progressBar4);
         profileImage = view.findViewById(R.id.profileImage);
         requestQueue = Volley.newRequestQueue( getContext() );
         user = new User(1);
         user.setHomepageFragmentNotifier(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveUserInfo(user);
-        //add progress bar!!!!!!
-
-
-
-
-
-        //
         return view;
     }
 
@@ -108,5 +107,25 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     @Override
     public void notifyImageChanged() {
         profileImage.setImageBitmap(user.getImage());
+    }
+
+    @Override
+    public void notifyAsiaChanged() {
+        progressBar1.setProgress(user.getCountryAsiaAmount()*10);
+    }
+
+    @Override
+    public void notifyEuropeChanged() {
+        progressBar2.setProgress(user.getCountryEuropeAmount()*10);
+    }
+
+    @Override
+    public void notifyAmericaChanged() {
+        progressBar3.setProgress(user.getCountryAmericaAmount()*10);
+    }
+
+    @Override
+    public void notifyAfricaChanged() {
+        progressBar4.setProgress(user.getCountryAfricaAmount()*10);
     }
 }

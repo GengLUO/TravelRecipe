@@ -9,85 +9,105 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.adapters.HomepageFragmentNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.models.Country;
+import be.kuleuven.travelrecipe.models.Recipe;
 
+public class UploadRecipeActivity extends AppCompatActivity {
 
-public class SettingMain extends AppCompatActivity implements HomepageFragmentNotifier {
-    private EditText usernameinput;
-    private EditText passwordinput;
-    private Button setButton;
-    private TextView levelNumber;
-    private TextView recipeAmountNumber;
-    private ImageView profileImage;
-    private Bitmap bitmap;
+    private ImageView recipeMainImageView;
+    private EditText recipeNameEditText;
+    private EditText countryEditText;
+    private EditText descriptionEditText;
+    private Button uploadMainRecipeButton;
+
+    private Bitmap bitmap = null;
     private RequestQueue requestQueue;
+    private DatabaseConnect databaseConnect;
     private int PICK_IMAGE_REQUEST = 111;
     private ProgressDialog progressDialog;
-    private User user;
-    private ImageView image;
-    private ImageView imageRetrieved;
-    DatabaseConnect databaseConnect;
+    private Recipe recipe;
+    private int userID = 1;
+    private int recipeID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_main);
-        TextView usernameText = findViewById(R.id.usernameText);
-        TextView passwordText = findViewById(R.id.passwordText);
-        TextView levelText = findViewById(R.id.setting_levelText);
-        levelNumber = findViewById(R.id.setting_levelNumber);
-        TextView recipeAmountText = findViewById(R.id.setting_recipeAmountText);
-        recipeAmountNumber = findViewById(R.id.setting_recipeAmountNumber);
-        usernameinput = findViewById(R.id.usernameInput);
-        passwordinput = findViewById(R.id.passwordInput);
-        setButton = findViewById(R.id.setButton);
-        profileImage = findViewById(R.id.setting_prifileImage);
-        image = (ImageView)findViewById(R.id.image);
-        imageRetrieved = (ImageView)findViewById(R.id.imageRetrieved);
+        setContentView(R.layout.activity_upload_recipe);
+        recipeNameEditText = findViewById(R.id.recipeNameEditText);
+        countryEditText = findViewById(R.id.countryEditText);
+        descriptionEditText = findViewById(R.id.descriptionEditText);
+        uploadMainRecipeButton = findViewById(R.id.uploadMainRecipeButton);
+        recipeMainImageView = findViewById(R.id.recipeMainImageView);
         requestQueue = Volley.newRequestQueue(this);
-
-        user = new User(1);
-        user.setHomepageFragmentNotifier(this);
         databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveUserInfo(user);
-
+        this.getBiggestRecipeID();
+        recipeMainImageView.setImageResource(R.drawable.ic_baseline_star_24);
     }
 
-    public void onBtnSetClicked(View caller)
+
+
+    public void onPostRecipeButton_Clicked(View caller)
     {
-        startActivity(new Intent(this, UploadRecipeActivity.class));
+        String countryName = recipeNameEditText.getText().toString();
+        String description = descriptionEditText.getText().toString();
+        String country = countryEditText.getText().toString();
+        int countryid = Integer.valueOf(country);
+        recipe = new Recipe(recipeID,countryName,description,countryid,bitmap);
+        databaseConnect.uploadRecipe(caller,recipe,userID);
+
+        Intent intent = new Intent(this,UploadStepsActivity.class);
+        intent.putExtra("recipeid",recipeID);
+        startActivity(intent);
     }
-    public void onBtnPostClicked(View caller){
-        databaseConnect.postProfileImage(caller,bitmap,user);
+
+    public void getBiggestRecipeID()
+    {
+        String biggestURL = "https://studev.groept.be/api/a21pt210/getBiggestRecipeID";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, biggestURL, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                List<Country> temCountries= new ArrayList<Country>();
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject o = null;
+                    try {
+                        o = response.getJSONObject(i);
+                        recipeID = o.getInt("max")+1;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ;
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(request);
     }
-    public void onProfileImage_Clicked(View caller)
+    public void onRecipeMainImage_Clicked(View caller)
     {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -112,7 +132,7 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
                 bitmap = getResizedBitmap( bitmap, 400 );
 
                 //Setting image to ImageView
-                profileImage.setImageBitmap(bitmap);
+                recipeMainImageView.setImageBitmap(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -135,43 +155,5 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
                 bm, 0, 0, width, height, matrix, false);
         bm.recycle();
         return resizedBitmap;
-    }
-
-
-
-    @Override
-    public void notifyNameChanged() {
-        usernameinput.setHint(user.getUserName());
-        usernameinput.setText("");
-    }
-
-    @Override
-    public void notifyLevelChanged() {
-        levelNumber.setText(String.valueOf(user.getLevel()));
-    }
-
-    @Override
-    public void notifyRecipeNumberChanged() {
-        recipeAmountNumber.setText(String.valueOf(user.getRecipeAmount()));
-    }
-
-    @Override
-    public void notifyImageChanged() {
-        profileImage.setImageBitmap(user.getImage());
-    }
-
-
-
-    @Override
-    public void notifyAsiaChanged() {
-    }
-    @Override
-    public void notifyEuropeChanged() {
-    }
-    @Override
-    public void notifyAmericaChanged() {
-    }
-    @Override
-    public void notifyAfricaChanged() {
     }
 }

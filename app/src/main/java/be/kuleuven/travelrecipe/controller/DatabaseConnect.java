@@ -41,6 +41,7 @@ public class DatabaseConnect {
     private int PICK_IMAGE_REQUEST = 111;
     private User user;
 
+
     public DatabaseConnect(RequestQueue requestQueue) {
         this.requestQueue = requestQueue;
     }
@@ -169,4 +170,91 @@ public class DatabaseConnect {
         requestQueue.add(submitRequest);
     }
 
+    public void uploadRecipe(View caller,Recipe recipe,int userid)
+    {
+        String POSTImage_URL = "https://studev.groept.be/api/a21pt210/insertRecipe";
+        //Start an animating progress widget
+        progressDialog = new ProgressDialog(caller.getContext());
+        progressDialog.setMessage("Uploading, please wait...");
+        progressDialog.show();
+
+        //convert image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        recipe.getDemo().compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        StringRequest  submitRequest = new StringRequest (Request.Method.POST, POSTImage_URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                progressDialog.dismiss();
+                Toast.makeText(caller.getContext(), "Post request executed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(caller.getContext(), "Post request failed", Toast.LENGTH_LONG).show();
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("demo", imageString);
+                params.put("recipeid",String.valueOf(recipe.getRecipeId()));
+                params.put("name",recipe.getName());
+                params.put("description",recipe.getDescription());
+                params.put("country",String.valueOf(recipe.getCountry()));
+                params.put("recipeidd",String.valueOf(recipe.getRecipeId()));
+                params.put("userid",String.valueOf(userid));
+                return params;
+            }
+        };
+
+        requestQueue.add(submitRequest);
+    }
+
+    public void uploadStep(View caller, int recipeid, int sequence, String description,Bitmap image)
+    {
+        String POSTImage_URL = "https://studev.groept.be/api/a21pt210/insetStep";
+        //Start an animating progress widget
+        progressDialog = new ProgressDialog(caller.getContext());
+        progressDialog.setMessage("Uploading, please wait...");
+        progressDialog.show();
+
+        //convert image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        StringRequest  submitRequest = new StringRequest (Request.Method.POST, POSTImage_URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                progressDialog.dismiss();
+                Toast.makeText(caller.getContext(), "Post request executed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(caller.getContext(), "Post request failed", Toast.LENGTH_LONG).show();
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("recipeid",String.valueOf(recipeid));
+                params.put("sequence",String.valueOf(sequence));
+                params.put("description",description);
+                params.put("image",imageString);
+                return params;
+            }
+        };
+
+        requestQueue.add(submitRequest);
+    }
 }

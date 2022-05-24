@@ -18,6 +18,13 @@ public class Recipe{
         this.recipeId = id;
         this.demo = demo;
     }
+    public Recipe(int recipeId, String name, String description, int country,Bitmap demo) {
+        this.recipeId = recipeId;
+        this.name = name;
+        this.description = description;
+        this.country = country;
+        this.demo = demo;
+    }
 
     public String getName() {
         return name;

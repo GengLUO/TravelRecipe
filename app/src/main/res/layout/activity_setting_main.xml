@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="36dp"
-        android:text="TextView"
+        android:text="Username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setting_prifileImage" />
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="TextView"
+        android:text="Password"
         app:layout_constraintStart_toStartOf="@+id/usernameText"
         app:layout_constraintTop_toBottomOf="@+id/usernameInput" />
 
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="192dp"
-        android:text="TextView"
+        android:text="level"
         app:layout_constraintStart_toEndOf="@+id/setting_recipeAmountText"
         app:layout_constraintTop_toTopOf="@+id/setting_recipeAmountText" />
 
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
-        android:text="TextView"
+        android:text="RecipeAmount"
         app:layout_constraintEnd_toStartOf="@+id/setting_prifileImage"
         app:layout_constraintTop_toTopOf="@+id/setting_prifileImage" />
 
@@ -102,7 +102,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:text="Button"
+        android:onClick="onBtnSetClicked"
+        android:text="Set"
         app:layout_constraintStart_toStartOf="@+id/passwordInput"
         app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
@@ -111,7 +112,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:onClick="onBtnPostClicked"
-        android:text="change"
+        android:text="upload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setting_prifileImage" />

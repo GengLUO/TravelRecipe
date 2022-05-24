@@ -57,18 +57,22 @@ public class User extends AbstractUser{
 
     public void setCountryAsiaAmount(int countryAsiaAmount) {
         this.countryAsiaAmount = countryAsiaAmount;
+        homepageFragmentNotifier.notifyAsiaChanged();
     }
 
     public void setCountryAmericaAmount(int countryAmericaAmount) {
         this.countryAmericaAmount = countryAmericaAmount;
+        homepageFragmentNotifier.notifyAmericaChanged();
     }
 
     public void setCountryEuropeAmount(int countryEuropeAmount) {
         this.countryEuropeAmount = countryEuropeAmount;
+        homepageFragmentNotifier.notifyEuropeChanged();
     }
 
     public void setCountryAfricaAmount(int countryAfricaAmount) {
         this.countryAfricaAmount = countryAfricaAmount;
+        homepageFragmentNotifier.notifyAfricaChanged();
     }
 
     public int getUserID() {
