@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe extends AbstractRecipe{
+public class Recipe{
 
     private String name, description;
     private int country, recipeId;

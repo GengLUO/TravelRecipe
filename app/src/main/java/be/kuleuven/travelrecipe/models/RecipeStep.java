@@ -4,7 +4,7 @@ package be.kuleuven.travelrecipe.models;
 
 import android.graphics.Bitmap;
 
-public class RecipeStep extends AbstractRecipeStep{
+public class RecipeStep{
     private String stepNr, stepDesc;
     private Bitmap stepImg;
 

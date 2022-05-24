@@ -1,5 +1,6 @@
 package be.kuleuven.travelrecipe.controller;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -12,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,130 +25,103 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.Recipe;
 import be.kuleuven.travelrecipe.models.RecipeStep;
+import be.kuleuven.travelrecipe.models.User;
 
 public class DatabaseConnect {
-    private static final String POST_URL = "https://studev.groept.be/api/a21pt210/insertStep";
-    private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
+    private RequestQueue requestQueue;
     private int PICK_IMAGE_REQUEST = 111;
+    private User user;
 
-    public static void uploadPic(Bitmap bitmap){
-        //convert image to base64 string
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    public DatabaseConnect(RequestQueue requestQueue) {
+        this.requestQueue = requestQueue;
+    }
 
-        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, POST_URL,  new Response.Listener<String>() {
+    public User retrieveUserInfo(User inuser)
+    {
+        String URL = "https://studev.groept.be/api/a21pt210";
+        //get username, recipeAmount, level
+        this.user = inuser;
+        int userID = this.user.getUserID();
+        user.setUserID(userID);
+        String infoURL = URL+'/'+"getUserinfo"+'/'+user.getUserID();
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, infoURL, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(String response) {
-                //Turn the progress widget off
-                /////progressDialog.dismiss();
-                /////Toast.makeText(MainActivity.this, "Post request executed", Toast.LENGTH_SHORT).show();
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject o = null;
+                    try {
+                        o = response.getJSONObject(0);
+                        user.setUserName(o.getString("Username"));
+                        user.setLevel(o.getInt("Level"));
+                        user.setRecipeAmount(o.getInt("RecipeAmount"));
+                        user.setCountryAfricaAmount(o.getInt("CountryAfricaAmount"));
+                        user.setCountryAmericaAmount(o.getInt("CountryAmericaAmount"));
+                        user.setCountryAsiaAmount(o.getInt("CountryAsiaAmount"));
+                        user.setCountryEuropeAmount(o.getInt("CountryEuropeAmount"));
+                        //image
+                        String b64String = o.getString("image");
+                        byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                        Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+                        user.setImage(bitmap);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //////Toast.makeText(MainActivity.this, "Post request failed", Toast.LENGTH_LONG).show();
             }
-        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+        });
+        requestQueue.add(request);
+        return user;
+    }
+    public User retrieveCountries(User inuser)
+    {
+        this.user = inuser;
+        int userID = user.getUserID();
+        String countriesURL = "https://studev.groept.be/api/a21pt210/getCountriesByID/"+userID;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, countriesURL, null, new Response.Listener<JSONArray>() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("image", imageString);
-                return params;
+            public void onResponse(JSONArray response) {
+                List<Country> countries= new ArrayList<Country>();
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject o = null;
+                    try {
+                        o = response.getJSONObject(0);
+                        int countryImg;
+                        String countryName;
+                        int recipeNumber;
+                        int actived;
+                        boolean ac;
+                        int continent;
+                        countryImg = o .getInt("idcountries");
+                        countryName = o.getString("name");
+                        recipeNumber = o.getInt("recipeNumber");
+                        actived = o.getInt("actived");
+                        continent = o.getInt("continent");
+                        if (actived == 0){ac = false;}
+                        else {ac = true;}
+                        Country country = new Country(countryImg,countryName,recipeNumber,ac,continent);
+                        countries.add(country);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ;
+                    }
+                }
+                user.setCountries(countries);
             }
-        };
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(request);
+        return user;
     }
 
-    public static Bitmap retrieveImage(){
-//Standard Volley request. We don't need any parameters for this one
-        Bitmap bitmap = null;
-        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try
-                        {
-                            //Check if the DB actually contains an image
-                            if( response.length() > 0 ) {
-                                JSONObject o = response.getJSONObject(0);
 
-                                //converting base64 string to image
-                                String b64String = o.getString("image");
-                                byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-                                Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-
-                                //Link the bitmap to the ImageView, so it's visible on screen
-                                ///////imageRetrieved.setImageBitmap( bitmap2 );
-
-                                //Just a double-check to tell us the request has completed
-                                ///////Toast.makeText(MainActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        catch( JSONException e )
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        ///////Toast.makeText(MainActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-        return bitmap;
-    }
-
-    public List<RecipeStep> loadRecipeSteps(int recipeId){
-        List<RecipeStep> steps = new ArrayList<>();
-        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL+"/"+recipeId, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try
-                        {
-                            //Check if the DB actually contains an image
-                            if( response.length() > 0 ) {
-                                for(int i=0; i<response.length();i++){
-                                    JSONObject o = response.getJSONObject(0);
-                                    String b64String = o.getString("image");
-                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-                                    RecipeStep step = new RecipeStep(String.valueOf(i),o.getString("description"),bitmap);
-                                    steps.add(step);
-                                }
-
-
-                                //converting base64 string to image
-//                                String b64String = o.getString("image");
-//                                byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-//                                Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-
-                                //Link the bitmap to the ImageView, so it's visible on screen
-                                ///////imageRetrieved.setImageBitmap( bitmap2 );
-
-                                //Just a double-check to tell us the request has completed
-                                ///////Toast.makeText(MainActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        catch( JSONException e )
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        ///////Toast.makeText(MainActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-        return steps;
-    }
 }

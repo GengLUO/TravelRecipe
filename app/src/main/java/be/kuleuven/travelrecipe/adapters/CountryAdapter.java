@@ -24,6 +24,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         this.list = list;
         this.context = context;
         this.continentNumber = continentNumber;
+
     }
 
     @NonNull

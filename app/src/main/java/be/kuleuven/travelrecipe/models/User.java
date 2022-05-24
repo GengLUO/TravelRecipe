@@ -5,7 +5,8 @@ import android.graphics.Bitmap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User extends AbstractUser{
+
     private int userID;
     private String userName;
     private int level;
@@ -19,6 +20,7 @@ public class User {
 
     public User(int userID) {
         this.userID = userID;
+        countries = new ArrayList<Country>();
     }
 
     public List<Country> getCountriesByContinentID(int continentID)
@@ -45,6 +47,7 @@ public class User {
 
     public void setRecipeAmount(int recipeAmount) {
         this.recipeAmount = recipeAmount;
+        homepageFragmentNotifier.notifyRecipeNumberChanged();
     }
     public Bitmap getImage() {
         return image;
@@ -56,10 +59,12 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+        homepageFragmentNotifier.notifyNameChanged();
     }
 
     public void setLevel(int level) {
         this.level = level;
+        homepageFragmentNotifier.notifyLevelChanged();
     }
 
     public void setCountryAsiaAmount(int countryAsiaAmount) {
@@ -80,6 +85,7 @@ public class User {
 
     public void setCountries(List<Country> countries) {
         this.countries = countries;
+
     }
 
     public int getUserID() {

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class RecipesModel implements IRecipesModel {
+public class RecipesModel {
     protected List<Recipe> recipes = new LinkedList<>();
 
     public RecipesModel() {
@@ -36,7 +36,7 @@ public class RecipesModel implements IRecipesModel {
 
     }
 
-    @Override
+
     public List<Recipe> getAllRecipes() {
         return recipes;
     }
