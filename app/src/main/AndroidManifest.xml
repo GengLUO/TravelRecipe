@@ -16,13 +16,10 @@
             android:name=".views.activities.CountrysActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activities.MeActivity"
+            android:name=".views.activities.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".views.activities.SettingMain"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".views.activities.MainActivity"

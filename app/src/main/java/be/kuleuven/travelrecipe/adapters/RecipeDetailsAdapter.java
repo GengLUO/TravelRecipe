@@ -15,6 +15,7 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.RecipeStep;
+import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
 public class RecipeDetailsAdapter extends  RecyclerView.Adapter<RecipeDetailsAdapter.detailsViewHolder>{
 
