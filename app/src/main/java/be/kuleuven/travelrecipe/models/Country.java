@@ -19,7 +19,6 @@ public class Country {
 
     public int getCountryImg() {
         return countryImg;
-
     }
 
     public void setCountryImg(int countryImg) {

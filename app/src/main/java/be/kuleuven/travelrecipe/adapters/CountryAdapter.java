@@ -39,7 +39,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         Country model = list.get(position);
         holder.number.setText(String.valueOf(model.getRecipeNumber()));
         holder.countryname.setText(model.getCountryName());
-        holder.imgCountry.setImageResource(model.getCountryImg());
+        holder.imgCountry.setImageResource(R.drawable.france);
+        System.out.println("0");
 
     }
     @Override

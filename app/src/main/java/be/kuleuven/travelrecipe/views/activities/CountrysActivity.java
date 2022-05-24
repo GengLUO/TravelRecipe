@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.CountryActivityNotifier;
+import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.User;
 
@@ -44,8 +45,7 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
     RecyclerView countriesRecyclerView;
     CountryAdapter countryAdapter;
     int continentNumber;
-    List<Country> countries;
-    private User user;
+    Countries countries;
     RequestQueue requestQueue;
 
     @Override
@@ -55,10 +55,10 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         setContentView(R.layout.activity_countries);
         Intent intent = getIntent();
         continentNumber = intent.getIntExtra("continentnumber",1);
-        user = new User(1);
-
+        countries = new Countries(1);
+        countries.setCountryActivityNotifier(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-
+        databaseConnect.retrieveCountries(countries);
         //continent setting
         TextView tvContinent = findViewById(R.id.textViewContinent);
     }

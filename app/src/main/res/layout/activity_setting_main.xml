@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/setting_prifileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="116dp"
         android:clickable="true"
         android:onClick="onProfileImage_Clicked"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -30,13 +30,12 @@
 
     <EditText
         android:id="@+id/usernameInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginTop="25dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
         app:layout_constraintStart_toStartOf="@+id/usernameText"
         app:layout_constraintTop_toBottomOf="@+id/usernameText" />
 
@@ -51,14 +50,13 @@
 
     <EditText
         android:id="@+id/passwordInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
         app:layout_constraintStart_toStartOf="@+id/usernameText"
         app:layout_constraintTop_toBottomOf="@+id/passwordText" />
 
@@ -107,4 +105,14 @@
         android:text="Button"
         app:layout_constraintStart_toStartOf="@+id/passwordInput"
         app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
+
+    <Button
+        android:id="@+id/changeProfileImageButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:onClick="onBtnPostClicked"
+        android:text="change"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_prifileImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

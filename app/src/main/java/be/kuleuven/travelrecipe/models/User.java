@@ -16,26 +16,13 @@ public class User extends AbstractUser{
     private int countryEuropeAmount;
     private int countryAfricaAmount;
     private Bitmap image;
-    private List<Country> countries;
+
 
     public User(int userID) {
         this.userID = userID;
-        countries = new ArrayList<Country>();
+
     }
 
-    public List<Country> getCountriesByContinentID(int continentID)
-    {
-        Country country;
-        List<Country> newCountries = new  ArrayList<Country>();
-        for (int i = 0; i < countries.size(); i++) {
-            country = countries.get(i);
-            if (country.getContinent() == continentID)
-            {
-                newCountries.add(country);
-            }
-        }
-        return newCountries;
-    }
     public void setUserID(int userID) {
         this.userID = userID;
     }
@@ -55,6 +42,7 @@ public class User extends AbstractUser{
 
     public void setImage(Bitmap image) {
         this.image = image;
+        homepageFragmentNotifier.notifyImageChanged();
     }
 
     public void setUserName(String userName) {
@@ -81,11 +69,6 @@ public class User extends AbstractUser{
 
     public void setCountryAfricaAmount(int countryAfricaAmount) {
         this.countryAfricaAmount = countryAfricaAmount;
-    }
-
-    public void setCountries(List<Country> countries) {
-        this.countries = countries;
-
     }
 
     public int getUserID() {
@@ -116,9 +99,6 @@ public class User extends AbstractUser{
         return countryAfricaAmount;
     }
 
-    public List<Country> getCountries() {
-        return countries;
-    }
 
 
 }

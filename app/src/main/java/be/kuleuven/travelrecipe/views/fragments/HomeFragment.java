@@ -1,5 +1,5 @@
 package be.kuleuven.travelrecipe.views.fragments;
-
+//2754
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     private ImageView imageView2;
     private ImageView imageView3;
     private ImageView imageView4;
+    private ImageView profileImage;
     private ProgressBar progressBar1;
     RequestQueue requestQueue;
     private static final String URL = "https://studev.groept.be/api/a21pt210";
@@ -74,26 +75,19 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         imageView3 = view.findViewById(R.id.imageView3);
         imageView4 = view.findViewById(R.id.imageView4);
         progressBar1 = view.findViewById(R.id.progressBar1);
+        profileImage = view.findViewById(R.id.profileImage);
         requestQueue = Volley.newRequestQueue( getContext() );
-        user.setHomepageFragmentNotifier(this);
         user = new User(1);
+        user.setHomepageFragmentNotifier(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveUserInfo(user);
+        //add progress bar!!!!!!
 
-        //set content
-        String recipeAmount = ""+user.getRecipeAmount();
-        String level = ""+user.getLevel();
-        recipeAmountTextview.setText(recipeAmount);
-        recipeAmountText.setText("recipeAmount");
-        usernameTextview.setText(user.getUserName());
-        levelText.setText("level");
-        levelTextview.setText(level);
-        //question setting progressbar
-        progressBar1.setProgress(10);
-        imageView1.setImageResource(R.drawable.germany);
-        imageView2.setImageResource(R.drawable.belgium);
-        imageView3.setImageResource(R.drawable.denmark);
-        imageView4.setImageResource(R.drawable.france);
+
+
+
+
+        //
         return view;
     }
 
@@ -107,9 +101,12 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     public void notifyLevelChanged() {
         levelTextview.setText(String.valueOf(user.getLevel()));
     }
-
     @Override
     public void notifyRecipeNumberChanged() {
         recipeAmountTextview.setText(String.valueOf(user.getRecipeAmount()));
+    }
+    @Override
+    public void notifyImageChanged() {
+        profileImage.setImageBitmap(user.getImage());
     }
 }
