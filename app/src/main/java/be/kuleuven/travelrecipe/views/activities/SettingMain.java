@@ -72,8 +72,9 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
         image = (ImageView)findViewById(R.id.image);
         imageRetrieved = (ImageView)findViewById(R.id.imageRetrieved);
         requestQueue = Volley.newRequestQueue(this);
-
-        user = new User(1);
+        Intent intent = getIntent();
+        int userid = intent.getIntExtra("userid",1);
+        user = new User(userid);
         user.setHomepageFragmentNotifier(this);
         databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveUserInfo(user);
@@ -82,7 +83,7 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
 
     public void onBtnSetClicked(View caller)
     {
-        startActivity(new Intent(this, UploadRecipeActivity.class));
+
     }
     public void onBtnPostClicked(View caller){
         databaseConnect.postProfileImage(caller,bitmap,user);

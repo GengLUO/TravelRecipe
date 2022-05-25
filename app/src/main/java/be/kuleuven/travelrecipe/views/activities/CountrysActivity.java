@@ -47,6 +47,7 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
     int continentNumber;
     Countries countries;
     RequestQueue requestQueue;
+    int userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,8 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         setContentView(R.layout.activity_countries);
         Intent intent = getIntent();
         continentNumber = intent.getIntExtra("continentnumber",1);
-        countries = new Countries(1);
+        userid = intent.getIntExtra("userid",1);
+        countries = new Countries(userid);
         countries.setCountryActivityNotifier(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveCountries(countries);

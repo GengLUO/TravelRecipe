@@ -19,26 +19,29 @@
 
     <Button
         android:id="@+id/finishButton"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="5dp"
         android:onClick="onFinishButton_Clicked"
         android:text="finish"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/oneMoreStepButton"
         app:layout_constraintTop_toTopOf="@+id/oneMoreStepButton" />
 
     <Button
         android:id="@+id/oneMoreStepButton"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="40dp"
         android:onClick="onAnotherStep_Clicked"
         android:text="+another step"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stepImageView" />
 

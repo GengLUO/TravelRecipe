@@ -48,13 +48,15 @@ public class UploadRecipeActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 111;
     private ProgressDialog progressDialog;
     private Recipe recipe;
-    private int userID = 1;
+    private int userID;
     private int recipeID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_recipe);
+        Intent intent = getIntent();
+        userID=intent.getIntExtra("userid",1);
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
         countryEditText = findViewById(R.id.countryEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);

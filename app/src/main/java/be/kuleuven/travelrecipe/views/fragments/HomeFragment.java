@@ -1,5 +1,6 @@
 package be.kuleuven.travelrecipe.views.fragments;
 //2754
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import be.kuleuven.travelrecipe.adapters.HomepageFragmentNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     private static final String URL = "https://studev.groept.be/api/a21pt210";
 
     private User user;
-
+    private int userid;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -83,7 +85,8 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         progressBar4 = view.findViewById(R.id.progressBar4);
         profileImage = view.findViewById(R.id.profileImage);
         requestQueue = Volley.newRequestQueue( getContext() );
-        user = new User(1);
+        userid = 1;
+        user = new User(userid);
         user.setHomepageFragmentNotifier(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveUserInfo(user);
