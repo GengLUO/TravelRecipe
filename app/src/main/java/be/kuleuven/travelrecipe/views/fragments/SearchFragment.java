@@ -54,6 +54,7 @@ public class SearchFragment extends Fragment {
     private ProgressDialog progressDialog;
     //protected RecipesModel recipesModel = new RecipesModel();
     private List<Recipe> recipes = new ArrayList<>();
+    List<Recipe> filteredList = new ArrayList<>();
 
     public SearchFragment() {
         // Required empty public constructor
@@ -92,6 +93,8 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if(filteredList.isEmpty())
+                    Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
@@ -106,7 +109,6 @@ public class SearchFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private List<Recipe> filterList(String text) {
-        List<Recipe> filteredList = new ArrayList<>();
         filteredList = recipes.stream()
                                 .filter(r -> r.getName().contains(text))
                                 .collect(Collectors.toList());

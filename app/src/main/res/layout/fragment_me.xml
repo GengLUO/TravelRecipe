@@ -52,7 +52,7 @@
         android:id="@+id/txtListLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My List"
+        android:text="Meal Plan"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
