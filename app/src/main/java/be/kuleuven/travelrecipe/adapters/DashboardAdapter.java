@@ -30,6 +30,11 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
         this.inflater = LayoutInflater.from(context);
     }
 
+    public void setList(List<Recipe> newList){
+        this.list = newList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public dashboardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

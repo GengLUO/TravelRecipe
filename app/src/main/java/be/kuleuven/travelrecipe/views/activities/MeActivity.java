@@ -47,5 +47,6 @@ public class MeActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(workFragment,"work");
         viewPager.setAdapter(viewPagerAdapter);
 
+
     }
 }
