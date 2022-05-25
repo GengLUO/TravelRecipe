@@ -26,15 +26,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
-import be.kuleuven.travelrecipe.models.Dashboard;
 import be.kuleuven.travelrecipe.models.Recipe;
 import be.kuleuven.travelrecipe.models.RecipesModel;
-import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 
 public class SearchFragment extends Fragment {
@@ -70,80 +67,75 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        dashboardRecyclerView = view.findViewById(R.id.recycler_view);
+
         requestQueue = Volley.newRequestQueue(getContext());
 
-            //Standard Volley request. We don't need any parameters for this one
-            JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL, null,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            try
-                            {
-                                //Check if the DB actually contains an image
-                                Toast.makeText(getContext(), "begin", Toast.LENGTH_SHORT).show();
-                                System.out.println(response);
-                                if( response.length() > 0 ) {
-                                    for(int i=0; i<response.length();i++){
-                                        JSONObject o = response.getJSONObject(i);
-
-                                        //converting base64 string to image
-                                        int id = o.getInt("recipe_id");
-                                        String name = o.getString("name");
-                                        String desc = o.getString("recipe_desc");
-                                        String b64String = o.getString("recipe_image");
-                                        byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-                                        Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-
-                                        //Link the bitmap to the ImageView, so it's visible on screen
-                                        //imageRetrieved.setImageBitmap( bitmap2 );
-                                        recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
-
-                                        //Just a double-check to tell us the request has completed
+        requestRecipes();
 
 
 
-                                    }
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getContext(), "IIImage retrieved from DB", Toast.LENGTH_SHORT).show();
+        return view;
+    }
 
-                                }
-                            }
-                            catch( JSONException e )
-                            {
-                                e.printStackTrace();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getContext(), "Unable to communicate with server", Toast.LENGTH_LONG).show();
-                        }
-                    }
-            );
-
-            requestQueue.add(retrieveImageRequest);
-
-
-//        dashboardModelList = new ArrayList<Recipe>();
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-//        dashboardModelList.add(new Dashboard(bitmap,bitmap,"水晶虾饺","很好吃"));
-
-
-        dashboardRecyclerView = view.findViewById(R.id.recycler_view);
+    private void bindAdapter() {
         dashboardAdapter = new DashboardAdapter(recipesModel.getAllRecipes(),getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         dashboardRecyclerView.setLayoutManager(layoutManager);
         dashboardRecyclerView.setNestedScrollingEnabled(false);
         dashboardRecyclerView.setAdapter(dashboardAdapter);
+    }
 
-        return view;
+    private void requestRecipes() {
+        //Standard Volley request. We don't need any parameters for this one
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try
+                        {
+                            //Check if the DB actually contains an image
+                            Toast.makeText(getContext(), "begin", Toast.LENGTH_SHORT).show();
+                            if( response.length() > 0 ) {
+                                for(int i=0; i<response.length();i++){
+                                    JSONObject o = response.getJSONObject(i);
+
+                                    //converting base64 string to image
+                                    int id = o.getInt("recipe_id");
+                                    String name = o.getString("name");
+                                    String desc = o.getString("recipe_desc");
+                                    String b64String = o.getString("recipe_image");
+                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+
+                                    //Link the bitmap to the ImageView, so it's visible on screen
+                                    //imageRetrieved.setImageBitmap( bitmap2 );
+                                    recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
+
+                                    //Just a double-check to tell us the request has completed
+
+
+
+                                }
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(), "IIImage retrieved from DB", Toast.LENGTH_SHORT).show();
+                                bindAdapter();
+                            }
+                        }
+                        catch( JSONException e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "Unable to communicate with server", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+
+        requestQueue.add(retrieveImageRequest);
     }
 }

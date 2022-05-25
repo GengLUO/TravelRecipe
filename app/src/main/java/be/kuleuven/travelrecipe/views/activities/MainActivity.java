@@ -94,6 +94,7 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -137,10 +138,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.btm_nav);
         navController = Navigation.findNavController(this, R.id.nav_controller);
+
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                bottomNavigationView.getMenu()).build();
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
+
 
 //        requestQueue = Volley.newRequestQueue(this);
 //        {

@@ -1,29 +1,59 @@
 package be.kuleuven.travelrecipe.views.fragments;
 
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.adapters.ViewPagerAdapter;
+import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.models.RecipesModel;
 
 public class MeFragment extends Fragment {
 
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
     private ImageView imgMore;
     private ImageView imgSetting;
-    private RecipeFragment recipeFragment;
-    private WorkFragment workFragment;
+//    private TabLayout tabLayout;
+//    private ViewPager viewPager;
+//    private RecipeFragment recipeFragment;
+//    private WorkFragment workFragment;
+    RecyclerView listRecyclerView;
+    DashboardAdapter listDashboardAdapter;
+    List<Recipe> listRecipeList;
+
+    private RequestQueue requestQueue;
+    private static final String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/1";
+    private ProgressDialog progressDialog;
+    private RecipesModel recipesModel = new RecipesModel();
 
     public MeFragment() {
         // Required empty public constructor
@@ -37,24 +67,84 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Me Fragment is Uploading");
+        progressDialog.show();
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_me, container, false);
 
-        viewPager = view.findViewById(R.id.view_pager);
-        tabLayout = view.findViewById(R.id.tab_layout);
+        requestQueue = Volley.newRequestQueue(getContext());
+
+        listRecyclerView = view.findViewById(R.id.rvList);
+
         imgMore = view.findViewById(R.id.img_More);
         imgSetting = view.findViewById(R.id.img_Setting);
 
-        recipeFragment = new RecipeFragment();
-        workFragment = new WorkFragment();
-
-        tabLayout.setupWithViewPager(viewPager);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewPagerAdapter.addFragment(recipeFragment,"recipe");
-        viewPagerAdapter.addFragment(workFragment,"work");
-        viewPager.setAdapter(viewPagerAdapter);
+        requestListRecipe();
 
         return view;
+    }
+
+    private void requestListRecipe() {
+        //Standard Volley request. We don't need any parameters for this one
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_LIKED_URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try
+                        {
+                            //Check if the DB actually contains an image
+                            Toast.makeText(getContext(), "beginlike", Toast.LENGTH_SHORT).show();
+                            if( response.length() > 0 ) {
+                                for(int i=0; i<response.length();i++){
+                                    JSONObject o = response.getJSONObject(i);
+
+                                    //converting base64 string to image
+                                    int id = o.getInt("recipe_id");
+                                    System.out.println(id);
+                                    String name = o.getString("name");
+                                    String desc = o.getString("recipe_desc");
+                                    String b64String = o.getString("recipe_image");
+                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+
+                                    //Link the bitmap to the ImageView, so it's visible on screen
+                                    //imageRetrieved.setImageBitmap( bitmap2 );
+                                    recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
+
+                                    //Just a double-check to tell us the request has completed
+
+
+
+                                }
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(), "IIImage retrieved from DB", Toast.LENGTH_SHORT).show();
+                                bindAdapter();
+                            }
+                        }
+                        catch( JSONException e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "Unable to communicate with server", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+
+        requestQueue.add(retrieveImageRequest);
+    }
+
+    private void bindAdapter() {
+        listDashboardAdapter = new DashboardAdapter(recipesModel.getAllRecipes(),getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        listRecyclerView.setLayoutManager(layoutManager);
+        listRecyclerView.setNestedScrollingEnabled(false);
+        listRecyclerView.setAdapter(listDashboardAdapter);
     }
 
 }
