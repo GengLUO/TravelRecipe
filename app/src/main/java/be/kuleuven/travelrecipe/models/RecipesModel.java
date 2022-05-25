@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class RecipesModel {
+public class RecipesModel extends AbstractRecipesModel{
     protected List<Recipe> recipes = new LinkedList<>();
 
     public RecipesModel() {
@@ -34,6 +34,11 @@ public class RecipesModel {
 
     public void loadRecipes(){
 
+    }
+
+    public void setRecipes(List<Recipe> recipes){
+        this.recipes = recipes;
+        recipeNotifier.setDashboardRecyclerView(recipes);
     }
 
 

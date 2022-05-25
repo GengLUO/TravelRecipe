@@ -36,18 +36,20 @@ import java.util.stream.Collectors;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
+import be.kuleuven.travelrecipe.adapters.RecipeNotifier;
+import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.controller.MySingleton;
 import be.kuleuven.travelrecipe.models.Recipe;
 import be.kuleuven.travelrecipe.models.RecipesModel;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements RecipeNotifier {
 
     RecyclerView dashboardRecyclerView;
     DashboardAdapter dashboardAdapter;
-    List<Recipe> dashboardModelList;
     SearchView searchView;
 
-    private RequestQueue requestQueue;
+    //private RequestQueue requestQueue;
     private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
     private int PICK_IMAGE_REQUEST = 111;
     private Bitmap bitmap;
@@ -55,6 +57,8 @@ public class SearchFragment extends Fragment {
     //protected RecipesModel recipesModel = new RecipesModel();
     private List<Recipe> recipes = new ArrayList<>();
     List<Recipe> filteredList = new ArrayList<>();
+    RecipesModel recipesModel;
+    RecipesModel filteredRecipesModel = new RecipesModel();
 
     public SearchFragment() {
         // Required empty public constructor
@@ -72,19 +76,21 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Uploading, please wait...");
-        progressDialog.show();
+        //progressDialog.show();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        dashboardRecyclerView = view.findViewById(R.id.recycler_view);
+        //indAdapter();
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         searchView = view.findViewById(R.id.searchView);
+        dashboardRecyclerView = view.findViewById(R.id.recycler_view);
         //searchView.clearFocus();
         setSearchViewListeners();
-        requestQueue = Volley.newRequestQueue(getContext());
-
-        requestRecipes();
-
-
+        recipesModel = new RecipesModel();
+        recipesModel.setRecipeNotifier(this);
+        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        //requestQueue = Volley.newRequestQueue(getContext());
+        databaseConnect.retrieveRecipes(recipesModel);
 
         return view;
     }
@@ -101,7 +107,8 @@ public class SearchFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextChange(String newText) {
-                bindAdapter(filterList(newText));
+                //bindAdapter(filterList(newText));
+
                 return false;
             }
         });
@@ -109,18 +116,23 @@ public class SearchFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private List<Recipe> filterList(String text) {
-        filteredList = recipes.stream()
-                                .filter(r -> r.getName().contains(text))
-                                .collect(Collectors.toList());
-//        recipes.stream().forEach(e -> {
-//            if (e.getName().contains(text)){
-//                filteredList.add(e);
-//            }
-//        });
-        return filteredList;
+//        filteredList = recipes.stream()
+//                                .filter(r -> r.getName().contains(text))
+//                                .collect(Collectors.toList());
+////        recipes.stream().forEach(e -> {
+////            if (e.getName().contains(text)){
+////                filteredList.add(e);
+////            }
+////        });
+//        return filteredList;
+        List<Recipe> filteredRecipes = recipesModel.getAllRecipes()
+                .stream()
+                .filter(r -> r.getName().contains(text))
+                .collect(Collectors.toList());
+        return filteredRecipes;
     }
 
-    private void bindAdapter(List<Recipe> recipes) {
+    private void bindAdapter() {
         dashboardAdapter = new DashboardAdapter(recipes,getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         dashboardRecyclerView.setLayoutManager(layoutManager);
@@ -158,7 +170,6 @@ public class SearchFragment extends Fragment {
                                 }
                                 progressDialog.dismiss();
                                 Toast.makeText(getContext(), "IIImage retrieved from DB", Toast.LENGTH_SHORT).show();
-                                bindAdapter(recipes);
                             }
                         }
                         catch( JSONException e )
@@ -175,6 +186,17 @@ public class SearchFragment extends Fragment {
                 }
         );
 
-        requestQueue.add(retrieveImageRequest);
+        //requestQueue.add(retrieveImageRequest);
+        MySingleton.getInstance(getContext()).addToRequestQueue(retrieveImageRequest);
+    }
+
+
+    @Override
+    public void setDashboardRecyclerView(List<Recipe> recipes) {
+        dashboardAdapter = new DashboardAdapter(recipes,getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        dashboardRecyclerView.setLayoutManager(layoutManager);
+        dashboardRecyclerView.setNestedScrollingEnabled(false);
+        dashboardRecyclerView.setAdapter(dashboardAdapter);
     }
 }

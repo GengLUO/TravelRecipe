@@ -32,6 +32,7 @@ import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.Recipe;
 import be.kuleuven.travelrecipe.models.RecipeStep;
+import be.kuleuven.travelrecipe.models.RecipesModel;
 import be.kuleuven.travelrecipe.models.User;
 import be.kuleuven.travelrecipe.views.activities.SettingMain;
 
@@ -257,4 +258,52 @@ public class DatabaseConnect {
 
         requestQueue.add(submitRequest);
     }
+
+    public void retrieveRecipes(RecipesModel recipesModel){
+        //Standard Volley request. We don't need any parameters for this one
+        List<Recipe> newRecipes = new ArrayList<>();
+        String GET_RECIPE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_RECIPE_URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try
+                        {
+                            //Check if the DB actually contains an image
+                            if( response.length() > 0 ) {
+                                for(int i=0; i<response.length();i++){
+                                    JSONObject o = response.getJSONObject(i);
+
+                                    //converting base64 string to image
+                                    int id = o.getInt("recipe_id");
+                                    String name = o.getString("name");
+                                    String desc = o.getString("recipe_desc");
+                                    String b64String = o.getString("recipe_image");
+                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+
+                                    //Link the bitmap to the ImageView, so it's visible on screen
+                                    //imageRetrieved.setImageBitmap( bitmap2 );
+                                    newRecipes.add(new Recipe(name,desc,id,bitmap));
+
+                                    //Just a double-check to tell us the request has completed
+                                }
+                                //progressDialog.dismiss();
+                                recipesModel.setRecipes(newRecipes);
+                            }
+                        }
+                        catch( JSONException e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        requestQueue.add(retrieveImageRequest);
+    }
+
 }

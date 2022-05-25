@@ -20,7 +20,7 @@ import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{
 
-    private List<Recipe> list = new LinkedList<>();
+    private List<Recipe> list;
     private Context context;
     private LayoutInflater inflater;
 
@@ -32,7 +32,6 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
 
     public void setList(List<Recipe> newList){
         this.list = newList;
-        notifyDataSetChanged();
     }
 
     @NonNull
