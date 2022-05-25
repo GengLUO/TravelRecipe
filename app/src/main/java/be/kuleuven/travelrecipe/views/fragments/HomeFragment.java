@@ -1,5 +1,5 @@
 package be.kuleuven.travelrecipe.views.fragments;
-
+//2754
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -44,7 +44,11 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     private ImageView imageView2;
     private ImageView imageView3;
     private ImageView imageView4;
+    private ImageView profileImage;
     private ProgressBar progressBar1;
+    private ProgressBar progressBar2;
+    private ProgressBar progressBar3;
+    private ProgressBar progressBar4;
     RequestQueue requestQueue;
     private static final String URL = "https://studev.groept.be/api/a21pt210";
 
@@ -74,26 +78,15 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         imageView3 = view.findViewById(R.id.imageView3);
         imageView4 = view.findViewById(R.id.imageView4);
         progressBar1 = view.findViewById(R.id.progressBar1);
+        progressBar2 = view.findViewById(R.id.progressBar2);
+        progressBar3 = view.findViewById(R.id.progressBar3);
+        progressBar4 = view.findViewById(R.id.progressBar4);
+        profileImage = view.findViewById(R.id.profileImage);
         requestQueue = Volley.newRequestQueue( getContext() );
-        user.setHomepageFragmentNotifier(this);
         user = new User(1);
+        user.setHomepageFragmentNotifier(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveUserInfo(user);
-
-        //set content
-        String recipeAmount = ""+user.getRecipeAmount();
-        String level = ""+user.getLevel();
-        recipeAmountTextview.setText(recipeAmount);
-        recipeAmountText.setText("recipeAmount");
-        usernameTextview.setText(user.getUserName());
-        levelText.setText("level");
-        levelTextview.setText(level);
-        //question setting progressbar
-        progressBar1.setProgress(10);
-        imageView1.setImageResource(R.drawable.germany);
-        imageView2.setImageResource(R.drawable.belgium);
-        imageView3.setImageResource(R.drawable.denmark);
-        imageView4.setImageResource(R.drawable.france);
         return view;
     }
 
@@ -107,9 +100,32 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     public void notifyLevelChanged() {
         levelTextview.setText(String.valueOf(user.getLevel()));
     }
-
     @Override
     public void notifyRecipeNumberChanged() {
         recipeAmountTextview.setText(String.valueOf(user.getRecipeAmount()));
+    }
+    @Override
+    public void notifyImageChanged() {
+        profileImage.setImageBitmap(user.getImage());
+    }
+
+    @Override
+    public void notifyAsiaChanged() {
+        progressBar1.setProgress(user.getCountryAsiaAmount()*10);
+    }
+
+    @Override
+    public void notifyEuropeChanged() {
+        progressBar2.setProgress(user.getCountryEuropeAmount()*10);
+    }
+
+    @Override
+    public void notifyAmericaChanged() {
+        progressBar3.setProgress(user.getCountryAmericaAmount()*10);
+    }
+
+    @Override
+    public void notifyAfricaChanged() {
+        progressBar4.setProgress(user.getCountryAfricaAmount()*10);
     }
 }

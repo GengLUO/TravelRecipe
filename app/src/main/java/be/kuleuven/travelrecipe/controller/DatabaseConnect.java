@@ -1,9 +1,11 @@
 package be.kuleuven.travelrecipe.controller;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,15 +27,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.Recipe;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.views.activities.SettingMain;
 
 public class DatabaseConnect {
     private RequestQueue requestQueue;
+    private ProgressDialog progressDialog;
     private int PICK_IMAGE_REQUEST = 111;
     private User user;
+
 
     public DatabaseConnect(RequestQueue requestQueue) {
         this.requestQueue = requestQueue;
@@ -79,40 +86,41 @@ public class DatabaseConnect {
         requestQueue.add(request);
         return user;
     }
-    public User retrieveCountries(User inuser)
+    public Countries retrieveCountries(Countries countries)
     {
-        this.user = inuser;
-        int userID = user.getUserID();
-        String countriesURL = "https://studev.groept.be/api/a21pt210/getCountriesByID/"+userID;
+        int userID = countries.getUserid();
+        String countriesURL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfo/"+userID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, countriesURL, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                List<Country> countries= new ArrayList<Country>();
+                List<Country> temCountries= new ArrayList<Country>();
                 for (int i = 0; i < response.length(); i++) {
                     JSONObject o = null;
                     try {
-                        o = response.getJSONObject(0);
+                        o = response.getJSONObject(i);
                         int countryImg;
                         String countryName;
                         int recipeNumber;
+
                         int actived;
                         boolean ac;
                         int continent;
-                        countryImg = o .getInt("idcountries");
-                        countryName = o.getString("name");
-                        recipeNumber = o.getInt("recipeNumber");
-                        actived = o.getInt("actived");
+                        countryImg = o .getInt("idcountry");
+                        countryName = o.getString("country_name");
+                        recipeNumber = o.getInt("number");
+                        if (recipeNumber==0) {actived = 0;}
+                        else { actived = 1; }
                         continent = o.getInt("continent");
                         if (actived == 0){ac = false;}
                         else {ac = true;}
                         Country country = new Country(countryImg,countryName,recipeNumber,ac,continent);
-                        countries.add(country);
+                        temCountries.add(country);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         ;
                     }
                 }
-                user.setCountries(countries);
+                countries.setCountries(temCountries);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -120,8 +128,133 @@ public class DatabaseConnect {
             }
         });
         requestQueue.add(request);
-        return user;
+        return countries;
+    }
+    public void postProfileImage(View caller,Bitmap bitmap,User user)
+    {
+        String POST_URL = "https://studev.groept.be/api/a21pt210/insertProfileImage";
+        //Start an animating progress widget
+        progressDialog = new ProgressDialog(caller.getContext());
+        progressDialog.setMessage("Uploading, please wait...");
+        progressDialog.show();
+
+        //convert image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        StringRequest  submitRequest = new StringRequest (Request.Method.POST, POST_URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                progressDialog.dismiss();
+                Toast.makeText(caller.getContext(), "Post request executed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(caller.getContext(), "Post request failed", Toast.LENGTH_LONG).show();
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("image", imageString);
+                params.put("userid",String.valueOf(user.getUserID()));
+                return params;
+            }
+        };
+
+        requestQueue.add(submitRequest);
     }
 
+    public void uploadRecipe(View caller,Recipe recipe,int userid)
+    {
+        String POSTImage_URL = "https://studev.groept.be/api/a21pt210/insertRecipe";
+        //Start an animating progress widget
+        progressDialog = new ProgressDialog(caller.getContext());
+        progressDialog.setMessage("Uploading, please wait...");
+        progressDialog.show();
 
+        //convert image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        recipe.getDemo().compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        StringRequest  submitRequest = new StringRequest (Request.Method.POST, POSTImage_URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                progressDialog.dismiss();
+                Toast.makeText(caller.getContext(), "Post request executed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(caller.getContext(), "Post request failed", Toast.LENGTH_LONG).show();
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("demo", imageString);
+                params.put("recipeid",String.valueOf(recipe.getRecipeId()));
+                params.put("name",recipe.getName());
+                params.put("description",recipe.getDescription());
+                params.put("country",String.valueOf(recipe.getCountry()));
+                params.put("recipeidd",String.valueOf(recipe.getRecipeId()));
+                params.put("userid",String.valueOf(userid));
+                return params;
+            }
+        };
+
+        requestQueue.add(submitRequest);
+    }
+
+    public void uploadStep(View caller, int recipeid, int sequence, String description,Bitmap image)
+    {
+        String POSTImage_URL = "https://studev.groept.be/api/a21pt210/insetStep";
+        //Start an animating progress widget
+        progressDialog = new ProgressDialog(caller.getContext());
+        progressDialog.setMessage("Uploading, please wait...");
+        progressDialog.show();
+
+        //convert image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        StringRequest  submitRequest = new StringRequest (Request.Method.POST, POSTImage_URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                progressDialog.dismiss();
+                Toast.makeText(caller.getContext(), "Post request executed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(caller.getContext(), "Post request failed", Toast.LENGTH_LONG).show();
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("recipeid",String.valueOf(recipeid));
+                params.put("sequence",String.valueOf(sequence));
+                params.put("description",description);
+                params.put("image",imageString);
+                return params;
+            }
+        };
+
+        requestQueue.add(submitRequest);
+    }
 }

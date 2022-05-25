@@ -206,24 +206,20 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,CountrysActivity.class);
         intent.putExtra("continentnumber",1);
         startActivity(intent);
-        startActivity(new Intent(this, CountrysActivity.class));
     }
     public void onImgContinent2_Clicked(View caller){
         Intent intent = new Intent(this,CountrysActivity.class);
         intent.putExtra("continentnumber",2);
         startActivity(intent);
-        startActivity(new Intent(this, CountrysActivity.class));
     }
     public void onImgContinent3_Clicked(View caller){
         Intent intent = new Intent(this,CountrysActivity.class);
         intent.putExtra("continentnumber",3);
         startActivity(intent);
-        startActivity(new Intent(this, CountrysActivity.class));
     }
     public void onImgContinent4_Clicked(View caller){
         Intent intent = new Intent(this,CountrysActivity.class);
         intent.putExtra("continentnumber",4);
         startActivity(intent);
-        startActivity(new Intent(this, CountrysActivity.class));
     }
 }
