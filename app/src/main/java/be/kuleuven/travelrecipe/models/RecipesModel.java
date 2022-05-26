@@ -38,9 +38,8 @@ public class RecipesModel extends AbstractRecipesModel{
 
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
-        recipeNotifier.setDashboardRecyclerView(recipes);
+        recipeNotifier.notifyRecipesListChanged(recipes);
     }
-
 
     public List<Recipe> getAllRecipes() {
         return recipes;

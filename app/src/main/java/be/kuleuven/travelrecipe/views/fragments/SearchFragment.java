@@ -30,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,24 +44,16 @@ import be.kuleuven.travelrecipe.models.RecipesModel;
 
 public class SearchFragment extends Fragment implements RecipeNotifier {
 
-    RecyclerView dashboardRecyclerView;
-    DashboardAdapter dashboardAdapter;
-    SearchView searchView;
+    private RecyclerView dashboardRecyclerView;
+    private DashboardAdapter dashboardAdapter;
+    private SearchView searchView;
 
-    //private RequestQueue requestQueue;
     private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
-    private int PICK_IMAGE_REQUEST = 111;
-    private Bitmap bitmap;
     private ProgressDialog progressDialog;
-    //protected RecipesModel recipesModel = new RecipesModel();
-    private List<Recipe> recipes = new ArrayList<>();
-    List<Recipe> filteredList = new ArrayList<>();
-    RecipesModel recipesModel;
-    RecipesModel filteredRecipesModel = new RecipesModel();
+    private RecipesModel recipesModel;
 
     public SearchFragment() {
         // Required empty public constructor
-
     }
 
 
@@ -74,32 +65,28 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Uploading, please wait...");
-        //progressDialog.show();
-        // Inflate the layout for this fragment
+//        progressDialog = new ProgressDialog(getContext());
+//        progressDialog.setMessage("Uploading, please wait...");
+//        progressDialog.show();
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-
-        //indAdapter();
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         searchView = view.findViewById(R.id.searchView);
         dashboardRecyclerView = view.findViewById(R.id.recycler_view);
-        //searchView.clearFocus();
-        setSearchViewListeners();
-        recipesModel = new RecipesModel();
-        recipesModel.setRecipeNotifier(this);
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        //requestQueue = Volley.newRequestQueue(getContext());
-        databaseConnect.retrieveRecipes(recipesModel);
-
+        initView();
+        initModel();
         return view;
     }
 
-    private void setSearchViewListeners() {
+    private void initView() {
+        dashboardAdapter = new DashboardAdapter(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        dashboardRecyclerView.setLayoutManager(layoutManager);
+        dashboardRecyclerView.setNestedScrollingEnabled(false);
+        dashboardRecyclerView.setAdapter(dashboardAdapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(filteredList.isEmpty())
+                if(filterList(query).isEmpty())
                     Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -108,10 +95,18 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //bindAdapter(filterList(newText));
-
+                dashboardAdapter.setList(filterList(newText));
                 return false;
             }
         });
+    }
+
+    private void initModel() {
+        recipesModel = new RecipesModel();
+        recipesModel.setRecipeNotifier(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        databaseConnect.retrieveRecipes(recipesModel);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -125,20 +120,12 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 ////            }
 ////        });
 //        return filteredList;
-        List<Recipe> filteredRecipes = recipesModel.getAllRecipes()
+        return recipesModel.getAllRecipes()
                 .stream()
                 .filter(r -> r.getName().contains(text))
                 .collect(Collectors.toList());
-        return filteredRecipes;
     }
 
-    private void bindAdapter() {
-        dashboardAdapter = new DashboardAdapter(recipes,getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-        dashboardRecyclerView.setLayoutManager(layoutManager);
-        dashboardRecyclerView.setNestedScrollingEnabled(false);
-        dashboardRecyclerView.setAdapter(dashboardAdapter);
-    }
 
     private void requestRecipes() {
         //Standard Volley request. We don't need any parameters for this one
@@ -164,7 +151,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipes.add(new Recipe(name,desc,id,bitmap));
+                                    recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
                                 }
@@ -185,18 +172,11 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
                     }
                 }
         );
-
-        //requestQueue.add(retrieveImageRequest);
         MySingleton.getInstance(getContext()).addToRequestQueue(retrieveImageRequest);
     }
 
-
     @Override
-    public void setDashboardRecyclerView(List<Recipe> recipes) {
-        dashboardAdapter = new DashboardAdapter(recipes,getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-        dashboardRecyclerView.setLayoutManager(layoutManager);
-        dashboardRecyclerView.setNestedScrollingEnabled(false);
-        dashboardRecyclerView.setAdapter(dashboardAdapter);
+    public void notifyRecipesListChanged(List<Recipe> recipes) {
+        dashboardAdapter.setList(recipes);
     }
 }

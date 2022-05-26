@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,24 +21,27 @@ import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{
 
-    private List<Recipe> list;
-    private Context context;
-    private LayoutInflater inflater;
+    private List<Recipe> list = new ArrayList<>();
+    private final Context context;
 
     public DashboardAdapter(List<Recipe> list, Context context) {
         this.list = list;
         this.context = context;
-        this.inflater = LayoutInflater.from(context);
+    }
+
+    public DashboardAdapter(Context context){
+        this.context = context;
     }
 
     public void setList(List<Recipe> newList){
         this.list = newList;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public dashboardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.recipe_fall,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recipe_fall,parent,false);
         return new dashboardViewHolder(view);
     }
 
