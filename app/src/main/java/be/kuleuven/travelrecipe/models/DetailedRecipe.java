@@ -6,6 +6,7 @@ import java.util.List;
 
 public class DetailedRecipe extends AbstractDetailedRecipe {
     private RecipeInfo recipe;
+    private boolean likeState;
     private LinkedHashMap<String, String> ingredients;
     private List<RecipeStep> steps = new ArrayList<>();
 
@@ -36,5 +37,14 @@ public class DetailedRecipe extends AbstractDetailedRecipe {
 
     public void setRecipe(RecipeInfo recipe) {
         this.recipe = recipe;
+    }
+
+    public boolean isLikeState() {
+        return likeState;
+    }
+
+    public void setLikeState(boolean likeState) {
+        this.likeState = likeState;
+        detailNotifier.notifyLikeStateChanged(likeState);
     }
 }

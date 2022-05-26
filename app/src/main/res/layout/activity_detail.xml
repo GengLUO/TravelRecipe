@@ -27,8 +27,9 @@
             android:id="@+id/tbtn_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/selector"
             android:background="@color/white"
+            android:button="@drawable/selector"
+            android:onClick="onLike_Clicked"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

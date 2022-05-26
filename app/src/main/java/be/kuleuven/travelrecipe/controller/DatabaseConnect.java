@@ -396,4 +396,65 @@ public class DatabaseConnect {
         );
         requestQueue.add(retrieveImageRequest);
     }
+
+    public void uploadMealPlan(int userId, DetailedRecipe detailedRecipe,boolean state)
+    {
+        String addMealPlan_URL = "https://studev.groept.be/api/a21pt210/addMealPlan";
+        String deleteMealPlan_URL = "https://studev.groept.be/api/a21pt210/deleteMealPlan";
+        String url = state? addMealPlan_URL : deleteMealPlan_URL;
+        int recipeId = detailedRecipe.getRecipe().getRecipeId();
+        //Start an animating progress widget
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        StringRequest  submitRequest = new StringRequest (Request.Method.POST, url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                detailedRecipe.setLikeState(state);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("userid", String.valueOf(userId));
+                params.put("recipeid",String.valueOf(recipeId));
+                return params;
+            }
+        };
+
+        requestQueue.add(submitRequest);
+    }
+
+    public void requestLikeState(int userId, DetailedRecipe detailedRecipe) {
+        String url = "https://studev.groept.be/api/a21pt210/getLikeState/";
+        int recipeId = detailedRecipe.getRecipe().getRecipeId();
+        //Start an animating progress widget
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ userId+"/"+recipeId, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //Toast.makeText(DetailActivity.this, "start ingredients", Toast.LENGTH_SHORT).show();
+                        //Check if the DB actually contains an image
+                        if( response.length() > 0 ) {
+                            detailedRecipe.setLikeState(true);
+                            //progressDialog.dismiss();
+                            //Toast.makeText(DetailActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(DetailActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+        requestQueue.add(retrieveImageRequest);
+    }
 }

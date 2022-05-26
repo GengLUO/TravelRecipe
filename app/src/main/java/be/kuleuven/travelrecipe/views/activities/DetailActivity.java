@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -29,12 +30,15 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 
     ImageView imgBack, imgRecipeDemo;
     TextView txtRecipeName, txtRecipeDesc;
+    ToggleButton tbtnStar;
     DetailsAdapter detailsAdapter;
     IngredientAdapter ingredientAdapter;
     ExpandListView detailsListView, ingredientsListView;
     DetailedRecipe detailedRecipeDetails;
+    DatabaseConnect databaseConnect;
     List<RecipeStep> recipeList = new ArrayList<>();
     LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
+    int userID = 1;
 
     private static final String GET_IMAGE_URL_this = "https://studev.groept.be/api/a21pt210/getStep/";
     private static final String GET_INGREDIENT_URL = "https://studev.groept.be/api/a21pt210/getIngredients/";
@@ -49,11 +53,11 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         imgRecipeDemo = findViewById(R.id.img_recipe_demo);
         txtRecipeName = findViewById(R.id.txt_recipe_name);
         txtRecipeDesc = findViewById(R.id.txt_recipe_desc);
+        tbtnStar = findViewById(R.id.tbtn_star);
 
 //        progressDialog = new ProgressDialog(DetailActivity.this);
 //        progressDialog.setMessage("Uploading, please wait...");
 //        progressDialog.show();
-
         detailedRecipeDetails = new DetailedRecipe();
         RecipeInfo recipe = (RecipeInfo) getIntent().getExtras().getParcelable("Recipe");
         detailedRecipeDetails.setRecipe(recipe);
@@ -61,20 +65,22 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         txtRecipeName.setText(recipe.getName());
         txtRecipeDesc.setText(recipe.getDescription());
 
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        databaseConnect = new DatabaseConnect(requestQueue);
+
         setDetailsListView();
         setIngredientsListView();
 
-        initModel();
+        initModel(databaseConnect);
 
 
         //setRecipeRecyclerView(recipeList);
         //setListView(recipeList);
     }
 
-    private void initModel() {
+    private void initModel(DatabaseConnect databaseConnect) {
         detailedRecipeDetails.setDetailNotifier(this);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        databaseConnect.requestLikeState(userID,detailedRecipeDetails);
         databaseConnect.requestIngredients(detailedRecipeDetails);
         databaseConnect.requestRecipeDetails(detailedRecipeDetails);
     }
@@ -193,6 +199,11 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         //startActivity(new Intent(this, ImageActivity.class));
     }
 
+    public void onLike_Clicked(View caller){
+        System.out.println(tbtnStar.isChecked());
+        databaseConnect.uploadMealPlan(userID,detailedRecipeDetails,tbtnStar.isChecked());
+    }
+
     @Override
     public void notifyDetailsRetrieved(List<RecipeStep> steps) {
         detailsAdapter.setList(steps);
@@ -201,5 +212,10 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     @Override
     public void notifyIngredientsRetrieved(LinkedHashMap<String,String> ingredients) {
         ingredientAdapter.setList(ingredients);
+    }
+
+    @Override
+    public void notifyLikeStateChanged(boolean newState) {
+        tbtnStar.setChecked(newState);
     }
 }
