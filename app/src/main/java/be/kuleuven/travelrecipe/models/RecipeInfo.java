@@ -4,23 +4,19 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Recipe implements Parcelable {
+public class RecipeInfo implements Parcelable {
 
     private String name, description;
     private int country, recipeId;
     private Bitmap demo;
-    private List<RecipeStep> steps = new ArrayList<>();
 
-    public Recipe(String title, String desc , int id, Bitmap demo) {
+    public RecipeInfo(String title, String desc , int id, Bitmap demo) {
         this.name = title;
         this.description = desc;
         this.recipeId = id;
         this.demo = demo;
     }
-    public Recipe(int recipeId, String name, String description, int country,Bitmap demo) {
+    public RecipeInfo(int recipeId, String name, String description, int country, Bitmap demo) {
         this.recipeId = recipeId;
         this.name = name;
         this.description = description;
@@ -28,7 +24,7 @@ public class Recipe implements Parcelable {
         this.demo = demo;
     }
 
-    protected Recipe(Parcel in) {
+    protected RecipeInfo(Parcel in) {
         name = in.readString();
         description = in.readString();
         country = in.readInt();
@@ -36,15 +32,15 @@ public class Recipe implements Parcelable {
         demo = in.readParcelable(Bitmap.class.getClassLoader());
     }
 
-    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+    public static final Creator<RecipeInfo> CREATOR = new Creator<RecipeInfo>() {
         @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
+        public RecipeInfo createFromParcel(Parcel in) {
+            return new RecipeInfo(in);
         }
 
         @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
+        public RecipeInfo[] newArray(int size) {
+            return new RecipeInfo[size];
         }
     };
 
@@ -86,18 +82,6 @@ public class Recipe implements Parcelable {
 
     public void setRecipeId(int recipeId) {
         this.recipeId = recipeId;
-    }
-
-    public List<RecipeStep> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(List<RecipeStep> steps) {
-        this.steps = steps;
-    }
-
-    public void addRecipeSteps(RecipeStep recipeStep){
-        steps.add(recipeStep);
     }
 
     @Override

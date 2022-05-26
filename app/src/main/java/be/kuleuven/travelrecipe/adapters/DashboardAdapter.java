@@ -2,7 +2,6 @@ package be.kuleuven.travelrecipe.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
 import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{
 
-    private List<Recipe> list = new ArrayList<>();
+    private List<RecipeInfo> list = new ArrayList<>();
     private final Context context;
 
-    public DashboardAdapter(List<Recipe> list, Context context) {
+    public DashboardAdapter(List<RecipeInfo> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -34,7 +32,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
         this.context = context;
     }
 
-    public void setList(List<Recipe> newList){
+    public void setList(List<RecipeInfo> newList){
         this.list = newList;
         notifyDataSetChanged();
     }
@@ -48,7 +46,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
 
     @Override
     public void onBindViewHolder(@NonNull dashboardViewHolder holder, int position) {
-        Recipe recipe = list.get(position);
+        RecipeInfo recipe = list.get(position);
         //Todo
         //holder.imgFlag.setImageBitmap(recipe.getCountry());
         holder.imgDish.setImageBitmap(recipe.getDemo());

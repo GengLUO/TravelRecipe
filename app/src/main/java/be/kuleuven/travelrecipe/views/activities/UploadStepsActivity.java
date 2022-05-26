@@ -8,7 +8,6 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +19,6 @@ import com.android.volley.toolbox.Volley;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.Recipe;
 
 public class UploadStepsActivity extends AppCompatActivity {
     private TextView stepNumberTextView ;

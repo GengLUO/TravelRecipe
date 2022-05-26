@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
 
 public class ViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
     //private List<Recipe> recipeList;
-    private ArrayList<Recipe> dashboardModels;
+    private ArrayList<RecipeInfo> dashboardModels;
 
     public ViewFragment() {
         // Required empty public constructor
@@ -51,7 +51,7 @@ public class ViewFragment extends Fragment {
     }
 
     private void initData() {
-        dashboardModels = new ArrayList<be.kuleuven.travelrecipe.models.Recipe>();
+        dashboardModels = new ArrayList<RecipeInfo>();
 //        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
 //        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));
 //        dashboardModels.add(new Dashboard(R.drawable.dumpling,R.drawable.flag_china,"水晶虾饺","很好吃"));

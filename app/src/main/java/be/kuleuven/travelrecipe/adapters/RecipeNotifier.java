@@ -2,8 +2,8 @@ package be.kuleuven.travelrecipe.adapters;
 
 import java.util.List;
 
-import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
 
 public interface RecipeNotifier {
-    void notifyRecipesListChanged(List<Recipe> recipes);
+    void notifyRecipesListChanged(List<RecipeInfo> recipes);
 }

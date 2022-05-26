@@ -9,7 +9,6 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +31,7 @@ import java.util.List;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.Country;
-import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
 
 public class UploadRecipeActivity extends AppCompatActivity {
 
@@ -47,7 +46,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
     private DatabaseConnect databaseConnect;
     private int PICK_IMAGE_REQUEST = 111;
     private ProgressDialog progressDialog;
-    private Recipe recipe;
+    private RecipeInfo recipe;
     private int userID;
     private int recipeID;
 
@@ -76,7 +75,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
         String description = descriptionEditText.getText().toString();
         String country = countryEditText.getText().toString();
         int countryid = Integer.valueOf(country);
-        recipe = new Recipe(recipeID,countryName,description,countryid,bitmap);
+        recipe = new RecipeInfo(recipeID,countryName,description,countryid,bitmap);
         databaseConnect.uploadRecipe(caller,recipe,userID);
 
         Intent intent = new Intent(this,UploadStepsActivity.class);

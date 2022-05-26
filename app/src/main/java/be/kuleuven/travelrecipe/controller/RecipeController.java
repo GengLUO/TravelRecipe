@@ -1,12 +1,12 @@
 package be.kuleuven.travelrecipe.controller;
 
-import be.kuleuven.travelrecipe.models.RecipesModel;
+import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 public class RecipeController {
-    private RecipesModel model;
+    private RecipesDashboard model;
 
     public RecipeController(){
-        model = new RecipesModel();
+        model = new RecipesDashboard();
     }
 
     public void loadMoreRecipes(){

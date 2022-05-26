@@ -94,43 +94,23 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.Recipe;
-import be.kuleuven.travelrecipe.models.RecipesModel;
+import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
-    private RequestQueue requestQueue;
-    private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
-    protected static RecipesModel recipesModel123 = new RecipesModel();
     private int userID = 1;
 
     @Override
@@ -139,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.btm_nav);
         navController = Navigation.findNavController(this, R.id.nav_controller);
-
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                bottomNavigationView.getMenu()).build();
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

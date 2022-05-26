@@ -6,10 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -24,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,9 +31,8 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
-import be.kuleuven.travelrecipe.adapters.ViewPagerAdapter;
-import be.kuleuven.travelrecipe.models.Recipe;
-import be.kuleuven.travelrecipe.models.RecipesModel;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 public class MeFragment extends Fragment {
 
@@ -48,12 +44,12 @@ public class MeFragment extends Fragment {
 //    private WorkFragment workFragment;
     RecyclerView listRecyclerView;
     DashboardAdapter listDashboardAdapter;
-    List<Recipe> listRecipeList;
+    List<RecipeInfo> listRecipeList;
 
     private RequestQueue requestQueue;
     private static final String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/1";
     private ProgressDialog progressDialog;
-    private RecipesModel recipesModel = new RecipesModel();
+    private RecipesDashboard recipesDashboard = new RecipesDashboard();
 
     public MeFragment() {
         // Required empty public constructor
@@ -110,7 +106,7 @@ public class MeFragment extends Fragment {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
+                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
 
@@ -140,7 +136,7 @@ public class MeFragment extends Fragment {
     }
 
     private void bindAdapter() {
-        listDashboardAdapter = new DashboardAdapter(recipesModel.getAllRecipes(),getContext());
+        listDashboardAdapter = new DashboardAdapter(recipesDashboard.getAllRecipes(),getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         listRecyclerView.setLayoutManager(layoutManager);
         listRecyclerView.setNestedScrollingEnabled(false);

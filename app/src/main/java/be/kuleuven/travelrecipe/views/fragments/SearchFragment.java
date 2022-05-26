@@ -29,7 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +37,8 @@ import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.adapters.RecipeNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.controller.MySingleton;
-import be.kuleuven.travelrecipe.models.Recipe;
-import be.kuleuven.travelrecipe.models.RecipesModel;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 
 public class SearchFragment extends Fragment implements RecipeNotifier {
@@ -50,7 +49,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
     private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
     private ProgressDialog progressDialog;
-    private RecipesModel recipesModel;
+    private RecipesDashboard recipesDashboard;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -102,15 +101,15 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     }
 
     private void initModel() {
-        recipesModel = new RecipesModel();
-        recipesModel.setRecipeNotifier(this);
+        recipesDashboard = new RecipesDashboard();
+        recipesDashboard.setRecipeNotifier(this);
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveRecipes(recipesModel);
+        databaseConnect.retrieveRecipes(recipesDashboard);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private List<Recipe> filterList(String text) {
+    private List<RecipeInfo> filterList(String text) {
 //        filteredList = recipes.stream()
 //                                .filter(r -> r.getName().contains(text))
 //                                .collect(Collectors.toList());
@@ -120,7 +119,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 ////            }
 ////        });
 //        return filteredList;
-        return recipesModel.getAllRecipes()
+        return recipesDashboard.getAllRecipes()
                 .stream()
                 .filter(r -> r.getName().contains(text))
                 .collect(Collectors.toList());
@@ -151,7 +150,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
+                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
                                 }
@@ -176,7 +175,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     }
 
     @Override
-    public void notifyRecipesListChanged(List<Recipe> recipes) {
+    public void notifyRecipesListChanged(List<RecipeInfo> recipes) {
         dashboardAdapter.setList(recipes);
     }
 }

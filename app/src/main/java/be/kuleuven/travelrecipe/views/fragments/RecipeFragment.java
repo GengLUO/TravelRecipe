@@ -30,19 +30,19 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
-import be.kuleuven.travelrecipe.models.Recipe;
-import be.kuleuven.travelrecipe.models.RecipesModel;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 public class RecipeFragment extends Fragment {
 
     RecyclerView dashboardRecyclerView;
     DashboardAdapter dashboardAdapter;
-    List<Recipe> dashboardModelList;
+    List<RecipeInfo> dashboardModelList;
 
     private RequestQueue requestQueue;
     private static final String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/1";
     private ProgressDialog progressDialog;
-    private RecipesModel recipesModel = new RecipesModel();
+    private RecipesDashboard recipesDashboard = new RecipesDashboard();
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -77,7 +77,7 @@ public class RecipeFragment extends Fragment {
     }
 
     private void bindAdapter() {
-        dashboardAdapter = new DashboardAdapter(recipesModel.getAllRecipes(),getContext());
+        dashboardAdapter = new DashboardAdapter(recipesDashboard.getAllRecipes(),getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         dashboardRecyclerView.setLayoutManager(layoutManager);
         //dashboardRecyclerView.setNestedScrollingEnabled(false);
@@ -109,7 +109,7 @@ public class RecipeFragment extends Fragment {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesModel.addRecipe(new Recipe(name,desc,id,bitmap));
+                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
 

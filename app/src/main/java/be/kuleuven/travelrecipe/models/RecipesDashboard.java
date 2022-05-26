@@ -5,26 +5,26 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class RecipesModel extends AbstractRecipesModel{
-    protected List<Recipe> recipes = new LinkedList<>();
+public class RecipesDashboard extends AbstractRecipesDashboard {
+    protected List<RecipeInfo> recipes = new LinkedList<>();
 
-    public RecipesModel() {
+    public RecipesDashboard() {
     }
 
 
-    public void addRecipe(Recipe recipe){
+    public void addRecipe(RecipeInfo recipe){
         recipes.add(recipe);
     }
 
-    public Recipe getRecipe(int index){
+    public RecipeInfo getRecipe(int index){
         return recipes.get(index);
     }
 
-    public void deleteRecipe(Recipe recipe){
+    public void deleteRecipe(RecipeInfo recipe){
         recipes.remove(recipe);
     }
 
-    public void addRecipes(ArrayList<Recipe> newRecipes){
+    public void addRecipes(ArrayList<RecipeInfo> newRecipes){
         recipes.addAll(newRecipes);
     }
 
@@ -36,12 +36,12 @@ public class RecipesModel extends AbstractRecipesModel{
 
     }
 
-    public void setRecipes(List<Recipe> recipes){
+    public void setRecipes(List<RecipeInfo> recipes){
         this.recipes = recipes;
         recipeNotifier.notifyRecipesListChanged(recipes);
     }
 
-    public List<Recipe> getAllRecipes() {
+    public List<RecipeInfo> getAllRecipes() {
         return recipes;
     }
 }

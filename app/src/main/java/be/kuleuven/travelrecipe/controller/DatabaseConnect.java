@@ -1,7 +1,6 @@
 package be.kuleuven.travelrecipe.controller;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -15,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,16 +26,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
-import be.kuleuven.travelrecipe.models.Recipe;
-import be.kuleuven.travelrecipe.models.RecipeDetails;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.models.DetailedRecipe;
 import be.kuleuven.travelrecipe.models.RecipeStep;
-import be.kuleuven.travelrecipe.models.RecipesModel;
+import be.kuleuven.travelrecipe.models.RecipesDashboard;
 import be.kuleuven.travelrecipe.models.User;
-import be.kuleuven.travelrecipe.views.activities.DetailActivity;
-import be.kuleuven.travelrecipe.views.activities.SettingMain;
 
 public class DatabaseConnect {
     private RequestQueue requestQueue;
@@ -174,7 +169,7 @@ public class DatabaseConnect {
         requestQueue.add(submitRequest);
     }
 
-    public void uploadRecipe(View caller,Recipe recipe,int userid)
+    public void uploadRecipe(View caller, RecipeInfo recipe, int userid)
     {
         String POSTImage_URL = "https://studev.groept.be/api/a21pt210/insertRecipe";
         //Start an animating progress widget
@@ -262,9 +257,9 @@ public class DatabaseConnect {
         requestQueue.add(submitRequest);
     }
 
-    public void retrieveRecipes(RecipesModel recipesModel){
+    public void retrieveRecipes(RecipesDashboard recipesDashboard){
         //Standard Volley request. We don't need any parameters for this one
-        List<Recipe> newRecipes = new ArrayList<>();
+        List<RecipeInfo> newRecipes = new ArrayList<>();
         String GET_RECIPE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
         JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_RECIPE_URL, null,
                 new Response.Listener<JSONArray>() {
@@ -287,12 +282,12 @@ public class DatabaseConnect {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    newRecipes.add(new Recipe(name,desc,id,bitmap));
+                                    newRecipes.add(new RecipeInfo(name,desc,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
                                 }
                                 //progressDialog.dismiss();
-                                recipesModel.setRecipes(newRecipes);
+                                recipesDashboard.setRecipes(newRecipes);
                             }
                         }
                         catch( JSONException e )
@@ -309,10 +304,10 @@ public class DatabaseConnect {
         requestQueue.add(retrieveImageRequest);
     }
 
-    public void requestIngredients(RecipeDetails recipeDetails) {
+    public void requestIngredients(DetailedRecipe detailedRecipeDetails) {
         //Standard Volley request. We don't need any parameters for this one
         String url = "https://studev.groept.be/api/a21pt210/getIngredients/";
-        int recipeId = recipeDetails.getRecipe().getRecipeId();
+        int recipeId = detailedRecipeDetails.getRecipe().getRecipeId();
         LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
         JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ recipeId, null,
                 new Response.Listener<JSONArray>() {
@@ -331,7 +326,7 @@ public class DatabaseConnect {
                                     ingredients.put(name,amount);
                                     //Just a double-check to tell us the request has completed
                                 }
-                                recipeDetails.setIngredients(ingredients);
+                                detailedRecipeDetails.setIngredients(ingredients);
                             }
 
                             //progressDialog.dismiss();
@@ -352,10 +347,10 @@ public class DatabaseConnect {
         requestQueue.add(retrieveImageRequest);
     }
 
-    public void requestRecipeDetails(RecipeDetails recipeDetails) {
+    public void requestRecipeDetails(DetailedRecipe detailedRecipeDetails) {
         //Standard Volley request. We don't need any parameters for this one
         String url = "https://studev.groept.be/api/a21pt210/getStep/";
-        int recipeId = recipeDetails.getRecipe().getRecipeId();
+        int recipeId = detailedRecipeDetails.getRecipe().getRecipeId();
         List<RecipeStep> steps = new ArrayList<>();
         JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ recipeId, null,
                 new Response.Listener<JSONArray>() {
@@ -381,7 +376,7 @@ public class DatabaseConnect {
                                     //Just a double-check to tell us the request has completed
 
                                 }
-                                recipeDetails.setSteps(steps);
+                                detailedRecipeDetails.setSteps(steps);
                                 //progressDialog.dismiss();
                                 //Toast.makeText(DetailActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
                             }

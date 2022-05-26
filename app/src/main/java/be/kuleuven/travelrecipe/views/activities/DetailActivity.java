@@ -3,25 +3,13 @@ package be.kuleuven.travelrecipe.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,8 +21,8 @@ import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.ExpandListView;
 import be.kuleuven.travelrecipe.adapters.IngredientAdapter;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.Recipe;
-import be.kuleuven.travelrecipe.models.RecipeDetails;
+import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.models.DetailedRecipe;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 
 public class DetailActivity extends AppCompatActivity implements DetailNotifier {
@@ -44,7 +32,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     DetailsAdapter detailsAdapter;
     IngredientAdapter ingredientAdapter;
     ExpandListView detailsListView, ingredientsListView;
-    RecipeDetails recipeDetails;
+    DetailedRecipe detailedRecipeDetails;
     List<RecipeStep> recipeList = new ArrayList<>();
     LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
 
@@ -66,9 +54,9 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 //        progressDialog.setMessage("Uploading, please wait...");
 //        progressDialog.show();
 
-        recipeDetails = new RecipeDetails();
-        Recipe recipe = (Recipe) getIntent().getExtras().getParcelable("Recipe");
-        recipeDetails.setRecipe(recipe);
+        detailedRecipeDetails = new DetailedRecipe();
+        RecipeInfo recipe = (RecipeInfo) getIntent().getExtras().getParcelable("Recipe");
+        detailedRecipeDetails.setRecipe(recipe);
         imgRecipeDemo.setImageBitmap(recipe.getDemo());
         txtRecipeName.setText(recipe.getName());
         txtRecipeDesc.setText(recipe.getDescription());
@@ -84,11 +72,11 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     }
 
     private void initModel() {
-        recipeDetails.setDetailNotifier(this);
+        detailedRecipeDetails.setDetailNotifier(this);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.requestIngredients(recipeDetails);
-        databaseConnect.requestRecipeDetails(recipeDetails);
+        databaseConnect.requestIngredients(detailedRecipeDetails);
+        databaseConnect.requestRecipeDetails(detailedRecipeDetails);
     }
 
 
