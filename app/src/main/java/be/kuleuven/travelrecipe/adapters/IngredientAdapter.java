@@ -14,12 +14,21 @@ import be.kuleuven.travelrecipe.R;
 
 public class IngredientAdapter extends BaseAdapter {
 
-    private LinkedHashMap<String,String> ingredients;
+    private LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
     private Context context;
 
     public IngredientAdapter(LinkedHashMap ingredients, Context context) {
         this.ingredients = ingredients;
         this.context = context;
+    }
+
+    public IngredientAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setList(LinkedHashMap<String, String> ingredients) {
+        this.ingredients = ingredients;
+        notifyDataSetChanged();
     }
 
     @Override

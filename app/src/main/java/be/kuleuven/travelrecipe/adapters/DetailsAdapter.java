@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
@@ -18,10 +19,14 @@ public class DetailsAdapter extends BaseAdapter {
     private List<RecipeStep> list;
     private Context context;
 
-
-    public DetailsAdapter(List<RecipeStep> list, Context context) {
-        this.list = list;
+    public DetailsAdapter(Context context) {
+        list = new ArrayList<>();
         this.context = context;
+    }
+
+    public void setList(List<RecipeStep> list) {
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     @Override

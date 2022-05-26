@@ -2,6 +2,7 @@ package be.kuleuven.travelrecipe.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("id",recipe.getRecipeId());
+                intent.putExtra("Recipe",  recipe);
                 context.startActivity(intent);
             }
         });

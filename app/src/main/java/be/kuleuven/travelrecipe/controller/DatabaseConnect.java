@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +32,11 @@ import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.Recipe;
+import be.kuleuven.travelrecipe.models.RecipeDetails;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 import be.kuleuven.travelrecipe.models.RecipesModel;
 import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 import be.kuleuven.travelrecipe.views.activities.SettingMain;
 
 public class DatabaseConnect {
@@ -306,4 +309,96 @@ public class DatabaseConnect {
         requestQueue.add(retrieveImageRequest);
     }
 
+    public void requestIngredients(RecipeDetails recipeDetails) {
+        //Standard Volley request. We don't need any parameters for this one
+        String url = "https://studev.groept.be/api/a21pt210/getIngredients/";
+        int recipeId = recipeDetails.getRecipe().getRecipeId();
+        LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ recipeId, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try
+                        {
+                            //Check if the DB actually contains an image
+                            if( response.length() > 0 ) {
+                                for(int i=0; i<response.length();i++){
+                                    JSONObject o = response.getJSONObject(i);
+
+                                    //converting base64 string to image
+                                    String name = o.getString("name");
+                                    String amount = o.getString("amount");
+                                    ingredients.put(name,amount);
+                                    //Just a double-check to tell us the request has completed
+                                }
+                                recipeDetails.setIngredients(ingredients);
+                            }
+
+                            //progressDialog.dismiss();
+
+                        }
+                        catch( JSONException e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+        );
+        requestQueue.add(retrieveImageRequest);
+    }
+
+    public void requestRecipeDetails(RecipeDetails recipeDetails) {
+        //Standard Volley request. We don't need any parameters for this one
+        String url = "https://studev.groept.be/api/a21pt210/getStep/";
+        int recipeId = recipeDetails.getRecipe().getRecipeId();
+        List<RecipeStep> steps = new ArrayList<>();
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ recipeId, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try
+                        {
+                            //Toast.makeText(DetailActivity.this, "start ingredients", Toast.LENGTH_SHORT).show();
+                            //Check if the DB actually contains an image
+                            if( response.length() > 0 ) {
+                                for(int i=0; i<response.length();i++){
+                                    JSONObject o = response.getJSONObject(i);
+
+                                    //converting base64 string to image
+                                    String desc = o.getString("description");
+                                    String b64String = o.getString("image");
+                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+
+                                    //Link the bitmap to the ImageView, so it's visible on screen
+                                    //imageRetrieved.setImageBitmap( bitmap2 );
+                                    steps.add(new RecipeStep(String.valueOf(i+1),desc,bitmap));
+                                    //Just a double-check to tell us the request has completed
+
+                                }
+                                recipeDetails.setSteps(steps);
+                                //progressDialog.dismiss();
+                                //Toast.makeText(DetailActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch( JSONException e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(DetailActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+        requestQueue.add(retrieveImageRequest);
+    }
 }
