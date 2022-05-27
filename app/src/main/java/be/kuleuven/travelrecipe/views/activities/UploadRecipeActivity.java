@@ -75,7 +75,8 @@ public class UploadRecipeActivity extends AppCompatActivity {
         String description = descriptionEditText.getText().toString();
         String country = countryEditText.getText().toString();
         int countryid = Integer.valueOf(country);
-        recipe = new RecipeInfo(recipeID,countryName,description,countryid,bitmap);
+        //TODO 暂时删掉了
+        //recipe = new RecipeInfo(recipeID,countryName,description,countryid,bitmap);
         databaseConnect.uploadRecipe(caller,recipe,userID);
 
         Intent intent = new Intent(this,UploadStepsActivity.class);

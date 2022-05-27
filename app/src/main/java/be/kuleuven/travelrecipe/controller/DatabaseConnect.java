@@ -274,6 +274,7 @@ public class DatabaseConnect {
 
                                     //converting base64 string to image
                                     int id = o.getInt("recipe_id");
+                                    int country = o.getInt("country");
                                     String name = o.getString("name");
                                     String desc = o.getString("recipe_desc");
                                     String b64String = o.getString("recipe_image");
@@ -282,7 +283,7 @@ public class DatabaseConnect {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    newRecipes.add(new RecipeInfo(name,desc,id,bitmap));
+                                    newRecipes.add(new RecipeInfo(name,desc,country,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
                                 }
@@ -307,7 +308,7 @@ public class DatabaseConnect {
     public void requestIngredients(DetailedRecipe detailedRecipeDetails) {
         //Standard Volley request. We don't need any parameters for this one
         String url = "https://studev.groept.be/api/a21pt210/getIngredients/";
-        int recipeId = detailedRecipeDetails.getRecipe().getRecipeId();
+        int recipeId = detailedRecipeDetails.getRecipeInfo().getRecipeId();
         LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
         JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ recipeId, null,
                 new Response.Listener<JSONArray>() {
@@ -326,7 +327,7 @@ public class DatabaseConnect {
                                     ingredients.put(name,amount);
                                     //Just a double-check to tell us the request has completed
                                 }
-                                detailedRecipeDetails.setIngredients(ingredients);
+                                //detailedRecipeDetails.setIngredients(ingredients);
                             }
 
                             //progressDialog.dismiss();
@@ -350,7 +351,7 @@ public class DatabaseConnect {
     public void requestRecipeDetails(DetailedRecipe detailedRecipeDetails) {
         //Standard Volley request. We don't need any parameters for this one
         String url = "https://studev.groept.be/api/a21pt210/getStep/";
-        int recipeId = detailedRecipeDetails.getRecipe().getRecipeId();
+        int recipeId = detailedRecipeDetails.getRecipeInfo().getRecipeId();
         List<RecipeStep> steps = new ArrayList<>();
         JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ recipeId, null,
                 new Response.Listener<JSONArray>() {
@@ -402,7 +403,7 @@ public class DatabaseConnect {
         String addMealPlan_URL = "https://studev.groept.be/api/a21pt210/addMealPlan";
         String deleteMealPlan_URL = "https://studev.groept.be/api/a21pt210/deleteMealPlan";
         String url = state? addMealPlan_URL : deleteMealPlan_URL;
-        int recipeId = detailedRecipe.getRecipe().getRecipeId();
+        int recipeId = detailedRecipe.getRecipeInfo().getRecipeId();
         //Start an animating progress widget
 
         //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
@@ -431,7 +432,7 @@ public class DatabaseConnect {
 
     public void requestLikeState(int userId, DetailedRecipe detailedRecipe) {
         String url = "https://studev.groept.be/api/a21pt210/getLikeState/";
-        int recipeId = detailedRecipe.getRecipe().getRecipeId();
+        int recipeId = detailedRecipe.getRecipeInfo().getRecipeId();
         //Start an animating progress widget
 
         //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
@@ -443,6 +444,42 @@ public class DatabaseConnect {
                         //Check if the DB actually contains an image
                         if( response.length() > 0 ) {
                             detailedRecipe.setLikeState(true);
+                            //progressDialog.dismiss();
+                            //Toast.makeText(DetailActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(DetailActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+        requestQueue.add(retrieveImageRequest);
+    }
+
+    public void requestRecipeDemo(DetailedRecipe detailedRecipe) {
+        String url = "https://studev.groept.be/api/a21pt210/getRecipeDemo/";
+        int id = detailedRecipe.getRecipeInfo().getRecipeId();
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, url+ id, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //Toast.makeText(DetailActivity.this, "start ingredients", Toast.LENGTH_SHORT).show();
+                        //Check if the DB actually contains an image
+                        if( response.length() > 0 ) {
+                            JSONObject o = null;
+                            try {
+                                o = response.getJSONObject(0);
+                                String b64String = o.getString("recipe_image");
+                                byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                                Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+                                detailedRecipe.setRecipeDemo(bitmap);
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             //progressDialog.dismiss();
                             //Toast.makeText(DetailActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
                         }

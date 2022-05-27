@@ -3,6 +3,7 @@ package be.kuleuven.travelrecipe.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,7 +35,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     DetailsAdapter detailsAdapter;
     IngredientAdapter ingredientAdapter;
     ExpandListView detailsListView, ingredientsListView;
-    DetailedRecipe detailedRecipeDetails;
+    DetailedRecipe detailedRecipe;
     DatabaseConnect databaseConnect;
     List<RecipeStep> recipeList = new ArrayList<>();
     LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
@@ -58,9 +59,9 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 //        progressDialog = new ProgressDialog(DetailActivity.this);
 //        progressDialog.setMessage("Uploading, please wait...");
 //        progressDialog.show();
-        detailedRecipeDetails = new DetailedRecipe();
+        detailedRecipe = new DetailedRecipe();
         RecipeInfo recipe = (RecipeInfo) getIntent().getExtras().getParcelable("Recipe");
-        detailedRecipeDetails.setRecipe(recipe);
+        detailedRecipe.setRecipeInfo(recipe);
         imgRecipeDemo.setImageBitmap(recipe.getDemo());
         txtRecipeName.setText(recipe.getName());
         txtRecipeDesc.setText(recipe.getDescription());
@@ -79,10 +80,11 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     }
 
     private void initModel(DatabaseConnect databaseConnect) {
-        detailedRecipeDetails.setDetailNotifier(this);
-        databaseConnect.requestLikeState(userID,detailedRecipeDetails);
-        databaseConnect.requestIngredients(detailedRecipeDetails);
-        databaseConnect.requestRecipeDetails(detailedRecipeDetails);
+        detailedRecipe.setDetailNotifier(this);
+        databaseConnect.requestRecipeDemo(detailedRecipe);
+        databaseConnect.requestLikeState(userID, detailedRecipe);
+        //databaseConnect.requestIngredients(detailedRecipe);
+        databaseConnect.requestRecipeDetails(detailedRecipe);
     }
 
 
@@ -201,7 +203,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 
     public void onLike_Clicked(View caller){
         System.out.println(tbtnStar.isChecked());
-        databaseConnect.uploadMealPlan(userID,detailedRecipeDetails,tbtnStar.isChecked());
+        databaseConnect.uploadMealPlan(userID, detailedRecipe,tbtnStar.isChecked());
     }
 
     @Override
@@ -217,5 +219,10 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     @Override
     public void notifyLikeStateChanged(boolean newState) {
         tbtnStar.setChecked(newState);
+    }
+
+    @Override
+    public void notifyRecipeDemoRetrieved(Bitmap bitmap) {
+        imgRecipeDemo.setImageBitmap(bitmap);
     }
 }
