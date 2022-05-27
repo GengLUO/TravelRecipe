@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,23 +32,24 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
+import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
 import be.kuleuven.travelrecipe.models.RecipesDashboard;
+import be.kuleuven.travelrecipe.models.User;
 
 public class MeFragment extends Fragment {
 
     private ImageView imgMore;
     private ImageView imgSetting;
-//    private TabLayout tabLayout;
-//    private ViewPager viewPager;
-//    private RecipeFragment recipeFragment;
-//    private WorkFragment workFragment;
+    private TextView usernameTextView;
+    private ImageView profileImageView;
     RecyclerView listRecyclerView;
     DashboardAdapter listDashboardAdapter;
     List<RecipeInfo> listRecipeList;
+    private int userid = 1;
 
     private RequestQueue requestQueue;
-    private static final String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/1";
+    private String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/";
     private ProgressDialog progressDialog;
     private RecipesDashboard recipesDashboard = new RecipesDashboard();
 
@@ -68,13 +70,17 @@ public class MeFragment extends Fragment {
         progressDialog.show();
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_me, container, false);
-
+        profileImageView = view.findViewById(R.id.profileImageView);
+        usernameTextView = view.findViewById(R.id.userNameTextView);
         requestQueue = Volley.newRequestQueue(getContext());
-
         listRecyclerView = view.findViewById(R.id.rvList);
-
         imgMore = view.findViewById(R.id.img_More);
         imgSetting = view.findViewById(R.id.img_Setting);
+        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        User user = new User(userid);
+        databaseConnect.retrieveUserInfo(user);
+        profileImageView.setImageBitmap(user.getImage());
+        usernameTextView.setText(user.getUserName());
 
         requestListRecipe();
 
@@ -83,6 +89,7 @@ public class MeFragment extends Fragment {
 
     private void requestListRecipe() {
         //Standard Volley request. We don't need any parameters for this one
+        GET_LIKED_URL = GET_LIKED_URL + String.valueOf(userid);
         JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_LIKED_URL, null,
                 new Response.Listener<JSONArray>() {
                     @Override
