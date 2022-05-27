@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import be.kuleuven.travelrecipe.R;
@@ -38,6 +39,7 @@ import be.kuleuven.travelrecipe.adapters.RecipeNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.controller.MySingleton;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.models.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 
@@ -119,9 +121,18 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 ////            }
 ////        });
 //        return filteredList;
+//        if(text.equals("")){
+//            return recipesDashboard.getAllRecipes();
+//        }
         return recipesDashboard.getAllRecipes()
                 .stream()
-                .filter(r -> r.getName().contains(text))
+                .filter(r -> r.getName().contains(text) ||
+                             r.getIngredients()
+                                     .stream()
+                                     .map(RecipeIngredient::getName)
+                                     .collect(Collectors.toSet())
+                                     .toString()
+                                     .contains(text))
                 .collect(Collectors.toList());
     }
 

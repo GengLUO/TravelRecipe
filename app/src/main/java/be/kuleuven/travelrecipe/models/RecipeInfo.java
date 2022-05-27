@@ -1,11 +1,15 @@
 package be.kuleuven.travelrecipe.models;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.RequiresApi;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class RecipeInfo implements Parcelable{
 
@@ -111,6 +115,11 @@ public class RecipeInfo implements Parcelable{
     public void addIngredients(RecipeIngredient ingredient){
         ingredients.add(ingredient);
     }
+
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    public Stream<RecipeIngredient> getRecipeIngredientsAsStream(){
+//        return ingredients.stream();
+//    }
 
     @Override
     public int describeContents() {

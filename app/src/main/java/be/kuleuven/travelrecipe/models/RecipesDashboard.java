@@ -16,7 +16,7 @@ public class RecipesDashboard extends AbstractRecipesDashboard {
         recipes.add(recipe);
     }
 
-    public RecipeInfo getRecipe(int index){
+    public RecipeInfo getRecipeInfo(int index){
         return recipes.get(index);
     }
 
