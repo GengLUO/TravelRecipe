@@ -97,21 +97,22 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 
-import com.android.volley.RequestQueue;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
-    private int userID = 1;
+    int userID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,60 +120,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.btm_nav);
         navController = Navigation.findNavController(this, R.id.nav_controller);
-//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//                bottomNavigationView.getMenu()).build();
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-
-
-//        requestQueue = Volley.newRequestQueue(this);
-//        {
-//            //Standard Volley request. We don't need any parameters for this one
-//            JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL, null,
-//                    new Response.Listener<JSONArray>() {
-//                        @Override
-//                        public void onResponse(JSONArray response) {
-//                            try
-//                            {
-//                                //Check if the DB actually contains an image
-//                                System.out.println("lsz sb");
-//                                if( response.length() > 0 ) {
-//                                    for(int i=0; i<response.length();i++){
-//                                        JSONObject o = response.getJSONObject(0);
-//
-//                                        //converting base64 string to image
-//                                        String name = o.getString("name");
-//                                        String desc = o.getString("recipe_desc");
-//                                        String b64String = o.getString("recipe_image");
-//                                        byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-//                                        Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-//
-//                                        //Link the bitmap to the ImageView, so it's visible on screen
-//                                        //imageRetrieved.setImageBitmap( bitmap2 );
-//                                        recipesModel.addRecipe(new Recipe(name,desc,bitmap));
-//
-//                                        //Just a double-check to tell us the request has completed
-//                                        Toast.makeText(MainActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//                            }
-//                            catch( JSONException e )
-//                            {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    },
-//                    new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//                            Toast.makeText(MainActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//            );
-//
-//            requestQueue.add(retrieveImageRequest);
-//        }
     }
+
+
 
     public void onButtonCreateRecipeClicked(View caller)
     {

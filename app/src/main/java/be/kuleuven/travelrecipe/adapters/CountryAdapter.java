@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
@@ -19,12 +20,27 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     private List<Country> list;
     private Context context;
     private int continentNumber;
+    private List<Integer> countryPictureList;
 
     public CountryAdapter(List<Country> list,int continentNumber, Context context) {
         this.list = list;
         this.context = context;
         this.continentNumber = continentNumber;
+        this.generateCountryList();
+    }
 
+    private void generateCountryList()
+    {
+        countryPictureList = new ArrayList<Integer>();
+        countryPictureList.add(R.drawable.spain);
+        countryPictureList.add(R.drawable.germany);
+        countryPictureList.add(R.drawable.denmark);
+        countryPictureList.add(R.drawable.sweden);
+        countryPictureList.add(R.drawable.france);
+        countryPictureList.add(R.drawable.belgium);
+        countryPictureList.add(R.drawable.italy);
+        countryPictureList.add(R.drawable.england);
+        countryPictureList.add(R.drawable.netherland);
     }
 
     @NonNull
@@ -39,7 +55,13 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         Country model = list.get(position);
         holder.number.setText(String.valueOf(model.getRecipeNumber()));
         holder.countryname.setText(model.getCountryName());
-        holder.imgCountry.setImageResource(R.drawable.france);
+        //
+        holder.imgCountry.setImageResource(countryPictureList.get(model.getCountryImg()-1));
+
+
+
+
+        //
         System.out.println("0");
 
     }
@@ -59,5 +81,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             countryname = itemView.findViewById(R.id.textViewRegionName);
             number = itemView.findViewById(R.id.textViewNumber);
         }
+
     }
 }

@@ -9,5 +9,4 @@ public interface HomepageFragmentNotifier {
     void notifyEuropeChanged();
     void notifyAmericaChanged();
     void notifyAfricaChanged();
-
 }

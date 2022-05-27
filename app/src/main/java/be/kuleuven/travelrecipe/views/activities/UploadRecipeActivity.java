@@ -25,11 +25,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
 
@@ -74,7 +78,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
         String countryName = recipeNameEditText.getText().toString();
         String description = descriptionEditText.getText().toString();
         String country = countryEditText.getText().toString();
-        int countryid = Integer.valueOf(country);
+        int countryid = findCountryidByCountry(country);
         recipe = new RecipeInfo(recipeID,countryName,description,countryid,bitmap);
         databaseConnect.uploadRecipe(caller,recipe,userID);
 
@@ -82,7 +86,27 @@ public class UploadRecipeActivity extends AppCompatActivity {
         intent.putExtra("recipeid",recipeID);
         startActivity(intent);
     }
-
+    public int findCountryidByCountry(String country)
+    {
+        int countryid = 1;
+        HashMap<String,Integer> countryHashMap = new HashMap();
+        Countries countries = new Countries(userID);
+        databaseConnect.retrieveCountries(countries);
+        for (int i = 1; i < countries.getCountries().size()+1; i++) {
+            String key = countries.getCountries().get(i).getCountryName();
+            countryHashMap.put(String.valueOf(i),i);
+            countryHashMap.put(key,i);
+            key = key.toLowerCase(Locale.ROOT);
+            countryHashMap.put(key,i);
+        }
+        try {
+            countryid = countryHashMap.get(country);
+        }
+        catch (Exception e)
+        {
+        }
+        return countryid;
+    }
     public void getBiggestRecipeID()
     {
         String biggestURL = "https://studev.groept.be/api/a21pt210/getBiggestRecipeID";

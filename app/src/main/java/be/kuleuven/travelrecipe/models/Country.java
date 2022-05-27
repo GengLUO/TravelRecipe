@@ -3,6 +3,7 @@ package be.kuleuven.travelrecipe.models;
 import be.kuleuven.travelrecipe.R;
 
 public class Country {
+
     private int countryImg;
     private String countryName;
     private int recipeNumber;

@@ -85,12 +85,17 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         progressBar4 = view.findViewById(R.id.progressBar4);
         profileImage = view.findViewById(R.id.profileImage);
         requestQueue = Volley.newRequestQueue( getContext() );
+        imageView1.setImageResource(R.drawable.asia);
+        imageView2.setImageResource(R.drawable.europe);
+        imageView3.setImageResource(R.drawable.america);
+        imageView4.setImageResource(R.drawable.africa);
         userid = 1;
         user = new User(userid);
         user.setHomepageFragmentNotifier(this);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveUserInfo(user);
         return view;
+
     }
 
 

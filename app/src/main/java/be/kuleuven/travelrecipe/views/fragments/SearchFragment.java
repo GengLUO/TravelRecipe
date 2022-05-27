@@ -110,15 +110,6 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private List<RecipeInfo> filterList(String text) {
-//        filteredList = recipes.stream()
-//                                .filter(r -> r.getName().contains(text))
-//                                .collect(Collectors.toList());
-////        recipes.stream().forEach(e -> {
-////            if (e.getName().contains(text)){
-////                filteredList.add(e);
-////            }
-////        });
-//        return filteredList;
         return recipesDashboard.getAllRecipes()
                 .stream()
                 .filter(r -> r.getName().contains(text))

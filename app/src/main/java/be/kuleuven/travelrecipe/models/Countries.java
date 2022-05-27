@@ -6,8 +6,13 @@ import java.util.List;
 import be.kuleuven.travelrecipe.adapters.CountryActivityNotifier;
 
 public class Countries extends AbstractCountries{
+
+
     private int userid;
     private List<Country> countries;
+
+
+
     public Countries(int userid) {
         this.userid = userid;
         this.countries = new ArrayList<Country>();
