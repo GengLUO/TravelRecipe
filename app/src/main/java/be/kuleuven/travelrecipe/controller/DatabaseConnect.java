@@ -129,6 +129,51 @@ public class DatabaseConnect {
         requestQueue.add(request);
         return countries;
     }
+    public Countries retrieveCountryByContinent(Countries countries, int continent)
+    {
+        int userID = countries.getUserid();
+        String countriesURL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfoByContinent/"+userID+"/"+continent;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, countriesURL, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                List<Country> temCountries= new ArrayList<Country>();
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject o = null;
+                    try {
+                        o = response.getJSONObject(i);
+                        int countryImg;
+                        String countryName;
+                        int recipeNumber;
+
+                        int actived;
+                        boolean ac;
+                        int continent;
+                        countryImg = o .getInt("idcountry");
+                        countryName = o.getString("country_name");
+                        recipeNumber = o.getInt("number");
+                        if (recipeNumber==0) {actived = 0;}
+                        else { actived = 1; }
+                        continent = o.getInt("continent");
+                        if (actived == 0){ac = false;}
+                        else {ac = true;}
+                        Country country = new Country(countryImg,countryName,recipeNumber,ac,continent);
+                        temCountries.add(country);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ;
+                    }
+                }
+                countries.setCountries(temCountries);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(request);
+        return countries;
+    }
+
     public void postProfileImage(View caller,Bitmap bitmap,User user)
     {
         String POST_URL = "https://studev.groept.be/api/a21pt210/insertProfileImage";

@@ -152,6 +152,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
             try {
                 //getting image from gallery
+                
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //Rescale the bitmap to 400px wide (avoid storing large images!)
                 bitmap = getResizedBitmap( bitmap, 400 );

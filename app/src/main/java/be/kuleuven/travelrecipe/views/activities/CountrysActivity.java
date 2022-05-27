@@ -55,30 +55,30 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue( this);
         setContentView(R.layout.activity_countries);
-//        textViewContinent.findViewById(R.id.textViewContinent);
+        textViewContinent.findViewById(R.id.textViewContinent);
         Intent intent = getIntent();
         continentNumber = intent.getIntExtra("continentnumber",1);
         userid = intent.getIntExtra("userid",1);
         countries = new Countries(userid);
         countries.setCountryActivityNotifier(this);
-//        if (continentNumber == 1)
-//        {
-//            textViewContinent.setText("Asia");
-//        }
-//        else if(continentNumber == 2)
-//        {
-//            textViewContinent.setText("Europe");
-//        }
-//        else if(continentNumber ==3)
-//        {
-//            textViewContinent.setText("America");
-//        }
-//        else
-//        {
-//            textViewContinent.setText("other places in the world");
-//        }
+        if (continentNumber == 1)
+        {
+            textViewContinent.setText("Asia");
+        }
+        else if(continentNumber == 2)
+        {
+            textViewContinent.setText("Europe");
+        }
+        else if(continentNumber ==3)
+        {
+            textViewContinent.setText("America");
+        }
+        else
+        {
+            textViewContinent.setText("other places in the world");
+        }
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveCountries(countries);
+        databaseConnect.retrieveCountryByContinent(countries,continentNumber);
         //continent setting
         TextView tvContinent = findViewById(R.id.textViewContinent);
     }

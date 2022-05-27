@@ -22,7 +22,9 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     private int continentNumber;
     //private List<Integer> countryPictureList;
     private final int[] flags = {R.drawable.spain, R.drawable.germany, R.drawable.denmark, R.drawable.sweden,
-            R.drawable.france,R.drawable.belgium,R.drawable.italy,R.drawable.england,R.drawable.netherland};
+            R.drawable.france,R.drawable.belgium,R.drawable.italy,R.drawable.england,R.drawable.netherland,R.drawable.ukraine,R.drawable.korea,R.drawable.korea,R.drawable.japan,
+    R.drawable.singapore,R.drawable.indonesia,R.drawable.philippines,R.drawable.thai,R.drawable.vietname,R.drawable.india,R.drawable.turkey,R.drawable.agentina,R.drawable.unitedstate,R.drawable.canada,R.drawable.brazil
+    };
 
     public CountryAdapter(List<Country> list,int continentNumber, Context context) {
         this.list = list;
@@ -30,19 +32,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         this.continentNumber = continentNumber;
     }
 
-//    private void generateCountryList()
-//    {
-//        countryPictureList = new ArrayList<Integer>();
-//        countryPictureList.add(R.drawable.spain);
-//        countryPictureList.add(R.drawable.germany);
-//        countryPictureList.add(R.drawable.denmark);
-//        countryPictureList.add(R.drawable.sweden);
-//        countryPictureList.add(R.drawable.france);
-//        countryPictureList.add(R.drawable.belgium);
-//        countryPictureList.add(R.drawable.italy);
-//        countryPictureList.add(R.drawable.england);
-//        countryPictureList.add(R.drawable.netherland);
-//    }
 
     @NonNull
     @Override
@@ -56,13 +45,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         Country model = list.get(position);
         holder.number.setText(String.valueOf(model.getRecipeNumber()));
         holder.countryname.setText(model.getCountryName());
-        //
         holder.imgCountry.setImageResource(flags[model.getCountryImg()-1]);
-
-
-
-
-        //
         System.out.println("0");
 
     }
