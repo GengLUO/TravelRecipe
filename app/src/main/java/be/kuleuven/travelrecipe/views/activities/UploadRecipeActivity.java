@@ -75,11 +75,11 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
     public void onPostRecipeButton_Clicked(View caller)
     {
-        String countryName = recipeNameEditText.getText().toString();
+        String recipeName = recipeNameEditText.getText().toString();
         String description = descriptionEditText.getText().toString();
         String country = countryEditText.getText().toString();
         int countryid = findCountryidByCountry(country);
-        recipe = new RecipeInfo(recipeID,countryName,description,countryid,bitmap);
+        recipe = new RecipeInfo(recipeName,description,countryid,recipeID,bitmap);
         databaseConnect.uploadRecipe(caller,recipe,userID);
 
         Intent intent = new Intent(this,UploadStepsActivity.class);
