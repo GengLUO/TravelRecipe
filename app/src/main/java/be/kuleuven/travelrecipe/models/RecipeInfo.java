@@ -12,7 +12,7 @@ public class RecipeInfo implements Parcelable{
     private String name, description;
     private int country, recipeId;
     private Bitmap demo;
-    private List<RecipeIngredient> ingredients;
+    private List<RecipeIngredient> ingredients = new ArrayList<>();
 
     public RecipeInfo(String name, String description, int country, int recipeId, List<RecipeIngredient> ingredients) {
         this.name = name;
@@ -106,6 +106,10 @@ public class RecipeInfo implements Parcelable{
 
     public void setIngredients(List<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void addIngredients(RecipeIngredient ingredient){
+        ingredients.add(ingredient);
     }
 
     @Override

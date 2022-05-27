@@ -7,17 +7,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.models.RecipeIngredient;
 
 public class IngredientAdapter extends BaseAdapter {
 
-    private LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
+    private List<RecipeIngredient> ingredients = new ArrayList<>();
     private Context context;
 
-    public IngredientAdapter(LinkedHashMap ingredients, Context context) {
+    public IngredientAdapter(List<RecipeIngredient> ingredients, Context context) {
         this.ingredients = ingredients;
         this.context = context;
     }
@@ -26,7 +29,7 @@ public class IngredientAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setList(LinkedHashMap<String, String> ingredients) {
+    public void setList(List<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
         notifyDataSetChanged();
     }
@@ -38,8 +41,7 @@ public class IngredientAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        String key = (String) ingredients.keySet().toArray()[i];
-        return new LinkedHashMap<String, String>().put(key,ingredients.get(key));
+        return ingredients.get(i);
     }
 
     @Override
@@ -53,10 +55,9 @@ public class IngredientAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.ingredient_list,null);
         //final ViewHolder holder = getViewHolder(view);
         ViewHolder holder = getViewHolder(view);
-
-        String key = (String) ingredients.keySet().toArray()[i];
-        holder.txtIngNmLbl.setText(key);
-        holder.txtIngAmntLbl.setText(ingredients.get(key));
+        RecipeIngredient ingredient = ingredients.get(i);
+        holder.txtIngNmLbl.setText(ingredient.getName());
+        holder.txtIngAmntLbl.setText(ingredient.getAmount());
         return view;
     }
 

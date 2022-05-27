@@ -25,6 +25,7 @@ import be.kuleuven.travelrecipe.adapters.IngredientAdapter;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
 import be.kuleuven.travelrecipe.models.DetailedRecipe;
+import be.kuleuven.travelrecipe.models.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 
 public class DetailActivity extends AppCompatActivity implements DetailNotifier {
@@ -61,6 +62,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 //        progressDialog.show();
         detailedRecipe = new DetailedRecipe();
         RecipeInfo recipe = (RecipeInfo) getIntent().getExtras().getParcelable("Recipe");
+        System.out.println(recipe.getIngredients());
         detailedRecipe.setRecipeInfo(recipe);
         imgRecipeDemo.setImageBitmap(recipe.getDemo());
         txtRecipeName.setText(recipe.getName());
@@ -70,7 +72,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         databaseConnect = new DatabaseConnect(requestQueue);
 
         setDetailsListView();
-        setIngredientsListView();
+        setIngredientsListView(recipe.getIngredients());
 
         initModel(databaseConnect);
 
@@ -182,9 +184,9 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         detailsListView.setAdapter(detailsAdapter);
     }
 
-    private void setIngredientsListView(){
+    private void setIngredientsListView(List<RecipeIngredient> ingredients){
         ingredientsListView = findViewById(R.id.ingredients_adapter);
-        ingredientAdapter = new IngredientAdapter(getApplicationContext());
+        ingredientAdapter = new IngredientAdapter(ingredients,getApplicationContext());
         ingredientsListView.setAdapter(ingredientAdapter);
     }
 
@@ -211,10 +213,10 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         detailsAdapter.setList(steps);
     }
 
-    @Override
-    public void notifyIngredientsRetrieved(LinkedHashMap<String,String> ingredients) {
-        ingredientAdapter.setList(ingredients);
-    }
+//    @Override
+//    public void notifyIngredientsRetrieved(List<RecipeIngredient> ingredients) {
+//        ingredientAdapter.setList(ingredients);
+//    }
 
     @Override
     public void notifyLikeStateChanged(boolean newState) {

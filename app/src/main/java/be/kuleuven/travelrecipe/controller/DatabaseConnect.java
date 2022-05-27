@@ -30,6 +30,7 @@ import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
 import be.kuleuven.travelrecipe.models.DetailedRecipe;
+import be.kuleuven.travelrecipe.models.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 import be.kuleuven.travelrecipe.models.RecipesDashboard;
 import be.kuleuven.travelrecipe.models.User;
@@ -261,7 +262,42 @@ public class DatabaseConnect {
         //Standard Volley request. We don't need any parameters for this one
         List<RecipeInfo> newRecipes = new ArrayList<>();
         String GET_RECIPE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
-        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_RECIPE_URL, null,
+        String GET_INGREDIENTS_URL = "https://studev.groept.be/api/a21pt210/getIngredients";
+        JsonArrayRequest retrieveRecipeIngredientsRequest = new JsonArrayRequest(Request.Method.GET, GET_INGREDIENTS_URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try
+                        {
+                            //Check if the DB actually contains an image
+                            if( response.length() > 0 ) {
+                                for(int i=0; i<response.length();i++){
+                                    JSONObject o = response.getJSONObject(i);
+                                    //converting base64 string to image
+                                    int id = o.getInt("recipe_id");
+                                    String name = o.getString("name");
+                                    String amount = o.getString("amount");
+                                    //Link the bitmap to the ImageView, so it's visible on screen
+                                    //imageRetrieved.setImageBitmap( bitmap2 );
+                                    newRecipes.get(id-1).addIngredients(new RecipeIngredient(name,amount));
+
+                                    //Just a double-check to tell us the request has completed
+                                }
+                                //progressDialog.dismiss();
+                            }
+                        }
+                        catch( JSONException e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        JsonArrayRequest retrieveRecipeInfoRequest = new JsonArrayRequest(Request.Method.GET, GET_RECIPE_URL, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -289,6 +325,7 @@ public class DatabaseConnect {
                                 }
                                 //progressDialog.dismiss();
                                 recipesDashboard.setRecipes(newRecipes);
+                                requestQueue.add(retrieveRecipeIngredientsRequest);
                             }
                         }
                         catch( JSONException e )
@@ -302,7 +339,8 @@ public class DatabaseConnect {
                     public void onErrorResponse(VolleyError error) {
                     }
                 });
-        requestQueue.add(retrieveImageRequest);
+
+        requestQueue.add(retrieveRecipeInfoRequest);
     }
 
     public void requestIngredients(DetailedRecipe detailedRecipeDetails) {
