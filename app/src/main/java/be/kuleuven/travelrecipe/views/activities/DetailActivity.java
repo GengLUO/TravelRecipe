@@ -3,7 +3,11 @@ package be.kuleuven.travelrecipe.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +28,7 @@ import be.kuleuven.travelrecipe.adapters.IngredientAdapter;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
 import be.kuleuven.travelrecipe.models.DetailedRecipe;
+import be.kuleuven.travelrecipe.models.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.RecipeStep;
 
 public class DetailActivity extends AppCompatActivity implements DetailNotifier {
@@ -34,11 +39,12 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     DetailsAdapter detailsAdapter;
     IngredientAdapter ingredientAdapter;
     ExpandListView detailsListView, ingredientsListView;
-    DetailedRecipe detailedRecipeDetails;
+    DetailedRecipe detailedRecipe;
     DatabaseConnect databaseConnect;
     List<RecipeStep> recipeList = new ArrayList<>();
     LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
     int userID = 1;
+    private int PICK_IMAGE_REQUEST = 111;
 
     private static final String GET_IMAGE_URL_this = "https://studev.groept.be/api/a21pt210/getStep/";
     private static final String GET_INGREDIENT_URL = "https://studev.groept.be/api/a21pt210/getIngredients/";
@@ -58,9 +64,10 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 //        progressDialog = new ProgressDialog(DetailActivity.this);
 //        progressDialog.setMessage("Uploading, please wait...");
 //        progressDialog.show();
-        detailedRecipeDetails = new DetailedRecipe();
+        detailedRecipe = new DetailedRecipe();
         RecipeInfo recipe = (RecipeInfo) getIntent().getExtras().getParcelable("Recipe");
-        detailedRecipeDetails.setRecipe(recipe);
+        System.out.println(recipe.getIngredients());
+        detailedRecipe.setRecipeInfo(recipe);
         imgRecipeDemo.setImageBitmap(recipe.getDemo());
         txtRecipeName.setText(recipe.getName());
         txtRecipeDesc.setText(recipe.getDescription());
@@ -69,7 +76,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         databaseConnect = new DatabaseConnect(requestQueue);
 
         setDetailsListView();
-        setIngredientsListView();
+        setIngredientsListView(recipe.getIngredients());
 
         initModel(databaseConnect);
 
@@ -79,10 +86,11 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     }
 
     private void initModel(DatabaseConnect databaseConnect) {
-        detailedRecipeDetails.setDetailNotifier(this);
-        databaseConnect.requestLikeState(userID,detailedRecipeDetails);
-        databaseConnect.requestIngredients(detailedRecipeDetails);
-        databaseConnect.requestRecipeDetails(detailedRecipeDetails);
+        detailedRecipe.setDetailNotifier(this);
+        databaseConnect.requestRecipeDemo(detailedRecipe);
+        databaseConnect.requestLikeState(userID, detailedRecipe);
+        //databaseConnect.requestIngredients(detailedRecipe);
+        databaseConnect.requestRecipeDetails(detailedRecipe);
     }
 
 
@@ -180,9 +188,9 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         detailsListView.setAdapter(detailsAdapter);
     }
 
-    private void setIngredientsListView(){
+    private void setIngredientsListView(List<RecipeIngredient> ingredients){
         ingredientsListView = findViewById(R.id.ingredients_adapter);
-        ingredientAdapter = new IngredientAdapter(getApplicationContext());
+        ingredientAdapter = new IngredientAdapter(ingredients,getApplicationContext());
         ingredientsListView.setAdapter(ingredientAdapter);
     }
 
@@ -201,7 +209,35 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 
     public void onLike_Clicked(View caller){
         System.out.println(tbtnStar.isChecked());
-        databaseConnect.uploadMealPlan(userID,detailedRecipeDetails,tbtnStar.isChecked());
+        databaseConnect.uploadMealPlan(userID, detailedRecipe,tbtnStar.isChecked());
+    }
+
+    public void onUploadWork_Clicked(View caller){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_PICK);
+
+        //this line will start the new activity and will automatically run the callback method below when the user has picked an image
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+
+            try {
+                //getting image from gallery
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //Rescale the bitmap to 400px wide (avoid storing large images!)
+                databaseConnect.uploadWork(detailedRecipe.getRecipeInfo().getRecipeId(),userID,bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -209,13 +245,18 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         detailsAdapter.setList(steps);
     }
 
-    @Override
-    public void notifyIngredientsRetrieved(LinkedHashMap<String,String> ingredients) {
-        ingredientAdapter.setList(ingredients);
-    }
+//    @Override
+//    public void notifyIngredientsRetrieved(List<RecipeIngredient> ingredients) {
+//        ingredientAdapter.setList(ingredients);
+//    }
 
     @Override
     public void notifyLikeStateChanged(boolean newState) {
         tbtnStar.setChecked(newState);
+    }
+
+    @Override
+    public void notifyRecipeDemoRetrieved(Bitmap bitmap) {
+        imgRecipeDemo.setImageBitmap(bitmap);
     }
 }

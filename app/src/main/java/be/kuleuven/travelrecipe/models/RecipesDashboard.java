@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public class RecipesDashboard extends AbstractRecipesDashboard {
-    protected List<RecipeInfo> recipes = new LinkedList<>();
+    private List<RecipeInfo> recipes = new LinkedList<>();
 
     public RecipesDashboard() {
     }
@@ -16,7 +16,7 @@ public class RecipesDashboard extends AbstractRecipesDashboard {
         recipes.add(recipe);
     }
 
-    public RecipeInfo getRecipe(int index){
+    public RecipeInfo getRecipeInfo(int index){
         return recipes.get(index);
     }
 

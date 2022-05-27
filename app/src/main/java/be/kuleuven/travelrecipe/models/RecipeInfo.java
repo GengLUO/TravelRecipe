@@ -1,26 +1,45 @@
 package be.kuleuven.travelrecipe.models;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class RecipeInfo implements Parcelable {
+import androidx.annotation.RequiresApi;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class RecipeInfo implements Parcelable{
 
     private String name, description;
     private int country, recipeId;
     private Bitmap demo;
+    private List<RecipeIngredient> ingredients = new ArrayList<>();
 
-    public RecipeInfo(String title, String desc , int id, Bitmap demo) {
-        this.name = title;
-        this.description = desc;
-        this.recipeId = id;
-        this.demo = demo;
-    }
-    public RecipeInfo(int recipeId, String name, String description, int country, Bitmap demo) {
-        this.recipeId = recipeId;
+    public RecipeInfo(String name, String description, int country, int recipeId, List<RecipeIngredient> ingredients) {
         this.name = name;
         this.description = description;
         this.country = country;
+        this.recipeId = recipeId;
+        this.ingredients = ingredients;
+    }
+
+    public RecipeInfo(String name, String description, int country, int recipeId, Bitmap demo, List<RecipeIngredient> ingredients) {
+        this.name = name;
+        this.description = description;
+        this.country = country;
+        this.recipeId = recipeId;
+        this.demo = demo;
+        this.ingredients = ingredients;
+    }
+
+    public RecipeInfo(String name, String description, int country, int recipeId, Bitmap demo) {
+        this.name = name;
+        this.description = description;
+        this.country = country;
+        this.recipeId = recipeId;
         this.demo = demo;
     }
 
@@ -29,7 +48,8 @@ public class RecipeInfo implements Parcelable {
         description = in.readString();
         country = in.readInt();
         recipeId = in.readInt();
-        demo = in.readParcelable(Bitmap.class.getClassLoader());
+        ingredients = new ArrayList<>();
+        in.readList(ingredients,RecipeIngredient.class.getClassLoader());
     }
 
     public static final Creator<RecipeInfo> CREATOR = new Creator<RecipeInfo>() {
@@ -84,6 +104,23 @@ public class RecipeInfo implements Parcelable {
         this.recipeId = recipeId;
     }
 
+    public List<RecipeIngredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<RecipeIngredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void addIngredients(RecipeIngredient ingredient){
+        ingredients.add(ingredient);
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    public Stream<RecipeIngredient> getRecipeIngredientsAsStream(){
+//        return ingredients.stream();
+//    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -95,6 +132,6 @@ public class RecipeInfo implements Parcelable {
         parcel.writeString(description);
         parcel.writeInt(country);
         parcel.writeInt(recipeId);
-        parcel.writeParcelable(demo, i);
+        parcel.writeList(ingredients);
     }
 }

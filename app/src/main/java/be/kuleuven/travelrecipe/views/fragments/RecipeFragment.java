@@ -100,7 +100,7 @@ public class RecipeFragment extends Fragment {
 
                                     //converting base64 string to image
                                     int id = o.getInt("recipe_id");
-                                    System.out.println(id);
+                                    int country = o.getInt("country");
                                     String name = o.getString("name");
                                     String desc = o.getString("recipe_desc");
                                     String b64String = o.getString("recipe_image");
@@ -109,7 +109,7 @@ public class RecipeFragment extends Fragment {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,id,bitmap));
+                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
 

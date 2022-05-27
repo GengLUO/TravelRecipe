@@ -1,26 +1,28 @@
 package be.kuleuven.travelrecipe.models;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DetailedRecipe extends AbstractDetailedRecipe {
-    private RecipeInfo recipe;
+    private RecipeInfo recipeInfo;
     private boolean likeState;
-    private LinkedHashMap<String, String> ingredients;
+    //private LinkedHashMap<String, String> ingredients;
     private List<RecipeStep> steps = new ArrayList<>();
 
     public DetailedRecipe() {
     }
 
-    public LinkedHashMap<String, String> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(LinkedHashMap<String, String> ingredients) {
-        this.ingredients = ingredients;
-        detailNotifier.notifyIngredientsRetrieved(ingredients);
-    }
+//    public LinkedHashMap<String, String> getIngredients() {
+//        return ingredients;
+//    }
+//
+//    public void setIngredients(LinkedHashMap<String, String> ingredients) {
+//        this.ingredients = ingredients;
+//        detailNotifier.notifyIngredientsRetrieved(ingredients);
+//    }
 
     public List<RecipeStep> getSteps() {
         return steps;
@@ -31,12 +33,17 @@ public class DetailedRecipe extends AbstractDetailedRecipe {
         detailNotifier.notifyDetailsRetrieved(steps);
     }
 
-    public RecipeInfo getRecipe() {
-        return recipe;
+    public RecipeInfo getRecipeInfo() {
+        return recipeInfo;
     }
 
-    public void setRecipe(RecipeInfo recipe) {
-        this.recipe = recipe;
+    public void setRecipeInfo(RecipeInfo recipeInfo) {
+        this.recipeInfo = recipeInfo;
+    }
+
+    public void setRecipeDemo(Bitmap bitmap){
+        getRecipeInfo().setDemo(bitmap);
+        detailNotifier.notifyRecipeDemoRetrieved(bitmap);
     }
 
     public boolean isLikeState() {

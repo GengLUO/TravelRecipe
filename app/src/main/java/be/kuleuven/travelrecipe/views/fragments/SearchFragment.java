@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import be.kuleuven.travelrecipe.R;
@@ -38,6 +39,7 @@ import be.kuleuven.travelrecipe.adapters.RecipeNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.controller.MySingleton;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.models.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.RecipesDashboard;
 
 
@@ -110,9 +112,28 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private List<RecipeInfo> filterList(String text) {
-        return recipesDashboard.getAllRecipes()
+//        filteredList = recipes.stream()
+//                                .filter(r -> r.getName().contains(text))
+//                                .collect(Collectors.toList());
+////        recipes.stream().forEach(e -> {
+////            if (e.getName().contains(text)){
+////                filteredList.add(e);
+////            }
+////        });
+//        return filteredList;
+//        if(text.equals("")){
+//            return recipesDashboard.getAllRecipes();
+//        }
+        return recipesDashboard
+                .getAllRecipes()
                 .stream()
-                .filter(r -> r.getName().contains(text))
+                .filter(r -> r.getName().contains(text) ||
+                             r.getIngredients()
+                                     .stream()
+                                     .map(RecipeIngredient::getName)
+                                     .collect(Collectors.toSet())
+                                     .toString()
+                                     .contains(text))
                 .collect(Collectors.toList());
     }
 
@@ -133,6 +154,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
                                     //converting base64 string to image
                                     int id = o.getInt("recipe_id");
+                                    int country = o.getInt("country");
                                     String name = o.getString("name");
                                     String desc = o.getString("recipe_desc");
                                     String b64String = o.getString("recipe_image");
@@ -141,7 +163,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,id,bitmap));
+                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
                                 }
