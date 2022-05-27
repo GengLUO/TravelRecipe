@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,7 @@ import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.adapters.RecipeNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.controller.MySingleton;
+import be.kuleuven.travelrecipe.models.CountryImageTranslation;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
 import be.kuleuven.travelrecipe.models.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.RecipesDashboard;

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.models.CountryImageTranslation;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
 import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
@@ -22,6 +23,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
 
     private List<RecipeInfo> list = new ArrayList<>();
     private final Context context;
+    private CountryImageTranslation countryImageTranslation = new CountryImageTranslation();
     private final int[] flags = {R.drawable.spain, R.drawable.germany, R.drawable.denmark, R.drawable.sweden,
             R.drawable.france,R.drawable.belgium,R.drawable.italy,R.drawable.england,R.drawable.netherland};
 
@@ -51,7 +53,8 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
         RecipeInfo recipe = list.get(position);
         //Todo
         //holder.imgFlag.setImageBitmap(recipe.getCountry());
-        holder.imgFlag.setImageResource(flags[recipe.getRecipeId()-1]);
+        //holder.imgFlag.setImageURI();
+        holder.flag.setText(countryImageTranslation.generateFlag(recipe.getCountry()));
         holder.imgDish.setImageBitmap(recipe.getDemo());
         holder.txtName.setText(recipe.getName());
         holder.txtDescription.setText(recipe.getDescription());
@@ -71,14 +74,14 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
 
     public class dashboardViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imgDish, imgFlag;
-        TextView txtName, txtDescription;
+        ImageView imgDish;
+        TextView txtName, txtDescription, flag;
 
         public dashboardViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgDish = itemView.findViewById(R.id.img_dish);
-            imgFlag = itemView.findViewById(R.id.img_flag);
+            flag = itemView.findViewById(R.id.flag);
             txtName = itemView.findViewById(R.id.txt_name);
             txtDescription = itemView.findViewById(R.id.txt_descr);
         }

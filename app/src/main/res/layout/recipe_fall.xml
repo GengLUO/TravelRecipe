@@ -23,16 +23,19 @@
         android:text="看起来就很好吃馋得想死"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toEndOf="@+id/img_dish"
-        app:layout_constraintTop_toBottomOf="@+id/img_flag" />
+        app:layout_constraintTop_toBottomOf="@+id/flag" />
 
-    <ImageView
-        android:id="@+id/img_flag"
-        android:layout_width="40dp"
-        android:layout_height="27dp"
+    <TextView
+        android:id="@+id/flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/img_dish"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="flag" />
 
     <TextView
         android:id="@+id/txt_name"
@@ -42,8 +45,8 @@
         android:text="水晶虾饺"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/img_flag"
-        app:layout_constraintTop_toTopOf="@+id/img_flag" />
+        app:layout_constraintStart_toEndOf="@+id/flag"
+        app:layout_constraintTop_toTopOf="@+id/flag" />
 
     <ImageView
         android:id="@+id/img_dish"

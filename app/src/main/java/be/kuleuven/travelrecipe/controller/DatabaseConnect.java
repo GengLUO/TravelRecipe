@@ -43,15 +43,12 @@ public class DatabaseConnect {
     private int PICK_IMAGE_REQUEST = 111;
     private User user;
 
-
     public DatabaseConnect(RequestQueue requestQueue) {
         this.requestQueue = requestQueue;
     }
 
-    public User retrieveUserInfo(User inuser)
-    {
+    public User retrieveUserInfo(User inuser) {
         String URL = "https://studev.groept.be/api/a21pt210";
-        //get username, recipeAmount, level
         this.user = inuser;
         int userID = this.user.getUserID();
         user.setUserID(userID);
@@ -88,8 +85,8 @@ public class DatabaseConnect {
         requestQueue.add(request);
         return user;
     }
-    public Countries retrieveCountries(Countries countries)
-    {
+
+    public Countries retrieveCountries(Countries countries) {
         int userID = countries.getUserid();
         String countriesURL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfo/"+userID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, countriesURL, null, new Response.Listener<JSONArray>() {
