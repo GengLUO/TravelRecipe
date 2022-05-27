@@ -3,8 +3,11 @@ package be.kuleuven.travelrecipe.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +44,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     List<RecipeStep> recipeList = new ArrayList<>();
     LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
     int userID = 1;
+    private int PICK_IMAGE_REQUEST = 111;
 
     private static final String GET_IMAGE_URL_this = "https://studev.groept.be/api/a21pt210/getStep/";
     private static final String GET_INGREDIENT_URL = "https://studev.groept.be/api/a21pt210/getIngredients/";
@@ -206,6 +210,34 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     public void onLike_Clicked(View caller){
         System.out.println(tbtnStar.isChecked());
         databaseConnect.uploadMealPlan(userID, detailedRecipe,tbtnStar.isChecked());
+    }
+
+    public void onUploadWork_Clicked(View caller){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_PICK);
+
+        //this line will start the new activity and will automatically run the callback method below when the user has picked an image
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+
+            try {
+                //getting image from gallery
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //Rescale the bitmap to 400px wide (avoid storing large images!)
+                databaseConnect.uploadWork(detailedRecipe.getRecipeInfo().getRecipeId(),userID,bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

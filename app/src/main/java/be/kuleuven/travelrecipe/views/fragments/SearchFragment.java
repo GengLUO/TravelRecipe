@@ -124,7 +124,8 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 //        if(text.equals("")){
 //            return recipesDashboard.getAllRecipes();
 //        }
-        return recipesDashboard.getAllRecipes()
+        return recipesDashboard
+                .getAllRecipes()
                 .stream()
                 .filter(r -> r.getName().contains(text) ||
                              r.getIngredients()

@@ -3,6 +3,7 @@ package be.kuleuven.travelrecipe.controller;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import be.kuleuven.travelrecipe.ImageActivity;
 import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.RecipeInfo;
@@ -531,5 +533,54 @@ public class DatabaseConnect {
                 }
         );
         requestQueue.add(retrieveImageRequest);
+    }
+
+    public void uploadWork(int recipeId, int userId, Bitmap bitmap){
+        String url = "https://studev.groept.be/api/a21pt210/insertWork";
+        bitmap = getResizedBitmap( bitmap, 400 );
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("userid", String.valueOf(userId));
+                params.put("recipeid",String.valueOf(recipeId));
+                params.put("image",imageString);
+                return params;
+            }
+        };
+        requestQueue.add(submitRequest);
+    }
+
+    private Bitmap getResizedBitmap(Bitmap bm, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scale = ((float) newWidth) / width;
+
+        // We create a matrix to transform the image
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+
+        // Create the new bitmap
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
     }
 }
