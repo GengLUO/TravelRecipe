@@ -22,6 +22,8 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
 
     private List<RecipeInfo> list = new ArrayList<>();
     private final Context context;
+    private final int[] flags = {R.drawable.spain, R.drawable.germany, R.drawable.denmark, R.drawable.sweden,
+            R.drawable.france,R.drawable.belgium,R.drawable.italy,R.drawable.england,R.drawable.netherland};
 
     public DashboardAdapter(List<RecipeInfo> list, Context context) {
         this.list = list;
@@ -49,18 +51,16 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
         RecipeInfo recipe = list.get(position);
         //Todo
         //holder.imgFlag.setImageBitmap(recipe.getCountry());
+        holder.imgFlag.setImageResource(flags[recipe.getRecipeId()-1]);
         holder.imgDish.setImageBitmap(recipe.getDemo());
         holder.txtName.setText(recipe.getName());
         holder.txtDescription.setText(recipe.getDescription());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("Recipe",  recipe);
-                System.out.println(recipe.getIngredients());
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("Recipe",  recipe);
+            System.out.println(recipe.getIngredients());
+            context.startActivity(intent);
         });
     }
 

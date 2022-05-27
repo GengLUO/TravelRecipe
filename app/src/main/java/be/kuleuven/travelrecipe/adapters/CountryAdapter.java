@@ -20,28 +20,29 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     private List<Country> list;
     private Context context;
     private int continentNumber;
-    private List<Integer> countryPictureList;
+    //private List<Integer> countryPictureList;
+    private final int[] flags = {R.drawable.spain, R.drawable.germany, R.drawable.denmark, R.drawable.sweden,
+            R.drawable.france,R.drawable.belgium,R.drawable.italy,R.drawable.england,R.drawable.netherland};
 
     public CountryAdapter(List<Country> list,int continentNumber, Context context) {
         this.list = list;
         this.context = context;
         this.continentNumber = continentNumber;
-        this.generateCountryList();
     }
 
-    private void generateCountryList()
-    {
-        countryPictureList = new ArrayList<Integer>();
-        countryPictureList.add(R.drawable.spain);
-        countryPictureList.add(R.drawable.germany);
-        countryPictureList.add(R.drawable.denmark);
-        countryPictureList.add(R.drawable.sweden);
-        countryPictureList.add(R.drawable.france);
-        countryPictureList.add(R.drawable.belgium);
-        countryPictureList.add(R.drawable.italy);
-        countryPictureList.add(R.drawable.england);
-        countryPictureList.add(R.drawable.netherland);
-    }
+//    private void generateCountryList()
+//    {
+//        countryPictureList = new ArrayList<Integer>();
+//        countryPictureList.add(R.drawable.spain);
+//        countryPictureList.add(R.drawable.germany);
+//        countryPictureList.add(R.drawable.denmark);
+//        countryPictureList.add(R.drawable.sweden);
+//        countryPictureList.add(R.drawable.france);
+//        countryPictureList.add(R.drawable.belgium);
+//        countryPictureList.add(R.drawable.italy);
+//        countryPictureList.add(R.drawable.england);
+//        countryPictureList.add(R.drawable.netherland);
+//    }
 
     @NonNull
     @Override
@@ -56,7 +57,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         holder.number.setText(String.valueOf(model.getRecipeNumber()));
         holder.countryname.setText(model.getCountryName());
         //
-        holder.imgCountry.setImageResource(countryPictureList.get(model.getCountryImg()-1));
+        holder.imgCountry.setImageResource(flags[model.getCountryImg()-1]);
 
 
 
