@@ -1,14 +1,15 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.dashboard;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 
-public class RecipesDashboard extends AbstractRecipesDashboard {
-    private List<RecipeInfo> recipes = new LinkedList<>();
 
-    public RecipesDashboard() {
+public class Dashboard extends AbstractDashboard {
+    private List<RecipeInfo> recipes = new ArrayList<>();
+
+    public Dashboard() {
     }
 
 

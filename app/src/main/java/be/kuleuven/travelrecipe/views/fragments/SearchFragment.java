@@ -1,8 +1,6 @@
 package be.kuleuven.travelrecipe.views.fragments;
 
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -12,37 +10,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
-import be.kuleuven.travelrecipe.adapters.RecipeNotifier;
+import be.kuleuven.travelrecipe.notifier.RecipeNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.controller.MySingleton;
-import be.kuleuven.travelrecipe.models.CountryImageTranslation;
-import be.kuleuven.travelrecipe.models.RecipeInfo;
-import be.kuleuven.travelrecipe.models.RecipeIngredient;
-import be.kuleuven.travelrecipe.models.RecipesDashboard;
+import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
+import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
+import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 
 
 public class SearchFragment extends Fragment implements RecipeNotifier {
@@ -50,10 +38,14 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     private RecyclerView dashboardRecyclerView;
     private DashboardAdapter dashboardAdapter;
     private SearchView searchView;
+    private Spinner dashboardSpinner;
 
-    private static final String GET_IMAGE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
     private ProgressDialog progressDialog;
-    private RecipesDashboard recipesDashboard;
+    private Dashboard dashboard;
+    private static final int DATE_ASC = 0;
+    private static final int DATE_DESC = 1;
+    private static final int A_Z = 2;
+    private static final int Z_A = 3;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -68,12 +60,30 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        progressDialog = new ProgressDialog(getContext());
-//        progressDialog.setMessage("Uploading, please wait...");
-//        progressDialog.show();
+/*
+ progressDialog = new ProgressDialog(getContext());
+ progressDialog.setMessage("Uploading, please wait...");
+ progressDialog.show();
+*/
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         searchView = view.findViewById(R.id.searchView);
         dashboardRecyclerView = view.findViewById(R.id.recycler_view);
+        dashboardSpinner = view.findViewById(R.id.spSearch);
+        dashboardSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("click:"+i);
+                sortList(i);
+                System.out.println("finish");
+                System.out.println(i);
+                dashboardAdapter.setList(filterList(searchView.getQuery().toString()));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
         initView();
         initModel();
         return view;
@@ -99,17 +109,18 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
             public boolean onQueryTextChange(String newText) {
                 //bindAdapter(filterList(newText));
                 dashboardAdapter.setList(filterList(newText));
+                System.out.println("size"+ dashboard.getAllRecipes().size());
                 return false;
             }
         });
     }
 
     private void initModel() {
-        recipesDashboard = new RecipesDashboard();
-        recipesDashboard.setRecipeNotifier(this);
+        dashboard = new Dashboard();
+        dashboard.setRecipeNotifier(this);
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveRecipes(recipesDashboard);
+        databaseConnect.retrieveRecipes(dashboard);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -126,7 +137,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 //        if(text.equals("")){
 //            return recipesDashboard.getAllRecipes();
 //        }
-        return recipesDashboard
+        return dashboard
                 .getAllRecipes()
                 .stream()
                 .filter(r -> r.getName().contains(text) ||
@@ -139,54 +150,24 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
                 .collect(Collectors.toList());
     }
 
-
-    private void requestRecipes() {
-        //Standard Volley request. We don't need any parameters for this one
-        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try
-                        {
-                            //Check if the DB actually contains an image
-                            Toast.makeText(getContext(), "begin", Toast.LENGTH_SHORT).show();
-                            if( response.length() > 0 ) {
-                                for(int i=0; i<response.length();i++){
-                                    JSONObject o = response.getJSONObject(i);
-
-                                    //converting base64 string to image
-                                    int id = o.getInt("recipe_id");
-                                    int country = o.getInt("country");
-                                    String name = o.getString("name");
-                                    String desc = o.getString("recipe_desc");
-                                    String b64String = o.getString("recipe_image");
-                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-
-                                    //Link the bitmap to the ImageView, so it's visible on screen
-                                    //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
-
-                                    //Just a double-check to tell us the request has completed
-                                }
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(), "IIImage retrieved from DB", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        catch( JSONException e )
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Unable to communicate with server", Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-        MySingleton.getInstance(getContext()).addToRequestQueue(retrieveImageRequest);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void sortList(int state){
+        System.out.println(searchView.getQuery());
+        switch (state){
+            case DATE_ASC : dashboard.getAllRecipes()
+                                            .sort(Comparator.comparingInt(RecipeInfo::getRecipeId));
+                //(r1,r2) -> (r2.getRecipeId()-r1.getRecipeId())
+                break;
+            case DATE_DESC : dashboard.getAllRecipes()
+                                            .sort(Comparator.comparingInt(RecipeInfo::getRecipeId).reversed());
+                break;
+            case A_Z: dashboard.getAllRecipes()
+                                        .sort((Comparator.comparing(RecipeInfo::getName)));
+                break;
+            case Z_A: dashboard.getAllRecipes()
+                                        .sort((Comparator.comparing(RecipeInfo::getName).reversed()));
+                break;
+        }
     }
 
     @Override

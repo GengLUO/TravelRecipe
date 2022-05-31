@@ -1,6 +1,6 @@
 package be.kuleuven.travelrecipe.models;
 
-import be.kuleuven.travelrecipe.adapters.CountryActivityNotifier;
+import be.kuleuven.travelrecipe.notifier.CountryActivityNotifier;
 
 public abstract class AbstractCountries {
     protected CountryActivityNotifier countryActivityNotifier;

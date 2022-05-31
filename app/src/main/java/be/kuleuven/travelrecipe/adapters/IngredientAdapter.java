@@ -8,12 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.RecipeIngredient;
+import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
 
 public class IngredientAdapter extends BaseAdapter {
 

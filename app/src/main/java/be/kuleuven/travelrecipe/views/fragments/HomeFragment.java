@@ -1,13 +1,8 @@
 package be.kuleuven.travelrecipe.views.fragments;
 //2754
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +10,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.adapters.HomepageFragmentNotifier;
+import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.User;
-import be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomeFragment extends Fragment implements HomepageFragmentNotifier {

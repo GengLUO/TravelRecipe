@@ -33,8 +33,8 @@ import java.util.List;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.RecipeInfo;
-import be.kuleuven.travelrecipe.models.RecipesDashboard;
+import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
+import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 import be.kuleuven.travelrecipe.models.User;
 
 public class MeFragment extends Fragment {
@@ -51,7 +51,7 @@ public class MeFragment extends Fragment {
     private RequestQueue requestQueue;
     private String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/";
     private ProgressDialog progressDialog;
-    private RecipesDashboard recipesDashboard = new RecipesDashboard();
+    private Dashboard dashboard = new Dashboard();
 
     public MeFragment() {
         // Required empty public constructor
@@ -113,7 +113,7 @@ public class MeFragment extends Fragment {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
+                                    dashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
 
@@ -143,7 +143,7 @@ public class MeFragment extends Fragment {
     }
 
     private void bindAdapter() {
-        listDashboardAdapter = new DashboardAdapter(recipesDashboard.getAllRecipes(),getContext());
+        listDashboardAdapter = new DashboardAdapter(dashboard.getAllRecipes(),getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         listRecyclerView.setLayoutManager(layoutManager);
         listRecyclerView.setNestedScrollingEnabled(false);

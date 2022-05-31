@@ -3,8 +3,6 @@ package be.kuleuven.travelrecipe.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.kuleuven.travelrecipe.adapters.CountryActivityNotifier;
-
 public class Countries extends AbstractCountries{
 
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.RecipeStep;
+import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 
 public class DetailsAdapter extends BaseAdapter {
 

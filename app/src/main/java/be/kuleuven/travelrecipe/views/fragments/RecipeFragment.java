@@ -27,12 +27,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Locale;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
-import be.kuleuven.travelrecipe.models.RecipeInfo;
-import be.kuleuven.travelrecipe.models.RecipesDashboard;
+import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
+import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 
 public class RecipeFragment extends Fragment {
 
@@ -43,7 +42,7 @@ public class RecipeFragment extends Fragment {
     private RequestQueue requestQueue;
     private static final String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/1";
     private ProgressDialog progressDialog;
-    private RecipesDashboard recipesDashboard = new RecipesDashboard();
+    private Dashboard dashboard = new Dashboard();
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -78,7 +77,7 @@ public class RecipeFragment extends Fragment {
     }
 
     private void bindAdapter() {
-        dashboardAdapter = new DashboardAdapter(recipesDashboard.getAllRecipes(),getContext());
+        dashboardAdapter = new DashboardAdapter(dashboard.getAllRecipes(),getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         dashboardRecyclerView.setLayoutManager(layoutManager);
         //dashboardRecyclerView.setNestedScrollingEnabled(false);
@@ -110,7 +109,7 @@ public class RecipeFragment extends Fragment {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    recipesDashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
+                                    dashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
 

@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.adapters;
+package be.kuleuven.travelrecipe.notifier;
 
 import java.util.List;
 

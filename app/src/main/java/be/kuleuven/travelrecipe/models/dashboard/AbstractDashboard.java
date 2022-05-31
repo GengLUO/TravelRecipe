@@ -1,8 +1,8 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.dashboard;
 
-import be.kuleuven.travelrecipe.adapters.RecipeNotifier;
+import be.kuleuven.travelrecipe.notifier.RecipeNotifier;
 
-public abstract class AbstractRecipesDashboard {
+public abstract class AbstractDashboard {
     protected RecipeNotifier recipeNotifier;
     public final void setRecipeNotifier(RecipeNotifier recipeNotifier){
         this.recipeNotifier = recipeNotifier;

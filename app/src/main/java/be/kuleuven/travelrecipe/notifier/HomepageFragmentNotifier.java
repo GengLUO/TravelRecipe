@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.adapters;
+package be.kuleuven.travelrecipe.notifier;
 
 public interface HomepageFragmentNotifier {
     void notifyNameChanged();

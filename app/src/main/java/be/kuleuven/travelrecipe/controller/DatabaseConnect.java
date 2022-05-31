@@ -27,14 +27,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import be.kuleuven.travelrecipe.ImageActivity;
 import be.kuleuven.travelrecipe.models.Countries;
 import be.kuleuven.travelrecipe.models.Country;
-import be.kuleuven.travelrecipe.models.RecipeInfo;
-import be.kuleuven.travelrecipe.models.DetailedRecipe;
-import be.kuleuven.travelrecipe.models.RecipeIngredient;
-import be.kuleuven.travelrecipe.models.RecipeStep;
-import be.kuleuven.travelrecipe.models.RecipesDashboard;
+import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
+import be.kuleuven.travelrecipe.models.recipe.DetailedRecipe;
+import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
+import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
+import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 import be.kuleuven.travelrecipe.models.User;
 
 public class DatabaseConnect {
@@ -302,7 +301,7 @@ public class DatabaseConnect {
         requestQueue.add(submitRequest);
     }
 
-    public void retrieveRecipes(RecipesDashboard recipesDashboard){
+    public void retrieveRecipes(Dashboard dashboard){
         //Standard Volley request. We don't need any parameters for this one
         List<RecipeInfo> newRecipes = new ArrayList<>();
         String GET_RECIPE_URL = "https://studev.groept.be/api/a21pt210/getRecipe";
@@ -368,7 +367,7 @@ public class DatabaseConnect {
                                     //Just a double-check to tell us the request has completed
                                 }
                                 //progressDialog.dismiss();
-                                recipesDashboard.setRecipes(newRecipes);
+                                dashboard.setRecipes(newRecipes);
                                 requestQueue.add(retrieveRecipeIngredientsRequest);
                             }
                         }
