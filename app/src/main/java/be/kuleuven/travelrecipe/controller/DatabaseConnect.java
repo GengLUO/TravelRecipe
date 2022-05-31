@@ -66,10 +66,6 @@ public class DatabaseConnect {
                         user.setUserName(o.getString("Username"));
                         user.setLevel(o.getInt("Level"));
                         user.setRecipeAmount(o.getInt("RecipeAmount"));
-                        user.setCountryAfricaAmount(o.getInt("CountryAfricaAmount"));
-                        user.setCountryAmericaAmount(o.getInt("CountryAmericaAmount"));
-                        user.setCountryAsiaAmount(o.getInt("CountryAsiaAmount"));
-                        user.setCountryEuropeAmount(o.getInt("CountryEuropeAmount"));
                         //image
                         String b64String = o.getString("image");
                         byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
@@ -236,18 +232,8 @@ public class DatabaseConnect {
                     JSONObject o = null;
                     try {
                         o = response.getJSONObject(i);
-                        int countryImg;
-                        String countryName;
-                        int recipeNumber;
-                        int continented;
-                        int actived;
-                        boolean ac;
-                        countryImg = o .getInt("idcountry");
-                        countryName = o.getString("country_name");
-                        recipeNumber = o.getInt("number");
-                        if (recipeNumber==0) {actived = 0;}
-                        else { actived = 1; }
-                        continented = o.getInt("continent");
+                        int continented = o.getInt("continent");
+                        int recipeNumber = o.getInt("number");
                         if (continented ==1)
                         {
                             continent1 = continent1+recipeNumber;
