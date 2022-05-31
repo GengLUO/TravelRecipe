@@ -1,6 +1,7 @@
 package be.kuleuven.travelrecipe.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -21,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -35,6 +37,7 @@ import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 import be.kuleuven.travelrecipe.models.user.User;
+import be.kuleuven.travelrecipe.views.activities.LoginActivity;
 import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 public class DatabaseConnect {
@@ -277,6 +280,69 @@ public class DatabaseConnect {
         });
         requestQueue.add(request);
     }
+
+    public void login(LoginActivity loginActivity, String username, String password)
+    {
+        String loginURL = "https://studev.groept.be/api/a21pt210/login/"+username + "/" +password;
+        JsonArrayRequest loginRequest = new JsonArrayRequest(Request.Method.GET, loginURL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try
+                        {
+                            if (response.length() ==1)
+                            {
+                                JSONObject o = response.getJSONObject(0);
+                                int userid = o.getInt("idUser");
+                                loginActivity.login(userid);
+                            }
+                            else
+                            {
+                                Toast.makeText(loginActivity,"username or password wrong",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch( JSONException e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(DetailActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+        requestQueue.add(loginRequest);
+    }
+    public void register(View caller, String username, String password)
+    {
+        String loginURL = "https://studev.groept.be/api/a21pt210/register";
+        StringRequest  registerRequest = new StringRequest (Request.Method.POST, loginURL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                progressDialog.dismiss();
+                Toast.makeText(caller.getContext(), "register succeed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(caller.getContext(), "register failed", Toast.LENGTH_LONG).show();
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("password",password);
+                return params;
+            }
+        };
+        requestQueue.add(registerRequest);
+    }
+
     public void postProfileImage(View caller,Bitmap bitmap,User user) {
         String POST_URL = "https://studev.groept.be/api/a21pt210/insertProfileImage";
         //Start an animating progress widget

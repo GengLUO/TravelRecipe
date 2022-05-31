@@ -2,10 +2,12 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,16 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 
 public class LoginActivity extends AppCompatActivity {
-    private List<String> username;
-    private List<String> password;
-    private List<Integer> userid;
-    private boolean logedin = false;
-    private boolean request = false;
+    private boolean visible;
     private RequestQueue requestQueue;
     private EditText usernameEditText;
     private EditText passwordEditText;
+    private EditText passwordEditText2;
+    private DatabaseConnect databaseConnect;
     private static String loginURL = "https://studev.groept.be/api/a21pt210/login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,50 +42,46 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         usernameEditText = findViewById(R.id.userNameInputEditText);
         passwordEditText = findViewById(R.id.passwordInputEditText);
+        passwordEditText2 = findViewById(R.id.passwordInputEditText2);
+        passwordEditText2.setVisibility(View.INVISIBLE);
+        visible = false;
         requestQueue = Volley.newRequestQueue(this);
-        username = new ArrayList<String>();
-        password = new ArrayList<String>();
-        userid = new ArrayList<Integer>();
-        JsonArrayRequest loginRequest = new JsonArrayRequest(Request.Method.GET, loginURL, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try
-                        {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject o = response.getJSONObject(i);
-                                username.add(o.getString("Username"));
-                                password.add(o.getString("Password"));
-                                userid.add(o.getInt("idUser"));
-                            }
-                        }
-                        catch( JSONException e )
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(DetailActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-        requestQueue.add(loginRequest);
+        databaseConnect = new DatabaseConnect(requestQueue);
 
     }
 
     public void onClickLoginButton(View caller)
     {
-        for (int i = 0; i < username.size(); i++) {
-            if (username.get(i).equals(usernameEditText.getText().toString())&&password.get(i).equals(passwordEditText.getText().toString()))
+        if (visible)
+        {
+            passwordEditText2.setVisibility(View.INVISIBLE);
+            visible = false;
+        }
+        else {
+            databaseConnect.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
+        }
+    }
+    public void onClickRegisterButton(View caller)
+    {
+        if (visible)
+        {
+            if (passwordEditText.getText().toString().equals(passwordEditText2.getText().toString())) {
+                databaseConnect.register(caller, usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                passwordEditText2.setVisibility(View.INVISIBLE);
+                visible = false;
+            }
+            else
             {
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("userid",userid.get(i));
-                startActivity(intent);
+                Toast.makeText(this,"password input different",Toast.LENGTH_SHORT).show();
             }
         }
+        else
+        {
+            passwordEditText2.setVisibility(View.VISIBLE);
+            visible = true;
+        }
+
+
     }
 
     public String encrypt(String password){
@@ -103,5 +100,13 @@ public class LoginActivity extends AppCompatActivity {
         }
         return encryptedPassword;
     }
+
+    public void login(int userid)
+    {
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("userid",userid);
+        startActivity(intent);
+    }
+
 
 }
