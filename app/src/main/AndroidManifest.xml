@@ -22,9 +22,6 @@
             android:name=".views.activities.UploadRecipeActivity"
             android:exported="false" />
         <activity
-            android:name=".ImageActivity"
-            android:exported="false" />
-        <activity
             android:name=".views.activities.CountrysActivity"
             android:exported="false" />
         <activity
