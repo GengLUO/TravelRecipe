@@ -2,7 +2,6 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,8 +16,8 @@ import com.android.volley.toolbox.Volley;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.notifier.CountryActivityNotifier;
-import be.kuleuven.travelrecipe.models.Countries;
-import be.kuleuven.travelrecipe.models.Country;
+import be.kuleuven.travelrecipe.models.country.Countries;
+import be.kuleuven.travelrecipe.models.country.Country;
 
 
 import java.util.List;

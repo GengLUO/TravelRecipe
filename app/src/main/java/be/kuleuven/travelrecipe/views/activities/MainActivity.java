@@ -122,13 +122,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userID = intent.getIntExtra("userid",1);
         Bundle bundle = new Bundle();
-        bundle.putString("id","...");
         navController = Navigation.findNavController(this, R.id.nav_controller);
+        bundle.putInt("userid",userID);
+        System.out.println(userID);
+        navController.setGraph(R.navigation.bottom_navigation,bundle);
+        navController.navigate(R.id.fragment_home,bundle);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
         navController.setGraph(R.navigation.bottom_navigation,bundle);
         //System.out.println(bundle);
     }
-
 
 
     public void onButtonCreateRecipeClicked(View caller)

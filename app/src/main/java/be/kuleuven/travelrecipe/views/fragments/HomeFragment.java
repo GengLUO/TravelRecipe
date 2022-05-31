@@ -13,7 +13,7 @@ import android.widget.TextView;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.models.user.User;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     private ProgressBar progressBar2;
     private ProgressBar progressBar3;
     private ProgressBar progressBar4;
+    View view;
     RequestQueue requestQueue;
     private static final String URL = "https://studev.groept.be/api/a21pt210";
 
@@ -52,7 +53,18 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        initialize(view);
+        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        databaseConnect.retrieveUserInfo(user);
+        databaseConnect.retrieveContinentInfo(user);
+
+        return view;
+
+    }
+
+    public View initialize(View view)
+    {
         recipeAmountText = view.findViewById(R.id.recipeAmountText);
         recipeAmountTextview = view.findViewById(R.id.recipeAmountTextview);
         levelTextview = view.findViewById(R.id.levelTextview);
@@ -72,16 +84,12 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         imageView2.setImageResource(R.drawable.europe);
         imageView3.setImageResource(R.drawable.america);
         imageView4.setImageResource(R.drawable.africa);
-        userid = 1;
+        userid = getArguments().getInt("userid");
+        System.out.println(userid);
         user = new User(userid);
         user.setHomepageFragmentNotifier(this);
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveUserInfo(user);
         return view;
-
     }
-
-
     @Override
     public void notifyNameChanged() {
         usernameTextview.setText(user.getUserName());
@@ -109,12 +117,10 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     public void notifyEuropeChanged() {
         progressBar2.setProgress(user.getCountryEuropeAmount()*10);
     }
-
     @Override
     public void notifyAmericaChanged() {
         progressBar3.setProgress(user.getCountryAmericaAmount()*10);
     }
-
     @Override
     public void notifyAfricaChanged() {
         progressBar4.setProgress(user.getCountryAfricaAmount()*10);

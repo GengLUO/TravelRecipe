@@ -4,18 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.controller.CountryImageTranslation;
-import be.kuleuven.travelrecipe.models.Country;
+import be.kuleuven.travelrecipe.models.country.Country;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder>{
     private List<Country> list;

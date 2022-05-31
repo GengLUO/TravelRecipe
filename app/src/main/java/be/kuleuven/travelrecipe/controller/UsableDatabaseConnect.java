@@ -6,7 +6,7 @@ import android.view.View;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
-import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.models.user.User;
 
 public interface UsableDatabaseConnect {
     User retrieveUserInfo(User inuser);

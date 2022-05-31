@@ -3,12 +3,8 @@ package be.kuleuven.travelrecipe.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -26,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.Country;
 
 public class LoginActivity extends AppCompatActivity {
     private List<String> username;

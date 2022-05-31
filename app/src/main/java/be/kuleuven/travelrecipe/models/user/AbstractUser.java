@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.user;
 
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 

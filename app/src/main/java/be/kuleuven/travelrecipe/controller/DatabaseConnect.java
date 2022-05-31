@@ -27,14 +27,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import be.kuleuven.travelrecipe.models.Countries;
-import be.kuleuven.travelrecipe.models.Country;
+import be.kuleuven.travelrecipe.models.country.Countries;
+import be.kuleuven.travelrecipe.models.country.Country;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.models.recipe.DetailedRecipe;
 import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
-import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.models.user.User;
 import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 public class DatabaseConnect {
@@ -159,7 +159,6 @@ public class DatabaseConnect {
                         if (continent ==continented ){temCountries.add(country);}
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        ;
                     }
                 }
                 countries.setCountries(temCountries,1);
@@ -218,6 +217,66 @@ public class DatabaseConnect {
         return countries;
     }
 
+    public void retrieveContinentInfo( User user)
+    {
+        int userID = user.getUserID();
+        String POST_URL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfo/"+userID;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, POST_URL, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                List<Country> temCountries= new ArrayList<Country>();
+                int continent1 = 0;
+                int continent2 = 0;
+                int continent3 = 0;
+                int continent4 = 0;
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject o = null;
+                    try {
+                        o = response.getJSONObject(i);
+                        int countryImg;
+                        String countryName;
+                        int recipeNumber;
+                        int continented;
+                        int actived;
+                        boolean ac;
+                        countryImg = o .getInt("idcountry");
+                        countryName = o.getString("country_name");
+                        recipeNumber = o.getInt("number");
+                        if (recipeNumber==0) {actived = 0;}
+                        else { actived = 1; }
+                        continented = o.getInt("continent");
+                        if (continented ==1)
+                        {
+                            continent1 = continent1+recipeNumber;
+                        }
+                        else if (continented == 2)
+                        {
+                            continent2 = continent2 +recipeNumber;
+                        }
+                        else if (continented == 3)
+                        {
+                            continent3 = continent3 +recipeNumber;
+                        }
+                        else if (continented == 4)
+                        {
+                            continent4 = continent4 +recipeNumber;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                user.setCountryAsiaAmount(continent1);
+                user.setCountryEuropeAmount(continent2);
+                user.setCountryAmericaAmount(continent3);
+                user.setCountryAfricaAmount(continent4);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(request);
+    }
     public void postProfileImage(View caller,Bitmap bitmap,User user) {
         String POST_URL = "https://studev.groept.be/api/a21pt210/insertProfileImage";
         //Start an animating progress widget

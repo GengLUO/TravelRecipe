@@ -1,11 +1,10 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.user;
 
 import android.graphics.Bitmap;
 
-import java.util.ArrayList;
-import java.util.List;
+import be.kuleuven.travelrecipe.models.user.AbstractUser;
 
-public class User extends AbstractUser{
+public class User extends AbstractUser {
 
     private int userID;
     private String userName;

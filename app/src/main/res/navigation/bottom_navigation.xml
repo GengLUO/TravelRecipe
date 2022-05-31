@@ -9,17 +9,31 @@
         android:id="@+id/search"
         android:name="be.kuleuven.travelrecipe.views.fragments.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <argument
+            android:name="userID"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
     <fragment
         android:id="@+id/home"
         android:name="be.kuleuven.travelrecipe.views.fragments.HomeFragment"
+
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="userID"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
     <fragment
         android:id="@+id/me"
         android:name="be.kuleuven.travelrecipe.views.fragments.MeFragment"
         android:label="fragment_me"
         tools:layout="@layout/fragment_me" >
-        <argument android:name="id" />
+        <argument
+            android:name="userid"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
 </navigation>

@@ -38,7 +38,7 @@ import be.kuleuven.travelrecipe.adapters.DashboardAdapter;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
-import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.models.user.User;
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 import be.kuleuven.travelrecipe.notifier.RecipeNotifier;
 import be.kuleuven.travelrecipe.views.activities.MainActivity;

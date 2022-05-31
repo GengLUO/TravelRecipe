@@ -21,7 +21,7 @@ import com.android.volley.toolbox.Volley;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.models.user.User;
 
 
 public class SettingMain extends AppCompatActivity implements HomepageFragmentNotifier {

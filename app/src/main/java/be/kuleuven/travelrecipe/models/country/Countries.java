@@ -1,9 +1,9 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.country;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Countries extends AbstractCountries{
+public class Countries extends AbstractCountries {
 
 
     private int userid;

@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.country;
 
 import be.kuleuven.travelrecipe.R;
 
