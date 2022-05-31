@@ -9,12 +9,12 @@ import java.util.List;
 
 public class RecipeInfo implements Parcelable{
 
-    private String name, description;
-    private int country, recipeId;
+    private String name, description,country;
+    private int  recipeId;
     private Bitmap demo;
     private List<RecipeIngredient> ingredients = new ArrayList<>();
 
-    public RecipeInfo(String name, String description, int country, int recipeId, List<RecipeIngredient> ingredients) {
+    public RecipeInfo(String name, String description, String country, int recipeId, List<RecipeIngredient> ingredients) {
         this.name = name;
         this.description = description;
         this.country = country;
@@ -22,7 +22,7 @@ public class RecipeInfo implements Parcelable{
         this.ingredients = ingredients;
     }
 
-    public RecipeInfo(String name, String description, int country, int recipeId, Bitmap demo, List<RecipeIngredient> ingredients) {
+    public RecipeInfo(String name, String description, String country, int recipeId, Bitmap demo, List<RecipeIngredient> ingredients) {
         this.name = name;
         this.description = description;
         this.country = country;
@@ -31,7 +31,7 @@ public class RecipeInfo implements Parcelable{
         this.ingredients = ingredients;
     }
 
-    public RecipeInfo(String name, String description, int country, int recipeId, Bitmap demo) {
+    public RecipeInfo(String name, String description, String country, int recipeId, Bitmap demo) {
         this.name = name;
         this.description = description;
         this.country = country;
@@ -42,7 +42,7 @@ public class RecipeInfo implements Parcelable{
     protected RecipeInfo(Parcel in) {
         name = in.readString();
         description = in.readString();
-        country = in.readInt();
+        country = in.readString();
         recipeId = in.readInt();
         ingredients = new ArrayList<>();
         in.readList(ingredients,RecipeIngredient.class.getClassLoader());
@@ -76,11 +76,11 @@ public class RecipeInfo implements Parcelable{
         this.description = description;
     }
 
-    public int getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(int country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 

@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
-    int userID = 1;
+    int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

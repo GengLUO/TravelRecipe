@@ -350,7 +350,7 @@ public class DatabaseConnect {
 
                                     //converting base64 string to image
                                     int id = o.getInt("recipe_id");
-                                    int country = o.getInt("country");
+                                    String country = o.getString("country");
                                     String name = o.getString("name");
                                     String desc = o.getString("recipe_desc");
                                     String b64String = o.getString("recipe_image");
