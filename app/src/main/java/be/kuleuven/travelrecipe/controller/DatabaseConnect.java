@@ -154,7 +154,7 @@ public class DatabaseConnect {
                         continented = o.getInt("continent");
                         if (actived == 0){ac = false;}
                         else {ac = true;}
-                        Country country = new Country(countryImg,countryName,recipeNumber,ac,continent);
+                        Country country = new Country(countryImg,countryName,recipeNumber,ac,continented);
                         if (continent ==continented ){temCountries.add(country);}
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -162,7 +162,49 @@ public class DatabaseConnect {
                     }
                 }
                 countries.setCountries(temCountries);
-                System.out.println(temCountries);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        JsonArrayRequest fullrequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a21pt210/getAllCountries", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject o = null;
+                    List<Country> temCountries= new ArrayList<Country>();
+                    temCountries = countries.getCountries();
+                    try {
+                        o = response.getJSONObject(i);
+                        int countryImg;
+                        boolean mul = false;
+                        String countryName;
+                        int recipeNumber;
+                        int continented;
+                        int actived;
+                        boolean ac;
+                        countryImg = o .getInt("idcountry");
+                        countryName = o.getString("country_name");
+                        continented = o.getInt("continent");
+                        Country country = new Country(countryImg,countryName,0,false,continented);
+                        if (continent ==continented){
+                            for (int j = 0; j < countries.getCountries().size(); j++) {
+                                if (countries.getCountries().get(j).getCountryName().equals(country.getCountryName()))
+                                {
+                                    mul = true;
+                                }
+                            }
+                            if (mul = false)
+                            {
+                                temCountries.add(country);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ;
+                    }
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -170,6 +212,7 @@ public class DatabaseConnect {
             }
         });
         requestQueue.add(request);
+        requestQueue.add(fullrequest);
         return countries;
     }
 
