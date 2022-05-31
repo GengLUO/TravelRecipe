@@ -36,8 +36,9 @@ import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.country.Countries;
 import be.kuleuven.travelrecipe.models.country.Country;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
+import be.kuleuven.travelrecipe.notifier.CountryActivityNotifier;
 
-public class UploadRecipeActivity extends AppCompatActivity {
+public class UploadRecipeActivity extends AppCompatActivity implements CountryActivityNotifier {
 
     private ImageView recipeMainImageView;
     private EditText recipeNameEditText;
@@ -53,7 +54,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
     private RecipeInfo recipe;
     private int userID;
     private int recipeID;
-
+    private Countries countries;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,9 @@ public class UploadRecipeActivity extends AppCompatActivity {
         databaseConnect = new DatabaseConnect(requestQueue);
         this.getBiggestRecipeID();
         recipeMainImageView.setImageResource(R.drawable.ic_baseline_star_24);
+        countries = new Countries(userID);
+        countries.setCountryActivityNotifier(this);
+        databaseConnect.retrieveCountries(countries);
     }
 
 
@@ -90,8 +94,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
     {
         int countryid = 1;
         HashMap<String,Integer> countryHashMap = new HashMap();
-        Countries countries = new Countries(userID);
-        databaseConnect.retrieveCountries(countries);
         for (int i = 1; i < countries.getCountries().size()+1; i++) {
             String key = countries.getCountries().get(i).getCountryName();
             countryHashMap.put(String.valueOf(i),i);
@@ -181,5 +183,10 @@ public class UploadRecipeActivity extends AppCompatActivity {
                 bm, 0, 0, width, height, matrix, false);
         bm.recycle();
         return resizedBitmap;
+    }
+
+    @Override
+    public void setCountriesRecyclerView(List<Country> countries) {
+
     }
 }
