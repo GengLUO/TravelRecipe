@@ -5,15 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="200dp">
 
-    <!--    <View-->
-    <!--        android:id="@+id/view2"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="160dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.5"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <TextView
         android:id="@+id/txt_descr"
         android:layout_width="wrap_content"
@@ -21,7 +12,7 @@
         android:layout_marginStart="18dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/baloo_paaji"
-        android:text="desc"
+        android:text="@string/desc"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toEndOf="@+id/img_dish"
         app:layout_constraintTop_toBottomOf="@+id/flag" />
@@ -44,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/baloo_paaji"
-        android:text="name"
+        android:text="@string/name"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/flag"
@@ -58,6 +49,5 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dumpling" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

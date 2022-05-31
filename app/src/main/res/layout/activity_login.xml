@@ -11,8 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Username"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
+        android:fontFamily="@font/baloo_paaji"
+        android:text="@string/username"
+        app:layout_constraintStart_toStartOf="@+id/userNameInputEditText"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
@@ -20,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Password"
+        android:fontFamily="@font/baloo_paaji"
+        android:text="@string/password"
         app:layout_constraintStart_toStartOf="@+id/userNameInputEditText"
         app:layout_constraintTop_toBottomOf="@+id/userNameInputEditText" />
 
@@ -30,9 +32,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="user name"
+        android:fontFamily="@font/baloo_paaji"
+        android:hint="@string/user_name"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/usernameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
 
     <EditText
@@ -41,7 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="password"
+        android:fontFamily="@font/baloo_paaji"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/passwordTextView"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
@@ -51,7 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:text="TravelRecipe"
+        android:fontFamily="@font/baloo_paaji"
+        android:text="@string/travelrecipe"
         android:textAlignment="center"
         android:textColor="#00BCD4"
         android:textSize="48sp"
@@ -64,8 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
+        android:fontFamily="@font/baloo_paaji"
         android:onClick="onClickLoginButton"
-        android:text="Login"
+        android:text="@string/login"
         app:layout_constraintStart_toStartOf="@+id/passwordInputEditText"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputEditText" />
 
@@ -74,8 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
+        android:fontFamily="@font/baloo_paaji"
         android:onClick="onClickRegisterButton"
-        android:text="CREAT NEW ACCOUNT"
+        android:text="@string/creat_new_account"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="@+id/button" />
 
@@ -85,7 +93,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="password"
+        android:fontFamily="@font/baloo_paaji"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/passwordInputEditText"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputEditText" />

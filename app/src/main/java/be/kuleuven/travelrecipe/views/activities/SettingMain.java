@@ -34,11 +34,8 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
     private Bitmap bitmap;
     private RequestQueue requestQueue;
     private int PICK_IMAGE_REQUEST = 111;
-    private ProgressDialog progressDialog;
     private User user;
     private int userid;
-    private ImageView image;
-    private ImageView imageRetrieved;
     DatabaseConnect databaseConnect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +51,6 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
         passwordinput = findViewById(R.id.passwordInput);
         setButton = findViewById(R.id.setButton);
         profileImage = findViewById(R.id.setting_prifileImage);
-        image = (ImageView)findViewById(R.id.image);
-        imageRetrieved = (ImageView)findViewById(R.id.imageRetrieved);
         requestQueue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
         userid = intent.getIntExtra("userid",1);

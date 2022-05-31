@@ -22,6 +22,7 @@
       android:id="@+id/textViewContinent"
       android:layout_width="match_parent"
       android:layout_height="48dp"
+      android:fontFamily="@font/baloo_paaji"
       android:text="Continent"
       android:textAlignment="center"
       android:textSize="34sp"

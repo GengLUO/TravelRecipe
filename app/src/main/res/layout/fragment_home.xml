@@ -7,17 +7,6 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/img_More2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toEndOf="@+id/profileImage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_main_more" />
-
-    <ImageView
         android:id="@+id/imageView2"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -26,8 +15,7 @@
         android:onClick="onImgContinent2_Clicked"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/imageView1"
-        app:layout_constraintTop_toTopOf="@+id/imageView1"
-        tools:srcCompat="@drawable/england" />
+        app:layout_constraintTop_toTopOf="@+id/imageView1" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -38,8 +26,7 @@
         android:onClick="onImgContinent3_Clicked"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/imageView1"
-        app:layout_constraintTop_toTopOf="@+id/imageView1"
-        tools:srcCompat="@drawable/belgium" />
+        app:layout_constraintTop_toTopOf="@+id/imageView1" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -50,8 +37,7 @@
         android:onClick="onImgContinent4_Clicked"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/imageView1"
-        app:layout_constraintTop_toTopOf="@+id/imageView1"
-        tools:srcCompat="@drawable/germany" />
+        app:layout_constraintTop_toTopOf="@+id/imageView1" />
 
     <ImageView
         android:id="@+id/profileImage"
@@ -70,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
+        android:fontFamily="@font/baloo_paaji"
         android:text="recipeAmount"
         app:layout_constraintEnd_toStartOf="@+id/profileImage"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,6 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/baloo_paaji"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/profileImage"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
+        android:fontFamily="@font/baloo_paaji"
         android:text="level"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profileImage"
@@ -100,6 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/baloo_paaji"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profileImage"
@@ -111,6 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/baloo_paaji"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileImage" />
@@ -125,8 +116,7 @@
         android:onClick="onImgContinent1_Clicked"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/italy" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
@@ -165,11 +155,10 @@
         android:id="@+id/settingButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:onClick="onImgSetting_Clicked"
-        app:layout_constraintEnd_toStartOf="@+id/img_More2"
-        app:layout_constraintHorizontal_bias="0.727"
-        app:layout_constraintStart_toEndOf="@+id/profileImage"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_main_settings"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -178,7 +167,8 @@
         android:id="@+id/textView5"
         android:layout_width="50dp"
         android:layout_height="20dp"
-        android:text="ASIA"
+        android:fontFamily="@font/baloo_paaji"
+        android:text="@string/asia_"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="@+id/imageView1"
         app:layout_constraintTop_toBottomOf="@+id/imageView1" />
@@ -187,7 +177,8 @@
         android:id="@+id/textView6"
         android:layout_width="50dp"
         android:layout_height="20dp"
-        android:text="EUROPE"
+        android:fontFamily="@font/baloo_paaji"
+        android:text="@string/europe_"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -196,7 +187,8 @@
         android:id="@+id/textView7"
         android:layout_width="50dp"
         android:layout_height="20dp"
-        android:text="AMERICA"
+        android:fontFamily="@font/baloo_paaji"
+        android:text="@string/america_"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -205,7 +197,8 @@
         android:id="@+id/textView8"
         android:layout_width="50dp"
         android:layout_height="20dp"
-        android:text="OTHERS"
+        android:fontFamily="@font/baloo_paaji"
+        android:text="@string/others_"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
@@ -215,8 +208,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="216dp"
+        android:fontFamily="@font/baloo_paaji"
         android:onClick="onButtonCreateRecipeClicked"
-        android:text="CreatRecipe"
+        android:text="@string/creatrecipe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
