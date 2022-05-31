@@ -39,8 +39,6 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     private DashboardAdapter dashboardAdapter;
     private SearchView searchView;
     private Spinner dashboardSpinner;
-
-    private ProgressDialog progressDialog;
     private Dashboard dashboard;
     private static final int DATE_ASC = 0;
     private static final int DATE_DESC = 1;
@@ -48,9 +46,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     private static final int Z_A = 3;
 
     public SearchFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,41 +56,17 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-/*
- progressDialog = new ProgressDialog(getContext());
- progressDialog.setMessage("Uploading, please wait...");
- progressDialog.show();
-*/
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         searchView = view.findViewById(R.id.searchView);
         dashboardRecyclerView = view.findViewById(R.id.recycler_view);
         dashboardSpinner = view.findViewById(R.id.spSearch);
-        dashboardSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("click:"+i);
-                sortList(i);
-                System.out.println("finish");
-                System.out.println(i);
-                dashboardAdapter.setList(filterList(searchView.getQuery().toString()));
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-
         initView();
         initModel();
         return view;
     }
 
     private void initView() {
-        dashboardAdapter = new DashboardAdapter(getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-        dashboardRecyclerView.setLayoutManager(layoutManager);
-        dashboardRecyclerView.setNestedScrollingEnabled(false);
-        dashboardRecyclerView.setAdapter(dashboardAdapter);
+        bindAdapter();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -103,16 +75,32 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
                     Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                 return false;
             }
-
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextChange(String newText) {
-                //bindAdapter(filterList(newText));
                 dashboardAdapter.setList(filterList(newText));
-                System.out.println("size"+ dashboard.getAllRecipes().size());
                 return false;
             }
         });
+        dashboardSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sortList(i);
+                dashboardAdapter.setList(filterList(searchView.getQuery().toString()));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+    }
+
+    private void bindAdapter() {
+        dashboardAdapter = new DashboardAdapter(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        dashboardRecyclerView.setLayoutManager(layoutManager);
+        dashboardRecyclerView.setNestedScrollingEnabled(false);
+        dashboardRecyclerView.setAdapter(dashboardAdapter);
     }
 
     private void initModel() {
@@ -125,22 +113,11 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private List<RecipeInfo> filterList(String text) {
-//        filteredList = recipes.stream()
-//                                .filter(r -> r.getName().contains(text))
-//                                .collect(Collectors.toList());
-////        recipes.stream().forEach(e -> {
-////            if (e.getName().contains(text)){
-////                filteredList.add(e);
-////            }
-////        });
-//        return filteredList;
-//        if(text.equals("")){
-//            return recipesDashboard.getAllRecipes();
-//        }
         return dashboard
                 .getAllRecipes()
                 .stream()
                 .filter(r -> r.getName().contains(text) ||
+                             r.getCountryname().contains(text) ||
                              r.getIngredients()
                                      .stream()
                                      .map(RecipeIngredient::getName)
@@ -152,23 +129,15 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void sortList(int state){
-        System.out.println(searchView.getQuery());
         switch (state){
-            case DATE_ASC : dashboard.getAllRecipes()
-                                            .sort(Comparator.comparingInt(RecipeInfo::getRecipeId));
-                //(r1,r2) -> (r2.getRecipeId()-r1.getRecipeId())
+            case DATE_DESC : dashboard.getAllRecipes().sort(Comparator.comparingInt(RecipeInfo::getRecipeId).reversed());
                 break;
-            case DATE_DESC : dashboard.getAllRecipes()
-                                            .sort(Comparator.comparingInt(RecipeInfo::getRecipeId).reversed());
+            case A_Z:       dashboard.getAllRecipes().sort((Comparator.comparing(RecipeInfo::getName)));
                 break;
-            case A_Z: dashboard.getAllRecipes()
-                                        .sort((Comparator.comparing(RecipeInfo::getName)));
+            case Z_A:       dashboard.getAllRecipes().sort((Comparator.comparing(RecipeInfo::getName).reversed()));
                 break;
-            case Z_A: dashboard.getAllRecipes()
-                                        .sort((Comparator.comparing(RecipeInfo::getName).reversed()));
-                break;
-            default: dashboard.getAllRecipes()
-                    .sort(Comparator.comparingInt(RecipeInfo::getRecipeId));
+            case DATE_ASC :
+            default:        dashboard.getAllRecipes().sort(Comparator.comparingInt(RecipeInfo::getRecipeId));
         }
     }
 

@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:button="@drawable/selector"
+            android:fontFamily="@font/baloo_paaji"
             android:onClick="onLike_Clicked"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,9 +46,11 @@
         <TextView
             android:id="@+id/txt_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/baloo_paaji"
             android:text="time"
             android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_timer"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,6 +82,7 @@
                 android:id="@+id/txt_recipe_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo_paaji"
                 android:gravity="center"
                 android:text="TextView"
                 android:textColor="@color/black"
@@ -90,12 +94,14 @@
                 android:id="@+id/txt_recipe_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo_paaji"
                 android:text="Recipe Description" />
 
             <TextView
                 android:id="@+id/txtIngLbl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo_paaji"
                 android:text="Ingredients"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -115,14 +121,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:fontFamily="@font/baloo_paaji"
                 android:onClick="onUploadWork_Clicked"
                 android:text="Upload my work" />
-
-            <TextView
-                android:id="@+id/textView44"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="!!!!!!!!!!!!!!!!!!!" />
 
         </LinearLayout>
 
