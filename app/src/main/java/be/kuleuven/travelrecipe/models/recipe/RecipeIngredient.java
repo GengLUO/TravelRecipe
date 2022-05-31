@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.recipe;
 
 import android.os.Parcel;
 import android.os.Parcelable;

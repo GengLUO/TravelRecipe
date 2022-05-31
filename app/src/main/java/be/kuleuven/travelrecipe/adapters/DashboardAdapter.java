@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.models.CountryImageTranslation;
-import be.kuleuven.travelrecipe.models.RecipeInfo;
+import be.kuleuven.travelrecipe.controller.CountryImageTranslation;
+import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{

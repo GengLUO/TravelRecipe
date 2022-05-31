@@ -1,11 +1,10 @@
-package be.kuleuven.travelrecipe.adapters;
+package be.kuleuven.travelrecipe.notifier;
 
 import android.graphics.Bitmap;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import be.kuleuven.travelrecipe.models.RecipeStep;
+import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 
 public interface DetailNotifier {
     void notifyDetailsRetrieved(List<RecipeStep> steps);

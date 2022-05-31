@@ -1,7 +1,6 @@
 package be.kuleuven.travelrecipe.models;
 
-import be.kuleuven.travelrecipe.adapters.CountryActivityNotifier;
-import be.kuleuven.travelrecipe.adapters.HomepageFragmentNotifier;
+import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 
 public abstract class AbstractUser {
     //user controls HomepageFragment and CountryActivity

@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.recipe;
 
 //实体类，对数据对象分装
 

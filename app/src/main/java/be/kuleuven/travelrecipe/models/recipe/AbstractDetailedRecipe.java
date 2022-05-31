@@ -1,6 +1,6 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.recipe;
 
-import be.kuleuven.travelrecipe.adapters.DetailNotifier;
+import be.kuleuven.travelrecipe.notifier.DetailNotifier;
 
 public class AbstractDetailedRecipe {
     protected DetailNotifier detailNotifier;

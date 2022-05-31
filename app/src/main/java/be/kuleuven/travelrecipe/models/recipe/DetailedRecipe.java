@@ -1,9 +1,8 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.recipe;
 
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DetailedRecipe extends AbstractDetailedRecipe {

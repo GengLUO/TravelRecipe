@@ -20,16 +20,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import be.kuleuven.travelrecipe.adapters.DetailNotifier;
+import be.kuleuven.travelrecipe.notifier.DetailNotifier;
 import be.kuleuven.travelrecipe.adapters.DetailsAdapter;
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.adapters.ExpandListView;
 import be.kuleuven.travelrecipe.adapters.IngredientAdapter;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
-import be.kuleuven.travelrecipe.models.RecipeInfo;
-import be.kuleuven.travelrecipe.models.DetailedRecipe;
-import be.kuleuven.travelrecipe.models.RecipeIngredient;
-import be.kuleuven.travelrecipe.models.RecipeStep;
+import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
+import be.kuleuven.travelrecipe.models.recipe.DetailedRecipe;
+import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
+import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 
 public class DetailActivity extends AppCompatActivity implements DetailNotifier {
 

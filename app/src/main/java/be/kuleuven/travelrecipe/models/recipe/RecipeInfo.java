@@ -1,15 +1,11 @@
-package be.kuleuven.travelrecipe.models;
+package be.kuleuven.travelrecipe.models.recipe;
 
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.RequiresApi;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class RecipeInfo implements Parcelable{
 

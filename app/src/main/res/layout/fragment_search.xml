@@ -44,5 +44,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:queryHint="search for recipes or ingredients"
         app:iconifiedByDefault="false"/>
-<!--        make hint visible when not typing-->
+
+    <Spinner
+        android:id="@+id/spSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:entries="@array/spinner_items"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <!--        make hint visible when not typing-->
 </androidx.constraintlayout.widget.ConstraintLayout>
