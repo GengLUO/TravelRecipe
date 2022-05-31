@@ -24,8 +24,6 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
     private List<RecipeInfo> list = new ArrayList<>();
     private final Context context;
     private CountryImageTranslation countryImageTranslation = new CountryImageTranslation();
-    private final int[] flags = {R.drawable.spain, R.drawable.germany, R.drawable.denmark, R.drawable.sweden,
-            R.drawable.france,R.drawable.belgium,R.drawable.italy,R.drawable.england,R.drawable.netherland};
 
     public DashboardAdapter(List<RecipeInfo> list, Context context) {
         this.list = list;
@@ -51,9 +49,6 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
     @Override
     public void onBindViewHolder(@NonNull dashboardViewHolder holder, int position) {
         RecipeInfo recipe = list.get(position);
-        //Todo
-        //holder.imgFlag.setImageBitmap(recipe.getCountry());
-        //holder.imgFlag.setImageURI();
         holder.flag.setText(countryImageTranslation.generateFlag(recipe.getCountryname()));
         holder.imgDish.setImageBitmap(recipe.getDemo());
         holder.txtName.setText(recipe.getName());

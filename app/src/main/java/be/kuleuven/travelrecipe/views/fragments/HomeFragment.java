@@ -1,8 +1,7 @@
 package be.kuleuven.travelrecipe.views.fragments;
-//2754
+
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +12,12 @@ import android.widget.TextView;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
-import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.user.User;
 import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
 
 public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
+
     private TextView recipeAmountText;
     private TextView recipeAmountTextview;
     private TextView levelText;
@@ -36,11 +32,8 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     private ProgressBar progressBar2;
     private ProgressBar progressBar3;
     private ProgressBar progressBar4;
-    View view;
-
-    private static final String URL = "https://studev.groept.be/api/a21pt210";
-
     private User user;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -54,18 +47,13 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        initialize(view);
-
-        MainActivity.databaseConnect.retrieveUserInfo(user);
-        MainActivity.databaseConnect.retrieveContinentInfo(user);
-
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        initView(view);
+        initModel();
         return view;
-
     }
 
-    public View initialize(View view)
-    {
+    public void initView(View view) {
         recipeAmountText = view.findViewById(R.id.recipeAmountText);
         recipeAmountTextview = view.findViewById(R.id.recipeAmountTextview);
         levelTextview = view.findViewById(R.id.levelTextview);
@@ -84,10 +72,15 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         imageView2.setImageResource(R.drawable.europe);
         imageView3.setImageResource(R.drawable.america);
         imageView4.setImageResource(R.drawable.africa);
+    }
+
+    private void initModel() {
         user = new User(MainActivity.userID);
         user.setHomepageFragmentNotifier(this);
-        return view;
+        MainActivity.databaseConnect.retrieveUserInfo(user);
+        MainActivity.databaseConnect.retrieveContinentInfo(user);
     }
+
     @Override
     public void notifyNameChanged() {
         usernameTextview.setText(user.getUserName());
@@ -97,10 +90,12 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     public void notifyLevelChanged() {
         levelTextview.setText(String.valueOf(user.getLevel()));
     }
+
     @Override
     public void notifyRecipeNumberChanged() {
         recipeAmountTextview.setText(String.valueOf(user.getRecipeAmount()));
     }
+
     @Override
     public void notifyImageChanged() {
         profileImage.setImageBitmap(user.getImage());
@@ -115,10 +110,12 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     public void notifyEuropeChanged() {
         progressBar2.setProgress(user.getCountryEuropeAmount()*10);
     }
+
     @Override
     public void notifyAmericaChanged() {
         progressBar3.setProgress(user.getCountryAmericaAmount()*10);
     }
+
     @Override
     public void notifyAfricaChanged() {
         progressBar4.setProgress(user.getCountryAfricaAmount()*10);

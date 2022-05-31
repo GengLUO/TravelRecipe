@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -27,46 +28,51 @@ import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 
 public class CountrysActivity extends AppCompatActivity implements CountryActivityNotifier {
 
-    RecyclerView countriesRecyclerView;
-    CountryAdapter countryAdapter;
-    int continentNumber;
-    Countries countries;
-    RequestQueue requestQueue;
-    int userid;
+    private ImageView imgBack;
+    private TextView txtContinent;
+    private RecyclerView countriesRecyclerView;
+    private CountryAdapter countryAdapter;
+    private Countries countries;
+    private int continentNumber;
+    private int userid;
+    private static final int ASIA = 1;
+    private static final int EUROPE = 2;
+    private static final int AMERICA = 3;
+    private static final int OTHER = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestQueue = Volley.newRequestQueue( this);
         setContentView(R.layout.activity_countries);
-        TextView textViewContinent = findViewById(R.id.textViewContinent);
+
+        txtContinent = findViewById(R.id.textViewContinent);
+        imgBack = findViewById(R.id.img_back);
+        countriesRecyclerView = findViewById(R.id.countriesRecyclerView);
+
+        handleIntent();
+        countries = new Countries(userid);
+        countries.setCountryActivityNotifier(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        databaseConnect.retrieveCountryByContinent(countries,continentNumber);
+        switch(continentNumber){
+            case ASIA:txtContinent.setText(R.string.asia);
+                break;
+            case EUROPE:txtContinent.setText(R.string.europe);
+                break;
+            case AMERICA:txtContinent.setText(R.string.america);
+                break;
+            default:txtContinent.setText(R.string.other);
+        }
+    }
+
+    private void handleIntent() {
         Intent intent = getIntent();
         continentNumber = intent.getIntExtra("continentnumber",1);
         userid = intent.getIntExtra("userid",1);
-        countries = new Countries(userid);
-        countries.setCountryActivityNotifier(this);
-        if (continentNumber == 1)
-        {
-            textViewContinent.setText("Asia");
-        }
-        else if(continentNumber == 2)
-        {
-            textViewContinent.setText("Europe");
-        }
-        else if(continentNumber ==3)
-        {
-            textViewContinent.setText("America");
-        }
-        else
-        {
-            textViewContinent.setText("other places");
-        }
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveCountryByContinent(countries,continentNumber);
     }
 
     public void setCountriesRecyclerView(List<Country> countries){
-        countriesRecyclerView = findViewById(R.id.countriesRecyclerView);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,3);
         countriesRecyclerView.setLayoutManager(layoutManager);
         countryAdapter = new CountryAdapter(countries,continentNumber,this);
