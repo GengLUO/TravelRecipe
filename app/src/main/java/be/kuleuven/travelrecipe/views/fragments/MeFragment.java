@@ -54,8 +54,8 @@ public class MeFragment extends Fragment implements RecipeNotifier {
     }
 
     private void initModel() {
-        dashboard.setRecipeNotifier(this);
         dashboard = new Dashboard();
+        dashboard.setRecipeNotifier(this);
         MainActivity.databaseConnect.requestListRecipe(dashboard);
     }
 
