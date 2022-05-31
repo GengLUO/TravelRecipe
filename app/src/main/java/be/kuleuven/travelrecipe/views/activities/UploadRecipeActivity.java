@@ -46,6 +46,7 @@ public class UploadRecipeActivity extends AppCompatActivity implements CountryAc
     private EditText descriptionEditText;
     private Button uploadMainRecipeButton;
     private Spinner spCountry;
+
     private Bitmap bitmap = null;
     private RequestQueue requestQueue;
     private DatabaseConnect databaseConnect;
@@ -95,7 +96,7 @@ public class UploadRecipeActivity extends AppCompatActivity implements CountryAc
         int countryid = 1;
         HashMap<String,Integer> countryHashMap = new HashMap();
         for (int i = 1; i < countries.getCountries().size()+1; i++) {
-            String key = countries.getCountries().get(i).getCountryName();
+            String key = countries.getCountries().get(i-1).getCountryName();
             countryHashMap.put(String.valueOf(i),i);
             countryHashMap.put(key,i);
             key = key.toLowerCase(Locale.ROOT);
