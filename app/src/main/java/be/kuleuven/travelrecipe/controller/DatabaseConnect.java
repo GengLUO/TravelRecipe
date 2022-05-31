@@ -131,7 +131,7 @@ public class DatabaseConnect {
 
     public Countries retrieveCountryByContinent(Countries countries, int continent) {
         int userID = countries.getUserid();
-        String countriesURL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfoByContinent/"+userID+"/"+continent;
+        String countriesURL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfo/"+userID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, countriesURL, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -143,26 +143,26 @@ public class DatabaseConnect {
                         int countryImg;
                         String countryName;
                         int recipeNumber;
-
+                        int continented;
                         int actived;
                         boolean ac;
-                        int continent;
                         countryImg = o .getInt("idcountry");
                         countryName = o.getString("country_name");
                         recipeNumber = o.getInt("number");
                         if (recipeNumber==0) {actived = 0;}
                         else { actived = 1; }
-                        continent = o.getInt("continent");
+                        continented = o.getInt("continent");
                         if (actived == 0){ac = false;}
                         else {ac = true;}
                         Country country = new Country(countryImg,countryName,recipeNumber,ac,continent);
-                        temCountries.add(country);
+                        if (continent ==continented ){temCountries.add(country);}
                     } catch (JSONException e) {
                         e.printStackTrace();
                         ;
                     }
                 }
                 countries.setCountries(temCountries);
+                System.out.println(temCountries);
             }
         }, new Response.ErrorListener() {
             @Override

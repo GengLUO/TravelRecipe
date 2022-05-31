@@ -64,7 +64,6 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         }
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveCountryByContinent(countries,continentNumber);
-        this.setCountriesRecyclerView(countries.getCountries());
     }
 
     public void setCountriesRecyclerView(List<Country> countries){

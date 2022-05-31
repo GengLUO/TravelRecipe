@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.controller.CountryImageTranslation;
 import be.kuleuven.travelrecipe.models.Country;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder>{
@@ -21,10 +22,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     private Context context;
     private int continentNumber;
     //private List<Integer> countryPictureList;
-    private final int[] flags = {R.drawable.spain, R.drawable.germany, R.drawable.denmark, R.drawable.sweden,
-            R.drawable.france,R.drawable.belgium,R.drawable.italy,R.drawable.england,R.drawable.netherland,R.drawable.ukraine,R.drawable.korea,R.drawable.korea,R.drawable.japan,
-    R.drawable.singapore,R.drawable.indonesia,R.drawable.philippines,R.drawable.thai,R.drawable.vietname,R.drawable.india,R.drawable.turkey,R.drawable.agentina,R.drawable.unitedstate,R.drawable.canada,R.drawable.brazil
-    };
 
     public CountryAdapter(List<Country> list,int continentNumber, Context context) {
         this.list = list;
@@ -43,10 +40,11 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     @Override
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
         Country model = list.get(position);
+        CountryImageTranslation countryImageTranslation = new CountryImageTranslation();
         holder.number.setText(String.valueOf(model.getRecipeNumber()));
         holder.countryname.setText(model.getCountryName());
-        holder.imgCountry.setImageResource(flags[model.getCountryImg()-1]);
-        System.out.println("0");
+        holder.imgCountry.setText(countryImageTranslation.generateFlag(model.getCountryImg()));
+
 
     }
     @Override
@@ -55,13 +53,13 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
     public class CountryViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imgCountry;
+        TextView imgCountry;
         TextView countryname,number;
 
         public CountryViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imgCountry = itemView.findViewById(R.id.imageViewCountry);
+            imgCountry = itemView.findViewById(R.id.CountryFlags);
             countryname = itemView.findViewById(R.id.textViewRegionName);
             number = itemView.findViewById(R.id.textViewNumber);
         }
