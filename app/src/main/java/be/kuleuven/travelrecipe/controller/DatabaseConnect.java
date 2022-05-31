@@ -161,7 +161,7 @@ public class DatabaseConnect {
                         ;
                     }
                 }
-                countries.setCountries(temCountries);
+                countries.setCountries(temCountries,1);
             }
         }, new Response.ErrorListener() {
             @Override

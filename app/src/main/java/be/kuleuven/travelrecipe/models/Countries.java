@@ -22,6 +22,9 @@ public class Countries extends AbstractCountries{
         this.countries = countries;
         countryActivityNotifier.setCountriesRecyclerView(countries);
     }
+    public void setCountries(List<Country> countries,int i) {
+        this.countries = countries;
+    }
     public int getUserid() {
         return userid;
     }
