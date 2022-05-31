@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
-    private int userID;
+    public static int userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,11 +125,9 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         navController = Navigation.findNavController(this, R.id.nav_controller);
         bundle.putInt("userid",userID);
-        System.out.println(userID);
         navController.setGraph(R.navigation.bottom_navigation,bundle);
-        navController.navigate(R.id.fragment_home,bundle);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-        navController.setGraph(R.navigation.bottom_navigation,bundle);
+        navController.navigate(R.id.home,bundle);
         //System.out.println(bundle);
     }
 

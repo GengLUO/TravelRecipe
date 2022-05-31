@@ -67,8 +67,7 @@ public class MeFragment extends Fragment implements RecipeNotifier {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("bundle"+getArguments().getString("id"));
-        System.out.println(requireArguments().getString("id"));
+        System.out.println("bundle"+getArguments().getInt("userid"));
 
     }
 
@@ -90,10 +89,7 @@ public class MeFragment extends Fragment implements RecipeNotifier {
         requestQueue = Volley.newRequestQueue(getContext());
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.requestListRecipe(dashboard);
-
-        System.out.println(requireArguments().getString("id"));
-        System.out.println("bundle"+getArguments().getString("id"));
-
+        System.out.println("bundle"+getArguments().getInt("userID"));
         return view;
     }
 

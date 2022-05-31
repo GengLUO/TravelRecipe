@@ -2,6 +2,7 @@ package be.kuleuven.travelrecipe.views.fragments;
 //2754
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.user.User;
+import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -85,7 +87,7 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         imageView3.setImageResource(R.drawable.america);
         imageView4.setImageResource(R.drawable.africa);
         userid = getArguments().getInt("userid");
-        System.out.println(userid);
+        System.out.println(MainActivity.userID);
         user = new User(userid);
         user.setHomepageFragmentNotifier(this);
         return view;
