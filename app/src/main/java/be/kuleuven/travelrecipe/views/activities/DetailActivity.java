@@ -41,28 +41,34 @@ import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 
 public class DetailActivity extends AppCompatActivity implements DetailNotifier {
 
-    ImageView imgBack, imgRecipeDemo, imgTimer;
-    TextView txtRecipeName, txtRecipeDesc, txtTime;
-    ToggleButton tbtnStar;
-    DetailsAdapter detailsAdapter;
-    IngredientAdapter ingredientAdapter;
-    ExpandListView detailsListView, ingredientsListView;
-    DetailedRecipe detailedRecipe;
-    DatabaseConnect databaseConnect;
-    Vibrator vibrator;
-    List<RecipeStep> recipeList = new ArrayList<>();
-    LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
-    int userID = 1;
+    private ImageView imgBack, imgRecipeDemo, imgTimer;
+    private TextView txtRecipeName, txtRecipeDesc, txtTime;
+    private ToggleButton tbtnStar;
+    private DetailsAdapter detailsAdapter;
+    private IngredientAdapter ingredientAdapter;
+    private ExpandListView detailsListView, ingredientsListView;
+    private DetailedRecipe detailedRecipe;
+    private DatabaseConnect databaseConnect;
+    private Vibrator vibrator;
+    private int userID;
     private int PICK_IMAGE_REQUEST = 111;
     private CountDownTimer countDownTimer;
-    int hour;
-    int minute;
+    private int hour;
+    private int minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+
+        initView();
+        handleIntent();
+        setListView();
+        initModel();
+    }
+
+    private void initView() {
         imgBack = findViewById(R.id.img_back);
         imgTimer = findViewById(R.id.img_timer);
         imgRecipeDemo = findViewById(R.id.img_recipe_demo);
@@ -74,31 +80,28 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         vibrator = (Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
         detailsListView = findViewById(R.id.step_adapter);
         ingredientsListView = findViewById(R.id.ingredients_adapter);
-
-        handleIntent();
-        initView();
-        initModel();
-
     }
 
     private void handleIntent() {
         detailedRecipe = new DetailedRecipe();
         RecipeInfo recipe = getIntent().getExtras().getParcelable("Recipe");
+        userID = getIntent().getExtras().getInt("id");
+        System.out.println(userID);
         detailedRecipe.setRecipeInfo(recipe);
         imgRecipeDemo.setImageBitmap(recipe.getDemo());
         txtRecipeName.setText(recipe.getName());
         txtRecipeDesc.setText(recipe.getDescription());
     }
 
-    private void initView() {
+    private void setListView() {
         setDetailsListView();
         setIngredientsListView(detailedRecipe.getRecipeInfo().getIngredients());
     }
 
     private void initModel() {
-        detailedRecipe.setDetailNotifier(this);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        databaseConnect = new DatabaseConnect(requestQueue);
+        detailedRecipe.setDetailNotifier(this);
         databaseConnect.requestRecipeDemo(detailedRecipe);
         databaseConnect.requestLikeState(userID, detailedRecipe);
         databaseConnect.requestRecipeDetails(detailedRecipe);

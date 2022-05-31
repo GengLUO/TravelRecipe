@@ -18,6 +18,7 @@ import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.controller.CountryImageTranslation;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.views.activities.DetailActivity;
+import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.dashboardViewHolder>{
 
@@ -57,6 +58,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("Recipe",  recipe);
+            intent.putExtra("id", MainActivity.userID);
             System.out.println(recipe.getIngredients());
             context.startActivity(intent);
         });
