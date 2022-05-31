@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             visible = false;
         }
         else {
-            databaseConnect.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            databaseConnect.login(this, usernameEditText.getText().toString(), encrypt(passwordEditText.getText().toString()));
         }
     }
     public void onClickRegisterButton(View caller)
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         if (visible)
         {
             if (passwordEditText.getText().toString().equals(passwordEditText2.getText().toString())) {
-                databaseConnect.register(caller, usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                databaseConnect.register(caller, usernameEditText.getText().toString(), encrypt(passwordEditText.getText().toString()));
                 passwordEditText2.setVisibility(View.INVISIBLE);
                 visible = false;
             }

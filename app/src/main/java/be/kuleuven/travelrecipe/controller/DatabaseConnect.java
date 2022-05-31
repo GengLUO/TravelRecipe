@@ -323,7 +323,6 @@ public class DatabaseConnect {
             @Override
             public void onResponse(String response) {
                 //Turn the progress widget off
-                progressDialog.dismiss();
                 Toast.makeText(caller.getContext(), "register succeed", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
