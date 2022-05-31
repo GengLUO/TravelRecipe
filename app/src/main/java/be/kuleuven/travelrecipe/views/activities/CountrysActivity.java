@@ -2,6 +2,7 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,7 +43,7 @@ import be.kuleuven.travelrecipe.models.Country;
 import be.kuleuven.travelrecipe.models.User;
 
 public class CountrysActivity extends AppCompatActivity implements CountryActivityNotifier {
-    private TextView textViewContinent;
+
     RecyclerView countriesRecyclerView;
     CountryAdapter countryAdapter;
     int continentNumber;
@@ -55,7 +56,7 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue( this);
         setContentView(R.layout.activity_countries);
-        textViewContinent.findViewById(R.id.textViewContinent);
+        TextView textViewContinent = findViewById(R.id.textViewContinent);
         Intent intent = getIntent();
         continentNumber = intent.getIntExtra("continentnumber",1);
         userid = intent.getIntExtra("userid",1);
@@ -75,12 +76,11 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         }
         else
         {
-            textViewContinent.setText("other places in the world");
+            textViewContinent.setText("other places");
         }
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.retrieveCountryByContinent(countries,continentNumber);
-        //continent setting
-        TextView tvContinent = findViewById(R.id.textViewContinent);
+        this.setCountriesRecyclerView(countries.getCountries());
     }
 
     public void setCountriesRecyclerView(List<Country> countries){

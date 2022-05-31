@@ -194,13 +194,6 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         ingredientsListView.setAdapter(ingredientAdapter);
     }
 
-//    private void setRecipeRecyclerView(List<RecipeStep> recipeList){
-//        //recipeDetailsRV = findViewById(R.id.details_recycler);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-//        recipeDetailsRV.setLayoutManager(layoutManager);
-//        recipeDetailsAdapter = new RecipeDetailsAdapter(recipeList,this);
-//        recipeDetailsRV.setAdapter(recipeDetailsAdapter);
-//    }
 
     public void onImgBack_Clicked(View caller){
         onBackPressed();
