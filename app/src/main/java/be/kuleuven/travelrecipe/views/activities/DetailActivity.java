@@ -79,7 +79,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         txtTime = findViewById(R.id.txt_time);
         tbtnStar = findViewById(R.id.tbtn_star);
 
-        vibrator = (Vibrator)this.getSystemService(VIBRATOR_SERVICE);
+        vibrator = (Vibrator)this.getSystemService(Service.VIBRATOR_SERVICE);
 
 //        progressDialog = new ProgressDialog(DetailActivity.this);
 //        progressDialog.setMessage("Uploading, please wait...");
