@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,7 +44,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
     private EditText countryEditText;
     private EditText descriptionEditText;
     private Button uploadMainRecipeButton;
-
+    private Spinner spCountry;
     private Bitmap bitmap = null;
     private RequestQueue requestQueue;
     private DatabaseConnect databaseConnect;
@@ -60,10 +61,10 @@ public class UploadRecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userID=intent.getIntExtra("userid",1);
         recipeNameEditText = findViewById(R.id.recipeNameEditText);
-        countryEditText = findViewById(R.id.countryEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
         uploadMainRecipeButton = findViewById(R.id.uploadMainRecipeButton);
         recipeMainImageView = findViewById(R.id.recipeMainImageView);
+        spCountry = findViewById(R.id.spCountry);
         requestQueue = Volley.newRequestQueue(this);
         databaseConnect = new DatabaseConnect(requestQueue);
         this.getBiggestRecipeID();
@@ -76,7 +77,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
     {
         String recipeName = recipeNameEditText.getText().toString();
         String description = descriptionEditText.getText().toString();
-        String country = countryEditText.getText().toString();
+        String country = spCountry.getSelectedItem().toString();
         int countryid = findCountryidByCountry(country);
         recipe = new RecipeInfo(recipeName,description,countryid,recipeID,bitmap);
         databaseConnect.uploadRecipe(caller,recipe,userID);

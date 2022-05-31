@@ -22,7 +22,7 @@
         android:id="@+id/recipeNameEditText"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="recipe name"
@@ -65,16 +65,13 @@
         app:layout_constraintTop_toBottomOf="@+id/descriptionEditText"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <EditText
-        android:id="@+id/countryEditText"
-        android:layout_width="100dp"
+    <Spinner
+        android:id="@+id/spCountry"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="country"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/recipeNameEditText"
+        android:layout_marginTop="41dp"
+        android:entries="@array/country_list"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
