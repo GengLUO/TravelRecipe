@@ -43,7 +43,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         CountryImageTranslation countryImageTranslation = new CountryImageTranslation();
         holder.number.setText(String.valueOf(model.getRecipeNumber()));
         holder.countryname.setText(model.getCountryName());
-        holder.imgCountry.setText(countryImageTranslation.generateFlag(model.getCountryImg()));
+        holder.imgCountry.setText(countryImageTranslation.generateFlag(model.getCountryName()));
 
 
     }

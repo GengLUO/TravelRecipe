@@ -54,7 +54,7 @@ public class DashboardAdapter extends  RecyclerView.Adapter<DashboardAdapter.das
         //Todo
         //holder.imgFlag.setImageBitmap(recipe.getCountry());
         //holder.imgFlag.setImageURI();
-        holder.flag.setText(countryImageTranslation.generateFlag(recipe.getCountry()));
+        holder.flag.setText(countryImageTranslation.generateFlag(recipe.getCountryname()));
         holder.imgDish.setImageBitmap(recipe.getDemo());
         holder.txtName.setText(recipe.getName());
         holder.txtDescription.setText(recipe.getDescription());

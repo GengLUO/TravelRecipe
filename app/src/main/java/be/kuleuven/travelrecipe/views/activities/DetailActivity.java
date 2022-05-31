@@ -3,22 +3,34 @@ package be.kuleuven.travelrecipe.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.app.Service;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import be.kuleuven.travelrecipe.notifier.DetailNotifier;
 import be.kuleuven.travelrecipe.adapters.DetailsAdapter;
@@ -33,18 +45,22 @@ import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 
 public class DetailActivity extends AppCompatActivity implements DetailNotifier {
 
-    ImageView imgBack, imgRecipeDemo;
-    TextView txtRecipeName, txtRecipeDesc;
+    ImageView imgBack, imgRecipeDemo, imgTimer;
+    TextView txtRecipeName, txtRecipeDesc, txtTime;
     ToggleButton tbtnStar;
     DetailsAdapter detailsAdapter;
     IngredientAdapter ingredientAdapter;
     ExpandListView detailsListView, ingredientsListView;
     DetailedRecipe detailedRecipe;
     DatabaseConnect databaseConnect;
+    Vibrator vibrator;
     List<RecipeStep> recipeList = new ArrayList<>();
     LinkedHashMap<String,String> ingredients = new LinkedHashMap<>();
     int userID = 1;
     private int PICK_IMAGE_REQUEST = 111;
+    private CountDownTimer countDownTimer;
+    int hour;
+    int minute;
 
     private static final String GET_IMAGE_URL_this = "https://studev.groept.be/api/a21pt210/getStep/";
     private static final String GET_INGREDIENT_URL = "https://studev.groept.be/api/a21pt210/getIngredients/";
@@ -56,16 +72,20 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         setContentView(R.layout.activity_detail);
 
         imgBack = findViewById(R.id.img_back);
+        imgTimer = findViewById(R.id.img_timer);
         imgRecipeDemo = findViewById(R.id.img_recipe_demo);
         txtRecipeName = findViewById(R.id.txt_recipe_name);
         txtRecipeDesc = findViewById(R.id.txt_recipe_desc);
+        txtTime = findViewById(R.id.txt_time);
         tbtnStar = findViewById(R.id.tbtn_star);
+
+        vibrator = (Vibrator)this.getSystemService(VIBRATOR_SERVICE);
 
 //        progressDialog = new ProgressDialog(DetailActivity.this);
 //        progressDialog.setMessage("Uploading, please wait...");
 //        progressDialog.show();
         detailedRecipe = new DetailedRecipe();
-        RecipeInfo recipe = (RecipeInfo) getIntent().getExtras().getParcelable("Recipe");
+        RecipeInfo recipe = getIntent().getExtras().getParcelable("Recipe");
         System.out.println(recipe.getIngredients());
         detailedRecipe.setRecipeInfo(recipe);
         imgRecipeDemo.setImageBitmap(recipe.getDemo());
@@ -197,7 +217,17 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 
     public void onImgBack_Clicked(View caller){
         onBackPressed();
-        //startActivity(new Intent(this, ImageActivity.class));
+//        String[] isoCountries = Locale.getISOCountries();
+//        HashMap<String,String> map = new HashMap<>();
+//        for (String country : isoCountries) {
+//            Locale locale = new Locale("en", country);
+//            String iso = locale.getISO3Country();
+//            String code = locale.getCountry();
+//            String name = locale.getDisplayCountry();
+//            map.put(code,name);
+//            System.out.println(iso + " " + code + " " + name);
+//        }
+//        System.out.println(map);
     }
 
     public void onLike_Clicked(View caller){
@@ -212,6 +242,43 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
 
         //this line will start the new activity and will automatically run the callback method below when the user has picked an image
         startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
+
+    public void onTimer_Clicked(View caller){
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hr, int min) {
+                hour = hr;
+                minute = min;
+                long timeDuration = TimeUnit.HOURS.toMillis(hr) + TimeUnit.MINUTES.toMillis(min);
+                long interval = 1000;
+                if(countDownTimer!=null)
+                    countDownTimer.cancel();
+                countDownTimer = new CountDownTimer(timeDuration,interval) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        long hour = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                        long minute = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)-TimeUnit.HOURS.toMinutes(hour);
+                        long second = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)-TimeUnit.HOURS.toSeconds(hour)-TimeUnit.MINUTES.toSeconds(minute);
+                        String timeText = String.format(Locale.getDefault(),"%02d:%02d:%02d", hour,minute,second);
+                        txtTime.setText(timeText);
+                    }
+
+                    @Override
+                    public void onFinish() {
+//                        long[] vibrationPattern = new long[]{0, 180, 80, 120};//delay, duration, delay, duration
+//                        vibrator.vibrate(vibrationPattern, -1);
+                        vibrator.vibrate(2000);
+                        System.out.println("finish");
+                    }
+                }.start();
+            }
+        };
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener,hour,minute,true);
+        timePickerDialog.setTitle("Select time");
+        timePickerDialog.show();
+
+
     }
 
     @Override
@@ -233,15 +300,15 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         }
     }
 
+    private void playVibrate(Context context) {
+        long[] vibrationPattern = new long[]{0, 500, 80, 120};//delay, duration, delay, duration
+        vibrator.vibrate(vibrationPattern, -1);
+    }
+
     @Override
     public void notifyDetailsRetrieved(List<RecipeStep> steps) {
         detailsAdapter.setList(steps);
     }
-
-//    @Override
-//    public void notifyIngredientsRetrieved(List<RecipeIngredient> ingredients) {
-//        ingredientAdapter.setList(ingredients);
-//    }
 
     @Override
     public void notifyLikeStateChanged(boolean newState) {
