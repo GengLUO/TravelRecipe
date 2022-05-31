@@ -36,6 +36,7 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
     private int PICK_IMAGE_REQUEST = 111;
     private ProgressDialog progressDialog;
     private User user;
+    private int userid;
     private ImageView image;
     private ImageView imageRetrieved;
     DatabaseConnect databaseConnect;
@@ -57,7 +58,7 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
         imageRetrieved = (ImageView)findViewById(R.id.imageRetrieved);
         requestQueue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
-        int userid = intent.getIntExtra("userid",1);
+        userid = intent.getIntExtra("userid",1);
         user = new User(userid);
         user.setHomepageFragmentNotifier(this);
         databaseConnect = new DatabaseConnect(requestQueue);
@@ -67,7 +68,8 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
 
     public void onBtnSetClicked(View caller)
     {
-
+        LoginActivity loginActivity = new LoginActivity();
+        databaseConnect.setUserInfo(caller,userid,usernameinput.getText().toString(),loginActivity.encrypt(passwordinput.getText().toString()));
     }
     public void onBtnPostClicked(View caller){
         databaseConnect.postProfileImage(caller,bitmap,user);

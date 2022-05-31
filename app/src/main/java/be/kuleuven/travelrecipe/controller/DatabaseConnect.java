@@ -280,7 +280,32 @@ public class DatabaseConnect {
         });
         requestQueue.add(request);
     }
-
+    public void setUserInfo(View caller,int userid, String username,String password)
+    {
+        String URL = "https://studev.groept.be/api/a21pt210/setUsername";
+        StringRequest  registerRequest = new StringRequest (Request.Method.POST, URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                Toast.makeText(caller.getContext(), "succeed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(caller.getContext(), "failed", Toast.LENGTH_LONG).show();
+            }
+        }) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("password",password);
+                params.put("userid",String.valueOf(userid));
+                return params;
+            }
+        };
+        requestQueue.add(registerRequest);
+    }
     public void login(LoginActivity loginActivity, String username, String password)
     {
         String loginURL = "https://studev.groept.be/api/a21pt210/login/"+username + "/" +password;
@@ -416,8 +441,6 @@ public class DatabaseConnect {
                 params.put("name",recipe.getName());
                 params.put("description",recipe.getDescription());
                 params.put("country",String.valueOf(recipe.getCountry()));
-                params.put("recipeidd",String.valueOf(recipe.getRecipeId()));
-                params.put("userid",String.valueOf(userid));
                 return params;
             }
         };
@@ -770,6 +793,7 @@ public class DatabaseConnect {
                 params.put("userid", String.valueOf(userId));
                 params.put("recipeid",String.valueOf(recipeId));
                 params.put("image",imageString);
+                params.put("i",String.valueOf(userId));
                 return params;
             }
         };

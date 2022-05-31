@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.android.volley.RequestQueue;
@@ -114,94 +115,6 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     }
 
 
-//    private void requestRecipeDetails(int recipeId) {
-//        //Standard Volley request. We don't need any parameters for this one
-//        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_IMAGE_URL_this+ recipeId, null,
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        try
-//                        {
-//                            Toast.makeText(DetailActivity.this, "start ingredients", Toast.LENGTH_SHORT).show();
-//                            //Check if the DB actually contains an image
-//                            if( response.length() > 0 ) {
-//                                for(int i=0; i<response.length();i++){
-//                                    JSONObject o = response.getJSONObject(i);
-//
-//                                    //converting base64 string to image
-//                                    String desc = o.getString("description");
-//                                    String b64String = o.getString("image");
-//                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-//                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-//
-//                                    //Link the bitmap to the ImageView, so it's visible on screen
-//                                    //imageRetrieved.setImageBitmap( bitmap2 );
-//                                    recipeList.add(new RecipeStep(String.valueOf(i+1),desc,bitmap));
-//                                    //Just a double-check to tell us the request has completed
-//
-//                                }
-//                                recipeDetails.setSteps(recipeList);
-//                                progressDialog.dismiss();
-//                                Toast.makeText(DetailActivity.this, "Image retrieved from DB", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                        catch( JSONException e )
-//                        {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(DetailActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//        requestQueue.add(retrieveImageRequest);
-//    }
-
-//    private void requestIngredients(int recipeId) {
-//        //Standard Volley request. We don't need any parameters for this one
-//        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_INGREDIENT_URL+ recipeId, null,
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        try
-//                        {
-//                            //Check if the DB actually contains an image
-//                            if( response.length() > 0 ) {
-//                                for(int i=0; i<response.length();i++){
-//                                    JSONObject o = response.getJSONObject(i);
-//
-//                                    //converting base64 string to image
-//                                    String name = o.getString("name");
-//                                    String amount = o.getString("amount");
-//                                    ingredients.put(name,amount);
-//                                    //Just a double-check to tell us the request has completed
-//                                }
-//                            }
-//                            setIngredientsListView(ingredients);
-//                            //progressDialog.dismiss();
-//                            Toast.makeText(DetailActivity.this, "Ingredients retrieved from DB", Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                        catch( JSONException e )
-//                        {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(DetailActivity.this, "Unable to communicate with server", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//        requestQueue.add(retrieveImageRequest);
-//    }
-
     private void setDetailsListView() {
         detailsListView = findViewById(R.id.step_adapter);
         detailsAdapter = new DetailsAdapter(getApplicationContext());
@@ -293,6 +206,7 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //Rescale the bitmap to 400px wide (avoid storing large images!)
                 databaseConnect.uploadWork(detailedRecipe.getRecipeInfo().getRecipeId(),userID,bitmap);
+                Toast.makeText(this,"upload Success",Toast.LENGTH_SHORT).show();
 
             } catch (Exception e) {
                 e.printStackTrace();
