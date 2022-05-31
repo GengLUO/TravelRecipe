@@ -50,10 +50,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textSize="20sp"
         android:entries="@array/spinner_items"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <!--        make hint visible when not typing-->
 </androidx.constraintlayout.widget.ConstraintLayout>

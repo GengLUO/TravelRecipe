@@ -128,8 +128,8 @@ public class DatabaseConnect {
         requestQueue.add(request);
         return countries;
     }
-    public Countries retrieveCountryByContinent(Countries countries, int continent)
-    {
+
+    public Countries retrieveCountryByContinent(Countries countries, int continent) {
         int userID = countries.getUserid();
         String countriesURL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfoByContinent/"+userID+"/"+continent;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, countriesURL, null, new Response.Listener<JSONArray>() {
@@ -173,8 +173,7 @@ public class DatabaseConnect {
         return countries;
     }
 
-    public void postProfileImage(View caller,Bitmap bitmap,User user)
-    {
+    public void postProfileImage(View caller,Bitmap bitmap,User user) {
         String POST_URL = "https://studev.groept.be/api/a21pt210/insertProfileImage";
         //Start an animating progress widget
         progressDialog = new ProgressDialog(caller.getContext());
@@ -213,8 +212,7 @@ public class DatabaseConnect {
         requestQueue.add(submitRequest);
     }
 
-    public void uploadRecipe(View caller, RecipeInfo recipe, int userid)
-    {
+    public void uploadRecipe(View caller, RecipeInfo recipe, int userid) {
         String POSTImage_URL = "https://studev.groept.be/api/a21pt210/insertRecipe";
         //Start an animating progress widget
         progressDialog = new ProgressDialog(caller.getContext());
@@ -258,8 +256,7 @@ public class DatabaseConnect {
         requestQueue.add(submitRequest);
     }
 
-    public void uploadStep(View caller, int recipeid, int sequence, String description,Bitmap image)
-    {
+    public void uploadStep(View caller, int recipeid, int sequence, String description,Bitmap image) {
         String POSTImage_URL = "https://studev.groept.be/api/a21pt210/insetStep";
         //Start an animating progress widget
         progressDialog = new ProgressDialog(caller.getContext());
@@ -479,8 +476,7 @@ public class DatabaseConnect {
         requestQueue.add(retrieveImageRequest);
     }
 
-    public void uploadMealPlan(int userId, DetailedRecipe detailedRecipe,boolean state)
-    {
+    public void uploadMealPlan(int userId, DetailedRecipe detailedRecipe,boolean state) {
         String addMealPlan_URL = "https://studev.groept.be/api/a21pt210/addMealPlan";
         String deleteMealPlan_URL = "https://studev.groept.be/api/a21pt210/deleteMealPlan";
         String url = state? addMealPlan_URL : deleteMealPlan_URL;
