@@ -104,30 +104,33 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import be.kuleuven.travelrecipe.R;
+import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
     public static int userID;
+    public static RequestQueue requestQueue;
+    public static DatabaseConnect databaseConnect;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestQueue = Volley.newRequestQueue(this);
+        databaseConnect = new DatabaseConnect(requestQueue);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.btm_nav);
         Intent intent = getIntent();
         userID = intent.getIntExtra("userid",1);
-        Bundle bundle = new Bundle();
         navController = Navigation.findNavController(this, R.id.nav_controller);
-        bundle.putInt("userid",userID);
-        navController.setGraph(R.navigation.bottom_navigation,bundle);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-        navController.navigate(R.id.home,bundle);
         //System.out.println(bundle);
     }
 

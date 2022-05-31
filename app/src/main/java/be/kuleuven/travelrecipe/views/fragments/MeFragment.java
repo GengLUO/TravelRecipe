@@ -79,17 +79,11 @@ public class MeFragment extends Fragment implements RecipeNotifier {
 
         listRecyclerView = view.findViewById(R.id.rvList);
         imgSetting = view.findViewById(R.id.img_Setting);
-//        user = new User(userid);
-//        user.setHomepageFragmentNotifier(this);
-//        databaseConnect.retrieveUserInfo(user);
         bindAdapter();
 
         dashboard = new Dashboard();
         dashboard.setRecipeNotifier(this);
-        requestQueue = Volley.newRequestQueue(getContext());
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.requestListRecipe(dashboard);
-        System.out.println("bundle"+getArguments().getInt("userID"));
+        MainActivity.databaseConnect.requestListRecipe(dashboard);
         return view;
     }
 

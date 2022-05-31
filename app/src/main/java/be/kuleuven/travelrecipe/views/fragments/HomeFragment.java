@@ -37,11 +37,10 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     private ProgressBar progressBar3;
     private ProgressBar progressBar4;
     View view;
-    RequestQueue requestQueue;
+
     private static final String URL = "https://studev.groept.be/api/a21pt210";
 
     private User user;
-    private int userid;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -57,9 +56,9 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         initialize(view);
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveUserInfo(user);
-        databaseConnect.retrieveContinentInfo(user);
+
+        MainActivity.databaseConnect.retrieveUserInfo(user);
+        MainActivity.databaseConnect.retrieveContinentInfo(user);
 
         return view;
 
@@ -81,14 +80,11 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
         progressBar3 = view.findViewById(R.id.progressBar3);
         progressBar4 = view.findViewById(R.id.progressBar4);
         profileImage = view.findViewById(R.id.profileImage);
-        requestQueue = Volley.newRequestQueue( getContext() );
         imageView1.setImageResource(R.drawable.asia);
         imageView2.setImageResource(R.drawable.europe);
         imageView3.setImageResource(R.drawable.america);
         imageView4.setImageResource(R.drawable.africa);
-        userid = getArguments().getInt("userid");
-        System.out.println(MainActivity.userID);
-        user = new User(userid);
+        user = new User(MainActivity.userID);
         user.setHomepageFragmentNotifier(this);
         return view;
     }
