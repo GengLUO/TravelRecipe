@@ -36,8 +36,9 @@ import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
 
-public class MeFragment extends Fragment {
+public class MeFragment extends Fragment implements HomepageFragmentNotifier {
 
     private ImageView imgMore;
     private ImageView imgSetting;
@@ -78,6 +79,7 @@ public class MeFragment extends Fragment {
         imgSetting = view.findViewById(R.id.img_Setting);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         User user = new User(userid);
+        user.setHomepageFragmentNotifier(this);
         databaseConnect.retrieveUserInfo(user);
         profileImageView.setImageBitmap(user.getImage());
         usernameTextView.setText(user.getUserName());
@@ -150,4 +152,43 @@ public class MeFragment extends Fragment {
         listRecyclerView.setAdapter(listDashboardAdapter);
     }
 
+    @Override
+    public void notifyNameChanged() {
+
+    }
+
+    @Override
+    public void notifyLevelChanged() {
+
+    }
+
+    @Override
+    public void notifyRecipeNumberChanged() {
+
+    }
+
+    @Override
+    public void notifyImageChanged() {
+
+    }
+
+    @Override
+    public void notifyAsiaChanged() {
+
+    }
+
+    @Override
+    public void notifyEuropeChanged() {
+
+    }
+
+    @Override
+    public void notifyAmericaChanged() {
+
+    }
+
+    @Override
+    public void notifyAfricaChanged() {
+
+    }
 }
