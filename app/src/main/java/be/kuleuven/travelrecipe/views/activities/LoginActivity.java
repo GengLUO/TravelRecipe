@@ -27,7 +27,6 @@ import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.models.Country;
-import be.kuleuven.travelrecipe.models.RecipeStep;
 
 public class LoginActivity extends AppCompatActivity {
     private List<String> username;
