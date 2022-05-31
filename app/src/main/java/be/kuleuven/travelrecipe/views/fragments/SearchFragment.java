@@ -57,15 +57,15 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        searchView = view.findViewById(R.id.searchView);
-        dashboardRecyclerView = view.findViewById(R.id.recycler_view);
-        dashboardSpinner = view.findViewById(R.id.spSearch);
-        initView();
+        initView(view);
         initModel();
         return view;
     }
 
-    private void initView() {
+    private void initView(View view) {
+        searchView = view.findViewById(R.id.searchView);
+        dashboardRecyclerView = view.findViewById(R.id.recycler_view);
+        dashboardSpinner = view.findViewById(R.id.spSearch);
         bindAdapter();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -85,8 +85,8 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
         dashboardSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sortList(i);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int sortState, long l) {
+                sortList(sortState);
                 dashboardAdapter.setList(filterList(searchView.getQuery().toString()));
             }
             @Override
@@ -113,17 +113,19 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private List<RecipeInfo> filterList(String text) {
+        String lowercaseText = text.toLowerCase();
         return dashboard
                 .getAllRecipes()
                 .stream()
-                .filter(r -> r.getName().contains(text) ||
-                             r.getCountryname().contains(text) ||
+                .filter(r -> r.getName().toLowerCase().contains(lowercaseText) ||
+                             r.getCountryname().toLowerCase().contains(lowercaseText) ||
                              r.getIngredients()
                                      .stream()
                                      .map(RecipeIngredient::getName)
                                      .collect(Collectors.toSet())
                                      .toString()
-                                     .contains(text))
+                                     .toLowerCase()
+                                     .contains(lowercaseText))
                 .collect(Collectors.toList());
     }
 

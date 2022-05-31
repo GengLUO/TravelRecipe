@@ -7,11 +7,11 @@ import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 
 
 public class Dashboard extends AbstractDashboard {
-    private List<RecipeInfo> recipes = new ArrayList<>();
+    private List<RecipeInfo> recipes;
 
     public Dashboard() {
+         recipes = new ArrayList<>();
     }
-
 
     public void addRecipe(RecipeInfo recipe){
         recipes.add(recipe);
@@ -33,9 +33,6 @@ public class Dashboard extends AbstractDashboard {
         recipes.clear();
     }
 
-    public void loadRecipes(){
-
-    }
 
     public void setRecipes(List<RecipeInfo> recipes){
         this.recipes = recipes;
