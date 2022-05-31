@@ -35,6 +35,7 @@ import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.recipe.RecipeStep;
 import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 import be.kuleuven.travelrecipe.models.User;
+import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 public class DatabaseConnect {
     private RequestQueue requestQueue;
@@ -665,5 +666,55 @@ public class DatabaseConnect {
                 bm, 0, 0, width, height, matrix, false);
         bm.recycle();
         return resizedBitmap;
+    }
+
+    public void requestListRecipe(Dashboard dashboard) {
+            //Standard Volley request. We don't need any parameters for this one
+        String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/";
+        GET_LIKED_URL = GET_LIKED_URL + String.valueOf(1);
+        List<RecipeInfo> newRecipes = new ArrayList<>();
+        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_LIKED_URL, null,
+                new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try
+                {
+                    //Check if the DB actually contains an image
+                    if( response.length() > 0 ) {
+                        for(int i=0; i<response.length();i++){
+                            JSONObject o = response.getJSONObject(i);
+
+                            //converting base64 string to image
+                            int id = o.getInt("recipe_id");
+                            int country = o.getInt("country");
+                            String countryName = o.getString("country_name");
+                            String name = o.getString("name");
+                            String desc = o.getString("recipe_desc");
+                            String b64String = o.getString("recipe_image");
+                            byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
+                            Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
+
+                            //Link the bitmap to the ImageView, so it's visible on screen
+                            //imageRetrieved.setImageBitmap( bitmap2 );
+                            newRecipes.add(new RecipeInfo(name,desc,country,countryName,id,bitmap));
+
+                            //Just a double-check to tell us the request has completed
+                        }
+                        dashboard.setRecipes(newRecipes);
+                    }
+                }
+                catch( JSONException e )
+                {
+                    e.printStackTrace();
+                }
+            }
+            },
+                new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }
+        );
+        requestQueue.add(retrieveImageRequest);
     }
 }

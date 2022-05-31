@@ -167,6 +167,8 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
             case Z_A: dashboard.getAllRecipes()
                                         .sort((Comparator.comparing(RecipeInfo::getName).reversed()));
                 break;
+            default: dashboard.getAllRecipes()
+                    .sort(Comparator.comparingInt(RecipeInfo::getRecipeId));
         }
     }
 

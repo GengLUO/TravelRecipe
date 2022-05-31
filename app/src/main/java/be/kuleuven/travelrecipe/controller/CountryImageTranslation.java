@@ -25,12 +25,17 @@ public class CountryImageTranslation {
     }
 
     public String generateFlag(String fullName){
-        System.out.println(fullName);
-        String code = map.get(fullName);
-        System.out.println(code);
-        int firstLetter = Character.codePointAt(code, 0) - 0x41 + 0x1F1E6;
-        int secondLetter = Character.codePointAt(code, 1) - 0x41 + 0x1F1E6;
-        return new String(Character.toChars(firstLetter)) + new String(Character.toChars(secondLetter));
+        try {
+            System.out.println(fullName);
+            String code = map.get(fullName);
+            System.out.println(code);
+            int firstLetter = Character.codePointAt(code, 0) - 0x41 + 0x1F1E6;
+            int secondLetter = Character.codePointAt(code, 1) - 0x41 + 0x1F1E6;
+            return new String(Character.toChars(firstLetter)) + new String(Character.toChars(secondLetter));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

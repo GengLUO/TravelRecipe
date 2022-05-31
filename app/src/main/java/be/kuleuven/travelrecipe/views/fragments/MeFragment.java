@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavInflater;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,8 +40,10 @@ import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
 import be.kuleuven.travelrecipe.models.User;
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
+import be.kuleuven.travelrecipe.notifier.RecipeNotifier;
+import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
-public class MeFragment extends Fragment implements HomepageFragmentNotifier {
+public class MeFragment extends Fragment implements RecipeNotifier {
 
     private ImageView imgMore;
     private ImageView imgSetting;
@@ -47,13 +52,13 @@ public class MeFragment extends Fragment implements HomepageFragmentNotifier {
     RecyclerView listRecyclerView;
     DashboardAdapter listDashboardAdapter;
     List<RecipeInfo> listRecipeList;
-    private int userid = 1;
-    private User user;
+    Dashboard dashboard;
+
+    //private User user;
 
     private RequestQueue requestQueue;
     private String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/";
     private ProgressDialog progressDialog;
-    private Dashboard dashboard = new Dashboard();
 
     public MeFragment() {
         // Required empty public constructor
@@ -62,91 +67,38 @@ public class MeFragment extends Fragment implements HomepageFragmentNotifier {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("bundle"+getArguments().getString("id"));
+        System.out.println(requireArguments().getString("id"));
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Me Fragment is Uploading");
-        progressDialog.show();
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_me, container, false);
-        profileImageView = view.findViewById(R.id.profileImageView);
-        usernameTextView = view.findViewById(R.id.userNameTextView);
-        requestQueue = Volley.newRequestQueue(getContext());
+
         listRecyclerView = view.findViewById(R.id.rvList);
-        imgMore = view.findViewById(R.id.img_More);
         imgSetting = view.findViewById(R.id.img_Setting);
+//        user = new User(userid);
+//        user.setHomepageFragmentNotifier(this);
+//        databaseConnect.retrieveUserInfo(user);
+        bindAdapter();
+
+        dashboard = new Dashboard();
+        dashboard.setRecipeNotifier(this);
+        requestQueue = Volley.newRequestQueue(getContext());
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        user = new User(userid);
-        user.setHomepageFragmentNotifier(this);
-        databaseConnect.retrieveUserInfo(user);
+        databaseConnect.requestListRecipe(dashboard);
 
-
-
-        requestListRecipe();
+        System.out.println(requireArguments().getString("id"));
+        System.out.println("bundle"+getArguments().getString("id"));
 
         return view;
     }
 
-    private void requestListRecipe() {
-        //Standard Volley request. We don't need any parameters for this one
-        GET_LIKED_URL = GET_LIKED_URL + String.valueOf(userid);
-        JsonArrayRequest retrieveImageRequest = new JsonArrayRequest(Request.Method.GET, GET_LIKED_URL, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try
-                        {
-                            //Check if the DB actually contains an image
-                            Toast.makeText(getContext(), "beginlike", Toast.LENGTH_SHORT).show();
-                            if( response.length() > 0 ) {
-                                for(int i=0; i<response.length();i++){
-                                    JSONObject o = response.getJSONObject(i);
-
-                                    //converting base64 string to image
-                                    int id = o.getInt("recipe_id");
-                                    int country = o.getInt("country");
-                                    String name = o.getString("name");
-                                    String desc = o.getString("recipe_desc");
-                                    String b64String = o.getString("recipe_image");
-                                    byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray( imageBytes, 0, imageBytes.length );
-
-                                    //Link the bitmap to the ImageView, so it's visible on screen
-                                    //imageRetrieved.setImageBitmap( bitmap2 );
-                                    dashboard.addRecipe(new RecipeInfo(name,desc,country,id,bitmap));
-
-                                    //Just a double-check to tell us the request has completed
-
-
-
-                                }
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(), "IIImage retrieved from DB", Toast.LENGTH_SHORT).show();
-                                bindAdapter();
-                            }
-                        }
-                        catch( JSONException e )
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Unable to communicate with server", Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-
-        requestQueue.add(retrieveImageRequest);
-    }
-
     private void bindAdapter() {
-        listDashboardAdapter = new DashboardAdapter(dashboard.getAllRecipes(),getContext());
+        listDashboardAdapter = new DashboardAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         listRecyclerView.setLayoutManager(layoutManager);
         listRecyclerView.setNestedScrollingEnabled(false);
@@ -154,42 +106,7 @@ public class MeFragment extends Fragment implements HomepageFragmentNotifier {
     }
 
     @Override
-    public void notifyNameChanged() {
-        usernameTextView.setText(user.getUserName());
-    }
-
-    @Override
-    public void notifyLevelChanged() {
-
-    }
-
-    @Override
-    public void notifyRecipeNumberChanged() {
-
-    }
-
-    @Override
-    public void notifyImageChanged() {
-        profileImageView.setImageBitmap(user.getImage());
-    }
-
-    @Override
-    public void notifyAsiaChanged() {
-
-    }
-
-    @Override
-    public void notifyEuropeChanged() {
-
-    }
-
-    @Override
-    public void notifyAmericaChanged() {
-
-    }
-
-    @Override
-    public void notifyAfricaChanged() {
-
+    public void notifyRecipesListChanged(List<RecipeInfo> recipes) {
+        listDashboardAdapter.setList(recipes);
     }
 }

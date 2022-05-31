@@ -19,5 +19,7 @@
         android:id="@+id/me"
         android:name="be.kuleuven.travelrecipe.views.fragments.MeFragment"
         android:label="fragment_me"
-        tools:layout="@layout/fragment_me" />
+        tools:layout="@layout/fragment_me" >
+        <argument android:name="id" />
+    </fragment>
 </navigation>

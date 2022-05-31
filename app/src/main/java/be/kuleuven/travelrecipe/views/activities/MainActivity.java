@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     NavController navController;
-    int userID;
+    private int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,9 +121,12 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.btm_nav);
         Intent intent = getIntent();
         userID = intent.getIntExtra("userid",1);
-
+        Bundle bundle = new Bundle();
+        bundle.putString("id","...");
         navController = Navigation.findNavController(this, R.id.nav_controller);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
+        navController.setGraph(R.navigation.bottom_navigation,bundle);
+        //System.out.println(bundle);
     }
 
 
