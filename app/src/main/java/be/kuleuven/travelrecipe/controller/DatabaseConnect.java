@@ -171,9 +171,10 @@ public class DatabaseConnect {
         JsonArrayRequest fullrequest = new JsonArrayRequest(Request.Method.GET, "https://studev.groept.be/api/a21pt210/getAllCountries", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                List<Country> temCountries= new ArrayList<Country>();
                 for (int i = 0; i < response.length(); i++) {
                     JSONObject o = null;
-                    List<Country> temCountries= new ArrayList<Country>();
+
                     temCountries = countries.getCountries();
                     try {
                         o = response.getJSONObject(i);
@@ -205,6 +206,7 @@ public class DatabaseConnect {
                         ;
                     }
                 }
+                countries.setCountries(temCountries);
             }
         }, new Response.ErrorListener() {
             @Override
