@@ -196,14 +196,13 @@ public class DatabaseConnect {
                                     mul = true;
                                 }
                             }
-                            if (mul = false)
+                            if (!mul)
                             {
                                 temCountries.add(country);
                             }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        ;
                     }
                 }
                 countries.setCountries(temCountries);
