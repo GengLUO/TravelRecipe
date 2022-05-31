@@ -45,16 +45,21 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countries);
 
+        initView();
+        handleIntent();
+        initModel();
+    }
+
+    private void initView() {
         txtContinent = findViewById(R.id.textViewContinent);
         imgBack = findViewById(R.id.img_back);
         countriesRecyclerView = findViewById(R.id.countriesRecyclerView);
+    }
 
-        handleIntent();
-        countries = new Countries(userid);
-        countries.setCountryActivityNotifier(this);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveCountryByContinent(countries,continentNumber);
+    private void handleIntent() {
+        Intent intent = getIntent();
+        continentNumber = intent.getIntExtra("continentnumber",1);
+        userid = intent.getIntExtra("userid",1);
         switch(continentNumber){
             case ASIA:txtContinent.setText(R.string.asia);
                 break;
@@ -66,10 +71,12 @@ public class CountrysActivity extends AppCompatActivity implements CountryActivi
         }
     }
 
-    private void handleIntent() {
-        Intent intent = getIntent();
-        continentNumber = intent.getIntExtra("continentnumber",1);
-        userid = intent.getIntExtra("userid",1);
+    private void initModel() {
+        countries = new Countries(userid);
+        countries.setCountryActivityNotifier(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
+        databaseConnect.retrieveCountryByContinent(countries,continentNumber);
     }
 
     public void setCountriesRecyclerView(List<Country> countries){

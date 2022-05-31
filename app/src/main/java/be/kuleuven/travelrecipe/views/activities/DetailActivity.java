@@ -2,7 +2,6 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.app.Service;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -24,13 +23,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import be.kuleuven.travelrecipe.notifier.DetailNotifier;
@@ -63,10 +58,6 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
     int hour;
     int minute;
 
-    private static final String GET_IMAGE_URL_this = "https://studev.groept.be/api/a21pt210/getStep/";
-    private static final String GET_INGREDIENT_URL = "https://studev.groept.be/api/a21pt210/getIngredients/";
-    ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,73 +69,58 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         txtRecipeName = findViewById(R.id.txt_recipe_name);
         txtRecipeDesc = findViewById(R.id.txt_recipe_desc);
         txtTime = findViewById(R.id.txt_time);
+        txtTime.setVisibility(View.INVISIBLE);
         tbtnStar = findViewById(R.id.tbtn_star);
-
         vibrator = (Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
+        detailsListView = findViewById(R.id.step_adapter);
+        ingredientsListView = findViewById(R.id.ingredients_adapter);
 
-//        progressDialog = new ProgressDialog(DetailActivity.this);
-//        progressDialog.setMessage("Uploading, please wait...");
-//        progressDialog.show();
+        handleIntent();
+        initView();
+        initModel();
+
+    }
+
+    private void handleIntent() {
         detailedRecipe = new DetailedRecipe();
         RecipeInfo recipe = getIntent().getExtras().getParcelable("Recipe");
-        System.out.println(recipe.getIngredients());
         detailedRecipe.setRecipeInfo(recipe);
         imgRecipeDemo.setImageBitmap(recipe.getDemo());
         txtRecipeName.setText(recipe.getName());
         txtRecipeDesc.setText(recipe.getDescription());
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        databaseConnect = new DatabaseConnect(requestQueue);
-
-        setDetailsListView();
-        setIngredientsListView(recipe.getIngredients());
-
-        initModel(databaseConnect);
-
-
-        //setRecipeRecyclerView(recipeList);
-        //setListView(recipeList);
     }
 
-    private void initModel(DatabaseConnect databaseConnect) {
+    private void initView() {
+        setDetailsListView();
+        setIngredientsListView(detailedRecipe.getRecipeInfo().getIngredients());
+    }
+
+    private void initModel() {
         detailedRecipe.setDetailNotifier(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
         databaseConnect.requestRecipeDemo(detailedRecipe);
         databaseConnect.requestLikeState(userID, detailedRecipe);
-        //databaseConnect.requestIngredients(detailedRecipe);
         databaseConnect.requestRecipeDetails(detailedRecipe);
     }
 
 
     private void setDetailsListView() {
-        detailsListView = findViewById(R.id.step_adapter);
-        detailsAdapter = new DetailsAdapter(getApplicationContext());
+        detailsAdapter = new DetailsAdapter(this);
         detailsListView.setAdapter(detailsAdapter);
     }
 
     private void setIngredientsListView(List<RecipeIngredient> ingredients){
-        ingredientsListView = findViewById(R.id.ingredients_adapter);
-        ingredientAdapter = new IngredientAdapter(ingredients,getApplicationContext());
+        ingredientAdapter = new IngredientAdapter(ingredients,this);
         ingredientsListView.setAdapter(ingredientAdapter);
     }
 
 
     public void onImgBack_Clicked(View caller){
         onBackPressed();
-//        String[] isoCountries = Locale.getISOCountries();
-//        HashMap<String,String> map = new HashMap<>();
-//        for (String country : isoCountries) {
-//            Locale locale = new Locale("en", country);
-//            String iso = locale.getISO3Country();
-//            String code = locale.getCountry();
-//            String name = locale.getDisplayCountry();
-//            map.put(code,name);
-//            System.out.println(iso + " " + code + " " + name);
-//        }
-//        System.out.println(map);
     }
 
     public void onLike_Clicked(View caller){
-        System.out.println(tbtnStar.isChecked());
         databaseConnect.uploadMealPlan(userID, detailedRecipe,tbtnStar.isChecked());
     }
 
@@ -152,8 +128,6 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
-
-        //this line will start the new activity and will automatically run the callback method below when the user has picked an image
         startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
     }
 
@@ -163,51 +137,49 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
             public void onTimeSet(TimePicker timePicker, int hr, int min) {
                 hour = hr;
                 minute = min;
-                long timeDuration = TimeUnit.HOURS.toMillis(hr) + TimeUnit.MINUTES.toMillis(min);
+                long timeDuration = TimeUnit.HOURS.toMillis(hour) + TimeUnit.MINUTES.toMillis(minute);
                 long interval = 1000;
-                if(countDownTimer!=null)
-                    countDownTimer.cancel();
-                countDownTimer = new CountDownTimer(timeDuration,interval) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        long hour = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
-                        long minute = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)-TimeUnit.HOURS.toMinutes(hour);
-                        long second = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)-TimeUnit.HOURS.toSeconds(hour)-TimeUnit.MINUTES.toSeconds(minute);
-                        String timeText = String.format(Locale.getDefault(),"%02d:%02d:%02d", hour,minute,second);
-                        txtTime.setText(timeText);
-                    }
-
-                    @Override
-                    public void onFinish() {
-//                        long[] vibrationPattern = new long[]{0, 180, 80, 120};//delay, duration, delay, duration
-//                        vibrator.vibrate(vibrationPattern, -1);
-                        vibrator.vibrate(2000);
-                        System.out.println("finish");
-                    }
-                }.start();
+                setCountDownTimer(timeDuration, interval);
             }
         };
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener,hour,minute,true);
         timePickerDialog.setTitle("Select time");
         timePickerDialog.show();
+    }
 
-
+    private void setCountDownTimer(long timeDuration, long interval) {
+        if(countDownTimer!=null)
+            countDownTimer.cancel();
+        countDownTimer = new CountDownTimer(timeDuration, interval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long hour = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                long minute = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)-TimeUnit.HOURS.toMinutes(hour);
+                long second = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)-TimeUnit.HOURS.toSeconds(hour)-TimeUnit.MINUTES.toSeconds(minute);
+                String countDownTime = String.format(Locale.getDefault(),"%02d:%02d:%02d", hour,minute,second);
+                txtTime.setText(countDownTime);
+            }
+            @Override
+            public void onFinish() {
+                long[] vibrationPattern = new long[]{0, 1500, 500, 1500};//delay, duration, delay, duration
+                vibrator.vibrate(vibrationPattern, -1);
+                txtTime.setVisibility(View.INVISIBLE);
+            }
+        }.start();
+        txtTime.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
-
             try {
                 //getting image from gallery
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //Rescale the bitmap to 400px wide (avoid storing large images!)
                 databaseConnect.uploadWork(detailedRecipe.getRecipeInfo().getRecipeId(),userID,bitmap);
                 Toast.makeText(this,"upload Success",Toast.LENGTH_SHORT).show();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
