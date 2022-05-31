@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelRecipe">
         <activity
-            android:name=".views.activities.RegisterActivity"
-            android:exported="false" />
-        <activity
             android:name=".views.activities.MainActivity"
             android:exported="false" />
         <activity
