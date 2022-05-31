@@ -48,6 +48,7 @@ public class MeFragment extends Fragment implements HomepageFragmentNotifier {
     DashboardAdapter listDashboardAdapter;
     List<RecipeInfo> listRecipeList;
     private int userid = 1;
+    private User user;
 
     private RequestQueue requestQueue;
     private String GET_LIKED_URL = "https://studev.groept.be/api/a21pt210/getLikedRecipe/";
@@ -78,11 +79,11 @@ public class MeFragment extends Fragment implements HomepageFragmentNotifier {
         imgMore = view.findViewById(R.id.img_More);
         imgSetting = view.findViewById(R.id.img_Setting);
         DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        User user = new User(userid);
+        user = new User(userid);
         user.setHomepageFragmentNotifier(this);
         databaseConnect.retrieveUserInfo(user);
-        profileImageView.setImageBitmap(user.getImage());
-        usernameTextView.setText(user.getUserName());
+
+
 
         requestListRecipe();
 
@@ -154,7 +155,7 @@ public class MeFragment extends Fragment implements HomepageFragmentNotifier {
 
     @Override
     public void notifyNameChanged() {
-
+        usernameTextView.setText(user.getUserName());
     }
 
     @Override
@@ -169,7 +170,7 @@ public class MeFragment extends Fragment implements HomepageFragmentNotifier {
 
     @Override
     public void notifyImageChanged() {
-
+        profileImageView.setImageBitmap(user.getImage());
     }
 
     @Override
