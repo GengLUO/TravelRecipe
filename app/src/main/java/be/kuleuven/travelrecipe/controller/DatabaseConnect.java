@@ -350,8 +350,10 @@ public class DatabaseConnect {
 
                                     //converting base64 string to image
                                     int id = o.getInt("recipe_id");
-                                    String country = o.getString("country");
+                                    String countryname = o.getString("countryname");
+                                    int country = o.getInt("country");
                                     String name = o.getString("name");
+
                                     String desc = o.getString("recipe_desc");
                                     String b64String = o.getString("recipe_image");
                                     byte[] imageBytes = Base64.decode( b64String, Base64.DEFAULT );
@@ -359,7 +361,7 @@ public class DatabaseConnect {
 
                                     //Link the bitmap to the ImageView, so it's visible on screen
                                     //imageRetrieved.setImageBitmap( bitmap2 );
-                                    newRecipes.add(new RecipeInfo(name,desc,country,id,bitmap));
+                                    newRecipes.add(new RecipeInfo(name,desc,country,countryname,id,bitmap));
 
                                     //Just a double-check to tell us the request has completed
                                 }

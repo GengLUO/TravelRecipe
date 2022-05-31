@@ -9,20 +9,24 @@ import java.util.List;
 
 public class RecipeInfo implements Parcelable{
 
-    private String name, description,country;
-    private int  recipeId;
+    private String name;
+    private String description;
+
+    private String countryname;
+    private int country, recipeId;
     private Bitmap demo;
     private List<RecipeIngredient> ingredients = new ArrayList<>();
 
-    public RecipeInfo(String name, String description, String country, int recipeId, List<RecipeIngredient> ingredients) {
+    public RecipeInfo(String name, String description, int country,String countryname, int recipeId, List<RecipeIngredient> ingredients) {
         this.name = name;
         this.description = description;
         this.country = country;
         this.recipeId = recipeId;
         this.ingredients = ingredients;
+        this.countryname = countryname;
     }
 
-    public RecipeInfo(String name, String description, String country, int recipeId, Bitmap demo, List<RecipeIngredient> ingredients) {
+    public RecipeInfo(String name, String description, int country, int recipeId, Bitmap demo, List<RecipeIngredient> ingredients) {
         this.name = name;
         this.description = description;
         this.country = country;
@@ -31,7 +35,15 @@ public class RecipeInfo implements Parcelable{
         this.ingredients = ingredients;
     }
 
-    public RecipeInfo(String name, String description, String country, int recipeId, Bitmap demo) {
+    public RecipeInfo(String name, String description, int country,String countryname, int recipeId, Bitmap demo) {
+        this.name = name;
+        this.description = description;
+        this.country = country;
+        this.recipeId = recipeId;
+        this.demo = demo;
+        this.countryname = countryname;
+    }
+    public RecipeInfo(String name, String description, int country, int recipeId, Bitmap demo) {
         this.name = name;
         this.description = description;
         this.country = country;
@@ -42,7 +54,7 @@ public class RecipeInfo implements Parcelable{
     protected RecipeInfo(Parcel in) {
         name = in.readString();
         description = in.readString();
-        country = in.readString();
+        country = in.readInt();
         recipeId = in.readInt();
         ingredients = new ArrayList<>();
         in.readList(ingredients,RecipeIngredient.class.getClassLoader());
@@ -76,11 +88,11 @@ public class RecipeInfo implements Parcelable{
         this.description = description;
     }
 
-    public String getCountry() {
+    public int getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(int country) {
         this.country = country;
     }
 
@@ -129,5 +141,12 @@ public class RecipeInfo implements Parcelable{
         parcel.writeInt(country);
         parcel.writeInt(recipeId);
         parcel.writeList(ingredients);
+    }
+    public String getCountryname() {
+        return countryname;
+    }
+
+    public void setCountryname(String countryname) {
+        this.countryname = countryname;
     }
 }
