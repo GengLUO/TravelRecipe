@@ -31,6 +31,7 @@ import be.kuleuven.travelrecipe.controller.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.models.recipe.RecipeIngredient;
 import be.kuleuven.travelrecipe.models.dashboard.Dashboard;
+import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 
 public class SearchFragment extends Fragment implements RecipeNotifier {
@@ -106,9 +107,7 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     private void initModel() {
         dashboard = new Dashboard();
         dashboard.setRecipeNotifier(this);
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        DatabaseConnect databaseConnect = new DatabaseConnect(requestQueue);
-        databaseConnect.retrieveRecipes(dashboard);
+        MainActivity.databaseConnect.retrieveRecipes(dashboard);
     }
 
 //    @RequiresApi(api = Build.VERSION_CODES.N)
