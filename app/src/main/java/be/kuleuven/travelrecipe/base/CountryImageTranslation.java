@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.controller;
+package be.kuleuven.travelrecipe.base;
 
 import java.util.HashMap;
 import java.util.Locale;

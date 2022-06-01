@@ -1,4 +1,4 @@
-package be.kuleuven.travelrecipe.controller;
+package be.kuleuven.travelrecipe.base;
 
 import android.graphics.Bitmap;
 import android.view.View;

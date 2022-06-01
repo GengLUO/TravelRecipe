@@ -18,7 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.base.DatabaseConnect;
 
 public class UploadStepsActivity extends AppCompatActivity {
     private TextView stepNumberTextView ;

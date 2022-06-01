@@ -14,7 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.base.DatabaseConnect;
 
 public class MainActivity extends AppCompatActivity {
 

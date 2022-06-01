@@ -13,6 +13,7 @@
         android:layout_marginTop="116dp"
         android:clickable="true"
         android:onClick="onProfileImage_Clicked"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -81,6 +82,7 @@
         android:layout_marginTop="44dp"
         android:fontFamily="@font/baloo_paaji"
         android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/setting_levelText"
         app:layout_constraintStart_toStartOf="@+id/setting_levelText"
         app:layout_constraintTop_toTopOf="@+id/setting_levelText" />
 
@@ -103,6 +105,7 @@
         android:fontFamily="@font/baloo_paaji"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="@+id/setting_recipeAmountText"
+        app:layout_constraintStart_toStartOf="@+id/setting_recipeAmountText"
         app:layout_constraintTop_toTopOf="@+id/setting_recipeAmountText" />
 
     <Button

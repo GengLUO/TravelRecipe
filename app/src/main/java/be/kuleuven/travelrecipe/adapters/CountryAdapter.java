@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.controller.CountryImageTranslation;
+import be.kuleuven.travelrecipe.base.CountryImageTranslation;
 import be.kuleuven.travelrecipe.models.country.Country;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder>{

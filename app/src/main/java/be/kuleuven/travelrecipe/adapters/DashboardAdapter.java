@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.controller.CountryImageTranslation;
+import be.kuleuven.travelrecipe.base.CountryImageTranslation;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;
 import be.kuleuven.travelrecipe.views.activities.DetailActivity;
 import be.kuleuven.travelrecipe.views.activities.MainActivity;

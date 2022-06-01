@@ -24,7 +24,7 @@ import be.kuleuven.travelrecipe.models.country.Country;
 import java.util.List;
 
 import be.kuleuven.travelrecipe.adapters.CountryAdapter;
-import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.base.DatabaseConnect;
 
 public class CountrysActivity extends AppCompatActivity implements CountryActivityNotifier {
 

@@ -2,31 +2,20 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.base.DatabaseConnect;
 
 public class LoginActivity extends AppCompatActivity {
     private boolean visible;

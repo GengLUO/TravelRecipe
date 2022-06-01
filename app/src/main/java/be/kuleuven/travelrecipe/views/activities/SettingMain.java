@@ -2,7 +2,6 @@ package be.kuleuven.travelrecipe.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -20,7 +19,7 @@ import com.android.volley.toolbox.Volley;
 
 import be.kuleuven.travelrecipe.R;
 import be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier;
-import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.base.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.user.User;
 
 

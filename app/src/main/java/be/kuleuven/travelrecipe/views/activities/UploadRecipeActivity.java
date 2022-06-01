@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import be.kuleuven.travelrecipe.R;
-import be.kuleuven.travelrecipe.controller.DatabaseConnect;
+import be.kuleuven.travelrecipe.base.DatabaseConnect;
 import be.kuleuven.travelrecipe.models.country.Countries;
 import be.kuleuven.travelrecipe.models.country.Country;
 import be.kuleuven.travelrecipe.models.recipe.RecipeInfo;

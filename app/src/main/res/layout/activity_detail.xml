@@ -121,7 +121,7 @@
                 android:id="@+id/btn_upload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/teal_200"
                 android:fontFamily="@font/baloo_paaji"
                 android:onClick="onUploadWork_Clicked"
                 android:text="Upload my work" />
