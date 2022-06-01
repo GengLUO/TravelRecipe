@@ -11,7 +11,6 @@ public class RecipeInfo implements Parcelable{
 
     private String name;
     private String description;
-
     private String countryname;
     private int country, recipeId;
     private Bitmap demo;
@@ -124,10 +123,6 @@ public class RecipeInfo implements Parcelable{
         ingredients.add(ingredient);
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
-//    public Stream<RecipeIngredient> getRecipeIngredientsAsStream(){
-//        return ingredients.stream();
-//    }
 
     @Override
     public int describeContents() {
