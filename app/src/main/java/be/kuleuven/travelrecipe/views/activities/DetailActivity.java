@@ -7,6 +7,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -77,7 +79,6 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         txtTime = findViewById(R.id.txt_time);
         txtTime.setVisibility(View.INVISIBLE);
         tbtnStar = findViewById(R.id.tbtn_star);
-        vibrator = (Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
         detailsListView = findViewById(R.id.step_adapter);
         ingredientsListView = findViewById(R.id.ingredients_adapter);
     }
@@ -131,19 +132,17 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
+        //noinspection deprecation
         startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
     }
 
     public void onTimer_Clicked(View caller){
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hr, int min) {
-                hour = hr;
-                minute = min;
-                long timeDuration = TimeUnit.HOURS.toMillis(hour) + TimeUnit.MINUTES.toMillis(minute);
-                long interval = 1000;
-                setCountDownTimer(timeDuration, interval);
-            }
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, hr, min) -> {
+            hour = hr;
+            minute = min;
+            long timeDuration = TimeUnit.HOURS.toMillis(hour) + TimeUnit.MINUTES.toMillis(minute);
+            long interval = 1000;
+            setCountDownTimer(timeDuration, interval);
         };
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener,hour,minute,true);
         timePickerDialog.setTitle("Select time");
@@ -164,8 +163,10 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
             }
             @Override
             public void onFinish() {
-                long[] vibrationPattern = new long[]{0, 1500, 500, 1500};//delay, duration, delay, duration
-                vibrator.vibrate(vibrationPattern, -1);
+//                long[] vibrationPattern = new long[]{0, 1500, 500, 1500};//delay, duration, delay, duration
+//                vibrator.vibrate(vibrationPattern, -1);
+                playVibrate();
+                playRingtone();
                 txtTime.setVisibility(View.INVISIBLE);
             }
         }.start();
@@ -189,9 +190,16 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         }
     }
 
-    private void playVibrate(Context context) {
-        long[] vibrationPattern = new long[]{0, 500, 80, 120};//delay, duration, delay, duration
+    private void playVibrate() {
+        vibrator = (Vibrator)this.getSystemService(Service.VIBRATOR_SERVICE);
+        long[] vibrationPattern = new long[]{0, 1500, 500, 1500};//delay, duration, delay, duration
         vibrator.vibrate(vibrationPattern, -1);
+    }
+
+    private void playRingtone(){
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone rt = RingtoneManager.getRingtone(this, uri);
+        rt.play();
     }
 
     @Override
