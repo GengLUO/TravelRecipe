@@ -18,10 +18,6 @@ import be.kuleuven.travelrecipe.views.activities.MainActivity;
 
 public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
 
-    private TextView recipeAmountText;
-    private TextView recipeAmountTextview;
-    private TextView levelText;
-    private TextView levelTextview;
     private TextView usernameTextview;
     private ImageView imageView1;
     private ImageView imageView2;
@@ -54,10 +50,6 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
     }
 
     public void initView(View view) {
-        recipeAmountText = view.findViewById(R.id.recipeAmountText);
-        recipeAmountTextview = view.findViewById(R.id.recipeAmountTextview);
-        levelTextview = view.findViewById(R.id.levelTextview);
-        levelText = view.findViewById(R.id.levelText);
         usernameTextview = view.findViewById(R.id.usernameTextview);
         imageView1 = view.findViewById(R.id.imageView1);
         imageView2 = view.findViewById(R.id.imageView2);
@@ -88,12 +80,11 @@ public class HomeFragment extends Fragment implements HomepageFragmentNotifier {
 
     @Override
     public void notifyLevelChanged() {
-        levelTextview.setText(String.valueOf(user.getLevel()));
+
     }
 
     @Override
     public void notifyRecipeNumberChanged() {
-        recipeAmountTextview.setText(String.valueOf(user.getRecipeAmount()));
     }
 
     @Override

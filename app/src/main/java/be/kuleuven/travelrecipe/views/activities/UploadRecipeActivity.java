@@ -86,8 +86,8 @@ public class UploadRecipeActivity extends AppCompatActivity implements CountryAc
         String name = ingredientName.getText().toString();
         String amount = ingredientNumber.getText().toString();
         databaseConnect.addIngredient(caller,recipeID,name,amount);
-        ingredientName.clearComposingText();
-        ingredientNumber.clearComposingText();
+        ingredientName.getText().clear();
+        ingredientNumber.getText().clear();
     }
     public void onPostRecipeButton_Clicked(View caller)
     {
