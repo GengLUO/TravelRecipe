@@ -26,9 +26,6 @@ import be.kuleuven.travelrecipe.models.user.User;
 public class SettingMain extends AppCompatActivity implements HomepageFragmentNotifier {
     private EditText usernameinput;
     private EditText passwordinput;
-    private Button setButton;
-    private TextView levelNumber;
-    private TextView recipeAmountNumber;
     private ImageView profileImage;
     private Bitmap bitmap;
     private RequestQueue requestQueue;
@@ -42,13 +39,8 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
         setContentView(R.layout.activity_setting_main);
         TextView usernameText = findViewById(R.id.usernameText);
         TextView passwordText = findViewById(R.id.passwordText);
-        TextView levelText = findViewById(R.id.setting_levelText);
-        levelNumber = findViewById(R.id.setting_levelNumber);
-        TextView recipeAmountText = findViewById(R.id.setting_recipeAmountText);
-        recipeAmountNumber = findViewById(R.id.setting_recipeAmountNumber);
         usernameinput = findViewById(R.id.usernameInput);
         passwordinput = findViewById(R.id.passwordInput);
-        setButton = findViewById(R.id.setButton);
         profileImage = findViewById(R.id.setting_prifileImage);
         requestQueue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
@@ -128,12 +120,11 @@ public class SettingMain extends AppCompatActivity implements HomepageFragmentNo
 
     @Override
     public void notifyLevelChanged() {
-        levelNumber.setText(String.valueOf(user.getLevel()));
+
     }
 
     @Override
     public void notifyRecipeNumberChanged() {
-        recipeAmountNumber.setText(String.valueOf(user.getRecipeAmount()));
     }
 
     @Override
