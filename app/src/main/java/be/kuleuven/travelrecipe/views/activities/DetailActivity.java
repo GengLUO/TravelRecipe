@@ -63,7 +63,6 @@ public class DetailActivity extends AppCompatActivity implements DetailNotifier 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-
         initView();
         handleIntent();
         setListView();
