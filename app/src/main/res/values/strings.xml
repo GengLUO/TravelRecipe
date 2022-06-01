@@ -48,10 +48,10 @@
     <string name="username">Username</string>
 
     <string-array name="spinner_items">
-        <item>DateASC</item>
-        <item>DateDESC</item>
-        <item>A-Z</item>
-        <item>Z-A</item>
+        <item>Date ASC</item>
+        <item>Date DESC</item>
+        <item>A to Z</item>
+        <item>Z to A</item>
     </string-array>
 
     <string-array name="country_list">

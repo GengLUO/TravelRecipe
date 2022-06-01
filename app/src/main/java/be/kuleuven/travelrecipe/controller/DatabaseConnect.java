@@ -8,22 +8,17 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -451,7 +446,7 @@ public class DatabaseConnect implements UsableDatabaseConnect{
                                 //Just a double-check to tell us the request has completed
                             }
                             //progressDialog.dismiss();
-                            dashboard.setRecipes(newRecipes);
+                            dashboard.setDashboard(newRecipes);
                             requestQueue.add(retrieveRecipeIngredientsRequest);
                         }
                     }
@@ -662,7 +657,7 @@ public class DatabaseConnect implements UsableDatabaseConnect{
 
                                 //Just a double-check to tell us the request has completed
                             }
-                            dashboard.setRecipes(newRecipes);
+                            dashboard.setDashboard(newRecipes);
                         }
                     }
                     catch( JSONException e )

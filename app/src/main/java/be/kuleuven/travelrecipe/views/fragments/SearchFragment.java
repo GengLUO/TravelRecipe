@@ -40,10 +40,10 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
     private SearchView searchView;
     private Spinner dashboardSpinner;
     private Dashboard dashboard;
-    private static final int DATE_ASC = 0;
-    private static final int DATE_DESC = 1;
-    private static final int A_Z = 2;
-    private static final int Z_A = 3;
+//    private static final int DATE_ASC = 0;
+//    private static final int DATE_DESC = 1;
+//    private static final int A_Z = 2;
+//    private static final int Z_A = 3;
 
     public SearchFragment() {
     }
@@ -71,14 +71,14 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(filterList(query).isEmpty())
+                if(dashboard.filterList(query).isEmpty())
                     Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                 return false;
             }
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextChange(String newText) {
-                dashboardAdapter.setList(filterList(newText));
+                dashboardAdapter.setList(dashboard.filterList(newText));
                 return false;
             }
         });
@@ -86,8 +86,8 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int sortState, long l) {
-                sortList(sortState);
-                dashboardAdapter.setList(filterList(searchView.getQuery().toString()));
+                dashboard.sortList(sortState);
+                dashboardAdapter.setList(dashboard.filterList(searchView.getQuery().toString()));
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -111,37 +111,37 @@ public class SearchFragment extends Fragment implements RecipeNotifier {
         databaseConnect.retrieveRecipes(dashboard);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private List<RecipeInfo> filterList(String text) {
-        String lowercaseText = text.toLowerCase();
-        return dashboard
-                .getAllRecipes()
-                .stream()
-                .filter(r -> r.getName().toLowerCase().contains(lowercaseText) ||
-                             r.getCountryname().toLowerCase().contains(lowercaseText) ||
-                             r.getIngredients()
-                                     .stream()
-                                     .map(RecipeIngredient::getName)
-                                     .collect(Collectors.toSet())
-                                     .toString()
-                                     .toLowerCase()
-                                     .contains(lowercaseText))
-                .collect(Collectors.toList());
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    private List<RecipeInfo> filterList(String text) {
+//        String lowercaseText = text.toLowerCase();
+//        return dashboard
+//                .getAllRecipes()
+//                .stream()
+//                .filter(r -> r.getName().toLowerCase().contains(lowercaseText) ||
+//                             r.getCountryname().toLowerCase().contains(lowercaseText) ||
+//                             r.getIngredients()
+//                                     .stream()
+//                                     .map(RecipeIngredient::getName)
+//                                     .collect(Collectors.toSet())
+//                                     .toString()
+//                                     .toLowerCase()
+//                                     .contains(lowercaseText))
+//                .collect(Collectors.toList());
+//    }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void sortList(int state){
-        switch (state){
-            case DATE_DESC : dashboard.getAllRecipes().sort(Comparator.comparingInt(RecipeInfo::getRecipeId).reversed());
-                break;
-            case A_Z:       dashboard.getAllRecipes().sort((Comparator.comparing(RecipeInfo::getName)));
-                break;
-            case Z_A:       dashboard.getAllRecipes().sort((Comparator.comparing(RecipeInfo::getName).reversed()));
-                break;
-            case DATE_ASC :
-            default:        dashboard.getAllRecipes().sort(Comparator.comparingInt(RecipeInfo::getRecipeId));
-        }
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    private void sortList(int state){
+//        switch (state){
+//            case DATE_DESC : dashboard.getAllRecipes().sort(Comparator.comparingInt(RecipeInfo::getRecipeId).reversed());
+//                break;
+//            case A_Z:       dashboard.getAllRecipes().sort((Comparator.comparing(RecipeInfo::getName)));
+//                break;
+//            case Z_A:       dashboard.getAllRecipes().sort((Comparator.comparing(RecipeInfo::getName).reversed()));
+//                break;
+//            case DATE_ASC :
+//            default:        dashboard.getAllRecipes().sort(Comparator.comparingInt(RecipeInfo::getRecipeId));
+//        }
+//    }
 
     @Override
     public void notifyRecipesListChanged(List<RecipeInfo> recipes) {
