@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         userID = intent.getIntExtra("userid",1);
         navController = Navigation.findNavController(this, R.id.nav_controller);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
+
     }
 
 
