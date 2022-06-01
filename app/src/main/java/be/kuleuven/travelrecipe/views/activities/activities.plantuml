@@ -1,0 +1,228 @@
+@startuml
+
+title __ACTIVITIES's Class Diagram__\n
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.CountrysActivity {
+          {static} - AMERICA : int
+          {static} - ASIA : int
+          {static} - EUROPE : int
+          {static} - OTHER : int
+          - continentNumber : int
+          - countriesRecyclerView : RecyclerView
+          - imgBack : ImageView
+          - txtContinent : TextView
+          - userid : int
+          + onImgBack_Clicked()
+          + setCountriesRecyclerView()
+          # onCreate()
+          - handleIntent()
+          - initModel()
+          - initView()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.DetailActivity {
+          - PICK_IMAGE_REQUEST : int
+          - countDownTimer : CountDownTimer
+          - hour : int
+          - imgBack : ImageView
+          - imgRecipeDemo : ImageView
+          - imgTimer : ImageView
+          - minute : int
+          - tbtnStar : ToggleButton
+          - txtRecipeDesc : TextView
+          - txtRecipeName : TextView
+          - txtTime : TextView
+          - userID : int
+          - vibrator : Vibrator
+          + notifyDetailsRetrieved()
+          + notifyLikeStateChanged()
+          + notifyRecipeDemoRetrieved()
+          + onImgBack_Clicked()
+          + onLike_Clicked()
+          + onTimer_Clicked()
+          + onUploadWork_Clicked()
+          # onActivityResult()
+          # onCreate()
+          - handleIntent()
+          - initModel()
+          - initView()
+          - playRingtone()
+          - playVibrate()
+          - setCountDownTimer()
+          - setDetailsListView()
+          - setIngredientsListView()
+          - setListView()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.LoginActivity {
+          {static} - loginURL : String
+          - passwordEditText : EditText
+          - passwordEditText2 : EditText
+          - requestQueue : RequestQueue
+          - usernameEditText : EditText
+          - visible : boolean
+          + encrypt()
+          + login()
+          + onClickLoginButton()
+          + onClickRegisterButton()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.MainActivity {
+          {static} + databaseConnect : DatabaseConnect
+          {static} + requestQueue : RequestQueue
+          {static} + userID : int
+          ~ bottomNavigationView : BottomNavigationView
+          ~ navController : NavController
+          + onButtonCreateRecipeClicked()
+          + onImgContinent1_Clicked()
+          + onImgContinent2_Clicked()
+          + onImgContinent3_Clicked()
+          + onImgContinent4_Clicked()
+          + onImgSetting_Clicked()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.SettingMain {
+          - PICK_IMAGE_REQUEST : int
+          - bitmap : Bitmap
+          - levelNumber : TextView
+          - passwordinput : EditText
+          - profileImage : ImageView
+          - recipeAmountNumber : TextView
+          - requestQueue : RequestQueue
+          - setButton : Button
+          - userid : int
+          - usernameinput : EditText
+          + getResizedBitmap()
+          + notifyAfricaChanged()
+          + notifyAmericaChanged()
+          + notifyAsiaChanged()
+          + notifyEuropeChanged()
+          + notifyImageChanged()
+          + notifyLevelChanged()
+          + notifyNameChanged()
+          + notifyRecipeNumberChanged()
+          + onBtnPostClicked()
+          + onBtnSetClicked()
+          + onProfileImage_Clicked()
+          # onActivityResult()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity {
+          - PICK_IMAGE_REQUEST : int
+          - bitmap : Bitmap
+          - countryEditText : EditText
+          - descriptionEditText : EditText
+          - ingredientName : EditText
+          - ingredientNumber : EditText
+          - progressDialog : ProgressDialog
+          - recipeID : int
+          - recipeMainImageView : ImageView
+          - recipeNameEditText : EditText
+          - requestQueue : RequestQueue
+          - spCountry : Spinner
+          - uploadMainRecipeButton : Button
+          - userID : int
+          + findCountryidByCountry()
+          + getBiggestRecipeID()
+          + getResizedBitmap()
+          + onPostIngredient_Clicked()
+          + onPostRecipeButton_Clicked()
+          + onRecipeMainImage_Clicked()
+          + setCountriesRecyclerView()
+          # onActivityResult()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.UploadStepsActivity {
+          ~ bitmap : Bitmap
+          ~ recipeid : int
+          ~ requestQueue : RequestQueue
+          ~ step : int
+          - PICK_IMAGE_REQUEST : int
+          - descriptionStepEditText : EditText
+          - finishButton : Button
+          - oneMoreStepButton : Button
+          - stepImageView : ImageView
+          - stepNumberTextView : TextView
+          + getResizedBitmap()
+          + onAnotherStep_Clicked()
+          + onFinishButton_Clicked()
+          + onStepMainImage_Clicked()
+          # onActivityResult()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity .up.|> be.kuleuven.travelrecipe.notifier.CountryActivityNotifier
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity o-- be.kuleuven.travelrecipe.models.country.Countries : countries
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity o-- be.kuleuven.travelrecipe.adapters.CountryAdapter : countryAdapter
+  be.kuleuven.travelrecipe.views.activities.DetailActivity .up.|> be.kuleuven.travelrecipe.notifier.DetailNotifier
+  be.kuleuven.travelrecipe.views.activities.DetailActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.models.recipe.DetailedRecipe : detailedRecipe
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.DetailsAdapter : detailsAdapter
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.ExpandListView : detailsListView
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.IngredientAdapter : ingredientAdapter
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.ExpandListView : ingredientsListView
+  be.kuleuven.travelrecipe.views.activities.LoginActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.LoginActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.SettingMain .up.|> be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier
+  be.kuleuven.travelrecipe.views.activities.SettingMain -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.SettingMain o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.SettingMain o-- be.kuleuven.travelrecipe.models.user.User : user
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity .up.|> be.kuleuven.travelrecipe.notifier.CountryActivityNotifier
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity o-- be.kuleuven.travelrecipe.models.country.Countries : countries
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity o-- be.kuleuven.travelrecipe.models.recipe.RecipeInfo : recipe
+  be.kuleuven.travelrecipe.views.activities.UploadStepsActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.UploadStepsActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
