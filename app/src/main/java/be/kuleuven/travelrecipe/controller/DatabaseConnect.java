@@ -75,6 +75,30 @@ public class DatabaseConnect implements UsableDatabaseConnect{
         requestQueue.add(request);
     }
 
+    public void retrieveAllCountries(Countries countries)
+    {
+        String countriesURL = "https://studev.groept.be/api/a21pt210/getAllCountries";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, countriesURL, null, response -> {
+            List<Country> temCountries= new ArrayList<>();
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject o;
+                try {
+                    o = response.getJSONObject(i);
+                    int countryImg = o.getInt("idcountry");
+                    String countryName = o.getString("country_name");
+                    int recipeNumber = 0;
+                    int continent = o.getInt("continent");
+                    Country country = new Country(countryImg,countryName,recipeNumber,false,continent);
+                    temCountries.add(country);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            countries.setCountries(temCountries);
+        }, error -> {
+        });
+        requestQueue.add(request);
+    }
     public void retrieveCountries(Countries countries) {
         int userID = countries.getUserid();
         String countriesURL = "https://studev.groept.be/api/a21pt210/retrieveCountriesInfo/"+userID;
@@ -355,6 +379,25 @@ public class DatabaseConnect implements UsableDatabaseConnect{
         };
 
         requestQueue.add(submitRequest);
+    }
+
+    public void addIngredient(View caller,int recipeid,String name,String amount)
+    {
+        String ingredientURL = "https://studev.groept.be/api/a21pt210/addIngredient";
+        StringRequest  ingredientrequest = new StringRequest (Request.Method.POST, ingredientURL, response -> {
+            //Turn the progress widget off
+            Toast.makeText(caller.getContext(), "Post request executed", Toast.LENGTH_SHORT).show();
+        }, error -> Toast.makeText(caller.getContext(), "Post request failed", Toast.LENGTH_LONG).show()) { //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("recipeid", String.valueOf(recipeid));
+                params.put("name",name);
+                params.put("amount",amount);
+                return params;
+            }
+        };
+        requestQueue.add(ingredientrequest);
     }
 
     public void uploadStep(View caller, int recipeid, int sequence, String description,Bitmap image) {

@@ -46,6 +46,8 @@ public class UploadRecipeActivity extends AppCompatActivity implements CountryAc
     private EditText descriptionEditText;
     private Button uploadMainRecipeButton;
     private Spinner spCountry;
+    private EditText ingredientName;
+    private EditText ingredientNumber;
 
     private Bitmap bitmap = null;
     private RequestQueue requestQueue;
@@ -66,6 +68,8 @@ public class UploadRecipeActivity extends AppCompatActivity implements CountryAc
         descriptionEditText = findViewById(R.id.descriptionEditText);
         uploadMainRecipeButton = findViewById(R.id.uploadMainRecipeButton);
         recipeMainImageView = findViewById(R.id.recipeMainImageView);
+        ingredientName = findViewById(R.id.editTextIngredientName);
+        ingredientNumber = findViewById(R.id.editTextIngredientNumber);
         spCountry = findViewById(R.id.spCountry);
         requestQueue = Volley.newRequestQueue(this);
         databaseConnect = new DatabaseConnect(requestQueue);
@@ -73,11 +77,18 @@ public class UploadRecipeActivity extends AppCompatActivity implements CountryAc
         recipeMainImageView.setImageResource(R.drawable.ic_baseline_star_24);
         countries = new Countries(userID);
         countries.setCountryActivityNotifier(this);
-        databaseConnect.retrieveCountries(countries);
+        databaseConnect.retrieveAllCountries(countries);
     }
 
 
-
+    public void onPostIngredient_Clicked(View caller)
+    {
+        String name = ingredientName.getText().toString();
+        String amount = ingredientNumber.getText().toString();
+        databaseConnect.addIngredient(caller,recipeID,name,amount);
+        ingredientName.clearComposingText();
+        ingredientNumber.clearComposingText();
+    }
     public void onPostRecipeButton_Clicked(View caller)
     {
         String recipeName = recipeNameEditText.getText().toString();
