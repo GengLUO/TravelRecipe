@@ -1,0 +1,182 @@
+@startuml
+
+title __ADAPTERS's Class Diagram__\n
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.CountryAdapter {
+          - context : Context
+          - continentNumber : int
+          - list : List<Country>
+          + CountryAdapter()
+          + getItemCount()
+          + onBindViewHolder()
+          + onCreateViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.CountryAdapter.CountryViewHolder {
+          ~ countryname : TextView
+          ~ imgCountry : TextView
+          ~ number : TextView
+          + CountryViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.DashboardAdapter {
+          - context : Context
+          - list : List<RecipeInfo>
+          + DashboardAdapter()
+          + DashboardAdapter()
+          + getItemCount()
+          + onBindViewHolder()
+          + onCreateViewHolder()
+          + setList()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.DashboardAdapter.dashboardViewHolder {
+          ~ flag : TextView
+          ~ imgDish : ImageView
+          ~ txtDescription : TextView
+          ~ txtName : TextView
+          + dashboardViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.DetailsAdapter {
+          - context : Context
+          - list : List<RecipeStep>
+          + DetailsAdapter()
+          + getCount()
+          + getItem()
+          + getItemId()
+          + getView()
+          + setList()
+          - getViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.DetailsAdapter.ViewHolder {
+          - imgStep : ImageView
+          - txtStepDesc : TextView
+          - txtStepNr : TextView
+          ~ ViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.ExpandListView {
+          + ExpandListView()
+          + ExpandListView()
+          + ExpandListView()
+          + ExpandListView()
+          # onMeasure()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.IngredientAdapter {
+          - context : Context
+          - ingredients : List<RecipeIngredient>
+          + IngredientAdapter()
+          + IngredientAdapter()
+          + getCount()
+          + getItem()
+          + getItemId()
+          + getView()
+          + setList()
+          - getViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.IngredientAdapter.ViewHolder {
+          - txtIngAmntLbl : TextView
+          - txtIngNmLbl : TextView
+          ~ ViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter {
+          - context : Context
+          - list : List<RecipeStep>
+          + RecipeDetailsAdapter()
+          + getItemCount()
+          + onBindViewHolder()
+          + onCreateViewHolder()
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter.detailsViewHolder {
+          ~ imgStep : ImageView
+          ~ txtStepDesc : TextView
+          ~ txtStepNr : TextView
+          + detailsViewHolder()
+      }
+    }
+  }
+  
+
+  be.kuleuven.travelrecipe.adapters.CountryAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  be.kuleuven.travelrecipe.adapters.CountryAdapter +-down- be.kuleuven.travelrecipe.adapters.CountryAdapter.CountryViewHolder
+  be.kuleuven.travelrecipe.adapters.CountryAdapter.CountryViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  be.kuleuven.travelrecipe.adapters.DashboardAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  be.kuleuven.travelrecipe.adapters.DashboardAdapter o-- be.kuleuven.travelrecipe.base.CountryImageTranslation : countryImageTranslation
+  be.kuleuven.travelrecipe.adapters.DashboardAdapter +-down- be.kuleuven.travelrecipe.adapters.DashboardAdapter.dashboardViewHolder
+  be.kuleuven.travelrecipe.adapters.DashboardAdapter.dashboardViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  be.kuleuven.travelrecipe.adapters.DetailsAdapter -up-|> android.widget.BaseAdapter
+  be.kuleuven.travelrecipe.adapters.DetailsAdapter +-down- be.kuleuven.travelrecipe.adapters.DetailsAdapter.ViewHolder
+  be.kuleuven.travelrecipe.adapters.ExpandListView -up-|> android.widget.ListView
+  be.kuleuven.travelrecipe.adapters.IngredientAdapter -up-|> android.widget.BaseAdapter
+  be.kuleuven.travelrecipe.adapters.IngredientAdapter +-down- be.kuleuven.travelrecipe.adapters.IngredientAdapter.ViewHolder
+  be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter +-down- be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter.detailsViewHolder
+  be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter.detailsViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

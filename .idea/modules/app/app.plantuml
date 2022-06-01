@@ -1,0 +1,357 @@
+@startuml
+
+title __TRAVEL_RECIPE.APP's Class Diagram__\n
+
+  namespace be.kuleuven.travelrecipe {
+    class be.kuleuven.travelrecipe.BuildConfig {
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.CountryAdapter {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.DashboardAdapter {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.DetailsAdapter {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.ExpandListView {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.IngredientAdapter {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace adapters {
+      class be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace base {
+      class be.kuleuven.travelrecipe.base.CountryImageTranslation {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace base {
+      class be.kuleuven.travelrecipe.base.DatabaseConnect {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace base {
+      interface be.kuleuven.travelrecipe.base.UsableDatabaseConnect {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.country {
+      abstract class be.kuleuven.travelrecipe.models.country.AbstractCountries {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.country {
+      class be.kuleuven.travelrecipe.models.country.Countries {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.country {
+      class be.kuleuven.travelrecipe.models.country.Country {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.dashboard {
+      abstract class be.kuleuven.travelrecipe.models.dashboard.AbstractDashboard {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.dashboard {
+      class be.kuleuven.travelrecipe.models.dashboard.Dashboard {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.recipe {
+      class be.kuleuven.travelrecipe.models.recipe.AbstractDetailedRecipe {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.recipe {
+      class be.kuleuven.travelrecipe.models.recipe.DetailedRecipe {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.recipe {
+      class be.kuleuven.travelrecipe.models.recipe.RecipeInfo {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.recipe {
+      class be.kuleuven.travelrecipe.models.recipe.RecipeIngredient {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.recipe {
+      class be.kuleuven.travelrecipe.models.recipe.RecipeStep {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.user {
+      abstract class be.kuleuven.travelrecipe.models.user.AbstractUser {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace models.user {
+      class be.kuleuven.travelrecipe.models.user.User {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace notifier {
+      interface be.kuleuven.travelrecipe.notifier.CountryActivityNotifier {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace notifier {
+      interface be.kuleuven.travelrecipe.notifier.DetailNotifier {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace notifier {
+      interface be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace notifier {
+      interface be.kuleuven.travelrecipe.notifier.RecipeNotifier {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.CountrysActivity {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.DetailActivity {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.LoginActivity {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.MainActivity {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.SettingMain {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.activities {
+      class be.kuleuven.travelrecipe.views.activities.UploadStepsActivity {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.fragments {
+      class be.kuleuven.travelrecipe.views.fragments.HomeFragment {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.fragments {
+      class be.kuleuven.travelrecipe.views.fragments.MeFragment {
+      }
+    }
+  }
+  
+
+  namespace be.kuleuven.travelrecipe {
+    namespace views.fragments {
+      class be.kuleuven.travelrecipe.views.fragments.SearchFragment {
+      }
+    }
+  }
+  
+
+  be.kuleuven.travelrecipe.adapters.CountryAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  be.kuleuven.travelrecipe.adapters.DashboardAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  be.kuleuven.travelrecipe.adapters.DashboardAdapter o-- be.kuleuven.travelrecipe.base.CountryImageTranslation : countryImageTranslation
+  be.kuleuven.travelrecipe.adapters.DetailsAdapter -up-|> android.widget.BaseAdapter
+  be.kuleuven.travelrecipe.adapters.ExpandListView -up-|> android.widget.ListView
+  be.kuleuven.travelrecipe.adapters.IngredientAdapter -up-|> android.widget.BaseAdapter
+  be.kuleuven.travelrecipe.adapters.RecipeDetailsAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  be.kuleuven.travelrecipe.base.DatabaseConnect .up.|> be.kuleuven.travelrecipe.base.UsableDatabaseConnect
+  be.kuleuven.travelrecipe.base.DatabaseConnect o-- be.kuleuven.travelrecipe.models.user.User : user
+  be.kuleuven.travelrecipe.models.country.AbstractCountries o-- be.kuleuven.travelrecipe.notifier.CountryActivityNotifier : countryActivityNotifier
+  be.kuleuven.travelrecipe.models.country.Countries -up-|> be.kuleuven.travelrecipe.models.country.AbstractCountries
+  be.kuleuven.travelrecipe.models.dashboard.AbstractDashboard o-- be.kuleuven.travelrecipe.notifier.RecipeNotifier : recipeNotifier
+  be.kuleuven.travelrecipe.models.dashboard.Dashboard -up-|> be.kuleuven.travelrecipe.models.dashboard.AbstractDashboard
+  be.kuleuven.travelrecipe.models.recipe.AbstractDetailedRecipe o-- be.kuleuven.travelrecipe.notifier.DetailNotifier : detailNotifier
+  be.kuleuven.travelrecipe.models.recipe.DetailedRecipe -up-|> be.kuleuven.travelrecipe.models.recipe.AbstractDetailedRecipe
+  be.kuleuven.travelrecipe.models.recipe.DetailedRecipe o-- be.kuleuven.travelrecipe.models.recipe.RecipeInfo : recipeInfo
+  be.kuleuven.travelrecipe.models.recipe.RecipeInfo .up.|> android.os.Parcelable
+  be.kuleuven.travelrecipe.models.recipe.RecipeIngredient .up.|> android.os.Parcelable
+  be.kuleuven.travelrecipe.models.user.AbstractUser o-- be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier : homepageFragmentNotifier
+  be.kuleuven.travelrecipe.models.user.User -up-|> be.kuleuven.travelrecipe.models.user.AbstractUser
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity .up.|> be.kuleuven.travelrecipe.notifier.CountryActivityNotifier
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity o-- be.kuleuven.travelrecipe.models.country.Countries : countries
+  be.kuleuven.travelrecipe.views.activities.CountrysActivity o-- be.kuleuven.travelrecipe.adapters.CountryAdapter : countryAdapter
+  be.kuleuven.travelrecipe.views.activities.DetailActivity .up.|> be.kuleuven.travelrecipe.notifier.DetailNotifier
+  be.kuleuven.travelrecipe.views.activities.DetailActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.models.recipe.DetailedRecipe : detailedRecipe
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.DetailsAdapter : detailsAdapter
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.ExpandListView : detailsListView
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.IngredientAdapter : ingredientAdapter
+  be.kuleuven.travelrecipe.views.activities.DetailActivity o-- be.kuleuven.travelrecipe.adapters.ExpandListView : ingredientsListView
+  be.kuleuven.travelrecipe.views.activities.LoginActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.LoginActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.SettingMain .up.|> be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier
+  be.kuleuven.travelrecipe.views.activities.SettingMain -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.SettingMain o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.SettingMain o-- be.kuleuven.travelrecipe.models.user.User : user
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity .up.|> be.kuleuven.travelrecipe.notifier.CountryActivityNotifier
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity o-- be.kuleuven.travelrecipe.models.country.Countries : countries
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.activities.UploadRecipeActivity o-- be.kuleuven.travelrecipe.models.recipe.RecipeInfo : recipe
+  be.kuleuven.travelrecipe.views.activities.UploadStepsActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  be.kuleuven.travelrecipe.views.activities.UploadStepsActivity o-- be.kuleuven.travelrecipe.base.DatabaseConnect : databaseConnect
+  be.kuleuven.travelrecipe.views.fragments.HomeFragment .up.|> be.kuleuven.travelrecipe.notifier.HomepageFragmentNotifier
+  be.kuleuven.travelrecipe.views.fragments.HomeFragment -up-|> androidx.fragment.app.Fragment
+  be.kuleuven.travelrecipe.views.fragments.HomeFragment o-- be.kuleuven.travelrecipe.models.user.User : user
+  be.kuleuven.travelrecipe.views.fragments.MeFragment .up.|> be.kuleuven.travelrecipe.notifier.RecipeNotifier
+  be.kuleuven.travelrecipe.views.fragments.MeFragment -up-|> androidx.fragment.app.Fragment
+  be.kuleuven.travelrecipe.views.fragments.MeFragment o-- be.kuleuven.travelrecipe.models.dashboard.Dashboard : dashboard
+  be.kuleuven.travelrecipe.views.fragments.MeFragment o-- be.kuleuven.travelrecipe.adapters.DashboardAdapter : listDashboardAdapter
+  be.kuleuven.travelrecipe.views.fragments.SearchFragment .up.|> be.kuleuven.travelrecipe.notifier.RecipeNotifier
+  be.kuleuven.travelrecipe.views.fragments.SearchFragment -up-|> androidx.fragment.app.Fragment
+  be.kuleuven.travelrecipe.views.fragments.SearchFragment o-- be.kuleuven.travelrecipe.models.dashboard.Dashboard : dashboard
+  be.kuleuven.travelrecipe.views.fragments.SearchFragment o-- be.kuleuven.travelrecipe.adapters.DashboardAdapter : dashboardAdapter
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
